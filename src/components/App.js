@@ -6,7 +6,7 @@ import firebase from "firebase/app";
 import SignIn from './auth/SignIn';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-
+import { UserContext } from './userContext';
 
 import 'antd/dist/antd.css';
 
@@ -19,27 +19,28 @@ const theme = {
 };
 
 function App() {
-  const [value, setValue] = useState("not logged in")
+  const [value, setValue] = useState(null)
 
 
   return (
 
 
     <Router>
+      <UserContext.Provider value={{ value, setValue }}>
 
-
-      <Header theme={theme} />
-      <Switch>
-        <Route path='/signin'>
-          <SignIn />
-        </Route>
-        <Route exact path='/'>
-          <SongList />
-        </Route>
-        <Route path='/profile'>
-          <Profile />
-        </Route>
-      </Switch>
+        <Header theme={theme} />
+        <Switch>
+          <Route path='/signin'>
+            <SignIn />
+          </Route>
+          <Route exact path='/'>
+            <SongList />
+          </Route>
+          <Route path='/profile'>
+            <Profile />
+          </Route>
+        </Switch>
+      </UserContext.Provider>
     </Router >
   );
 }

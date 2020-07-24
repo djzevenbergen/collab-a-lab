@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import { Redirect } from 'react-router-dom';
 import { message } from 'antd'
 import SignUp from "./SignUp";
-
+import { UserContext } from '../userContext'
 
 function SignIn() {
 
@@ -19,8 +19,6 @@ function SignIn() {
       message.success("you signed in");
       setHidden(!hidden);
       setValue(firebase.auth().currentUser);
-      // let usernameTag = document.getElementById("username");
-      // usernameTag.innerHTML = usernameTag.innerHTML.replace("", email);
     }).catch(function (error) {
       message.error(error.message);
     });
@@ -34,8 +32,7 @@ function SignIn() {
     firebase.auth().signOut().then(function () {
       console.log("Successfully signed out!");
       setValue(null);
-      // let usernameTag = document.getElementById("username");
-      // usernameTag.innerHTML = "";
+
     }).catch(function (error) {
       console.log(error.message);
     });
