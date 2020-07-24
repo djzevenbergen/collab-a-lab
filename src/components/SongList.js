@@ -7,6 +7,7 @@ import Song from "./Song";
 import { useFirestore } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import { message } from "antd";
+import * as t from "tone";
 
 export default function SongList(props) {
   const [songList, setList] = useState(null);
@@ -59,7 +60,9 @@ export default function SongList(props) {
   // }
 
   const onClickSong = (post) => {
-
+    const synth = new t.MembraneSynth().toMaster();
+    // play a note with the synth we setup
+    synth.triggerAttackRelease("C2", "8n");
   }
 
   return (

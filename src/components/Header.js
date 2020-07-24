@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom"
 import firebase from 'firebase/app';
-// import { UserContext } from './userContext';
+import { UserContext } from './userContext';
 
 export default function Header(props) {
-  // const { value, setValue } = useContext(UserContext);
+  const { value, setValue } = useContext(UserContext);
   const Header = styled.section`
   background-color: ${props.theme.secondary};
   `;

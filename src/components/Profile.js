@@ -1,7 +1,7 @@
 // show song list and track list with only your id as the owner id
 
-import Profile from './TrackList';
-import React, { useState } from 'react';
+import TrackList from './TrackList';
+import React, { useState, useEffect, useContext } from 'react';
 import Header from './Header';
 import SongList from './SongList';
 import firebase from "firebase/app";
@@ -10,6 +10,7 @@ import { withFirestore, useFirestore } from 'react-redux-firebase';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { UserContext } from './userContext';
+import { MyContext } from "../context.js"
 
 import 'antd/dist/antd.css';
 import ReusableTrackForm from './ReusableTrackForm';
@@ -22,22 +23,50 @@ const theme = {
   white: '#e6f1ff'
 };
 
-function Profile() {
+const Profile = () => {
   const firestore = useFirestore();
-  const [value, setValue] = useState(null)
+  const [value, setValue] = useState(null);
+  const [trackList, setTrackList] = useState([])
+  const context = useContext(MyContext);
+  const [user, setUser] = useState(null);
+  const auth = firebase.auth();
 
-  let trackRef = firestore.collection("tracks");
+  // let trackRef = firestore.collection("tracks");
 
-  let myTracks = trackRef.where('owner', "==", firebase.auth.currentUser.uid);
+  // let myTracks = trackRef.where('owner', "==", firebase.auth.currentUser.uid);
 
-  console.log("whatup" + myTracks);
+  const getTrackList = () => {
+    let data;
+    firestore.collection("tracks").where("owner", "==", auth.currentUser.uid).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          data = doc.data()
+        });
 
+        setTrackList(data);
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
+  }
+
+  console.table(trackList);
+
+  useEffect(() => {
+    console.log(context.state)
+    setUser(auth.currentUser)
+    if (auth.currentUser) {
+      getTrackList();
+    }
+    //
+  }, [context.state.user])
 
   return (
     <React.Fragment>
       {/* column */}
       {console.log("sheebs")}
-      <TrackList tracks={myTracks} />
+      <TrackList tracks={trackList} />
+      {console.log("screech")}
     </React.Fragment>
 
 

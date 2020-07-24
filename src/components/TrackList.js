@@ -7,6 +7,7 @@ import Song from "./Song";
 import { useFirestore } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import { message } from "antd";
+import * as t from "tone";
 
 
 export default function TrackList(props) {
@@ -59,14 +60,21 @@ export default function TrackList(props) {
   }
 
 
+  const onClickTrack = (post) => {
+    const synth = new t.MembraneSynth().toMaster();
+    // play a note with the synth we setup
+    synth.triggerAttackRelease("C2", "8n");
+  }
+
   return (
 
     <div className="main-container">
       <div className="track-container">
         <div className="track-box">
           <p>This should be a list of tracks</p>
+
         </div>
-        {props.tracks ? props.tracks.map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} event={onLike} setTrackList={setList} />) : ''}
+        {props.tracks ? props.tracks.map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} event={onClickTrack} setTrackList={setList} />) : ''}
       </div>
       <button onClick={likesPage} > Likes </button>
 

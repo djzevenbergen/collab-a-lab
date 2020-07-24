@@ -1,4 +1,4 @@
-import Profile from './TrackList';
+import Profile from './Profile';
 import React, { useState } from 'react';
 import Header from './Header';
 import SongList from './SongList';
