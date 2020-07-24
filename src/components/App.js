@@ -1,12 +1,12 @@
-import Profile from './Profile';
+import Profile from './TrackList';
 import React, { useState } from 'react';
 import Header from './Header';
-import RemedyList from './RemedyList';
+import SongList from './SongList';
 import firebase from "firebase/app";
 import SignIn from './auth/SignIn';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { UserContext } from './userContext';
+
 
 import 'antd/dist/antd.css';
 
@@ -26,21 +26,20 @@ function App() {
 
 
     <Router>
-      <UserContext.Provider value={{ value, setValue }}>
 
-        <Header theme={theme} />
-        <Switch>
-          <Route path='/signin'>
-            <SignIn />
-          </Route>
-          <Route exact path='/'>
-            <RemedyList />
-          </Route>
-          <Route path='/profile'>
-            <Profile />
-          </Route>
-        </Switch>
-      </UserContext.Provider>
+
+      <Header theme={theme} />
+      <Switch>
+        <Route path='/signin'>
+          <SignIn />
+        </Route>
+        <Route exact path='/'>
+          <SongList />
+        </Route>
+        <Route path='/profile'>
+          <Profile />
+        </Route>
+      </Switch>
     </Router >
   );
 }

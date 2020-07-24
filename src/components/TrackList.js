@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Track from "./Track";
+import Song from "./Song";
 import { useFirestore } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import { message } from "antd";
-import Plus from "./Plus"
+
 
 export default function TrackList() {
-  const [remedyList, setList] = useState(null);
+  const [songList, setList] = useState(null);
   const [favePage, goToFaves] = useState(false);
   const [user, setUser] = useState(null);
   const auth = firebase.auth();
@@ -34,7 +35,7 @@ export default function TrackList() {
         });
         if (data.liked !== undefined) {
           data.liked.forEach(likedPost => {
-            if (likedPost.remedyId === post.remedyId) {
+            if (likedPost.songId === post.songId) {
               haslikedPost = true;
             }
           })
@@ -59,12 +60,11 @@ export default function TrackList() {
   return (
 
     <div className="main-container">
-      <div className="remedy-container">
-        <div className="remedy-box">
-          <Plus plus={true} />
+      <div className="song-container">
+        <div className="song-box">
           <p>Drag and drop remedies to add to your list</p>
         </div>
-        {remedyList ? remedyList.map((remedy, i) => <Remedy key={i} remedy={remedy} dragProp="list" canDelete={false} event={onLike} setremedyList={setList} />) : ''}
+        {songList ? songList.map((song, i) => <Song key={i} song={song} dragProp="list" canDelete={false} event={onLike} setSongList={setList} />) : ''}
       </div>
       <button onClick={likesPage} > Likes </button>
 
