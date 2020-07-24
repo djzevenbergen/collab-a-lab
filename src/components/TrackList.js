@@ -63,10 +63,29 @@ export default function TrackList(props) {
 
   console.log(tracks);
 
-  const onClickTrack = (post) => {
-    const synth = new t.MembraneSynth().toMaster();
-    // play a note with the synth we setup
-    synth.triggerAttackRelease("C2", "8n");
+  const onClickTrack = (name) => {
+    var storage = firebase.storage();
+    var pathReference = storage.ref('tracks/')
+
+    pathReference.child(`${name}`).getDownloadURL().then(function (url) {
+      // `url` is the download URL for 'images/stars.jpg'
+
+      // This can be downloaded directly:
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function (event) {
+        var blob = xhr.response;
+      };
+      xhr.open('GET', url);
+      xhr.send();
+
+    }).catch(function (error) {
+      console.log('error downloading');
+    });
+
+    // const synth = new t.MembraneSynth().toMaster();
+    // // play a note with the synth we setup
+    // synth.triggerAttackRelease("C2", "8n");
   }
 
   return (
@@ -90,4 +109,5 @@ export default function TrackList(props) {
 TrackList.propTypes = {
   tracks: PropTypes.object
 };
+
 

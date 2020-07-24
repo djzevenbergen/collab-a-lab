@@ -44,7 +44,7 @@ export default function Track(props) {
           <div className="track-box">
 
 
-            < h2 onClick={() => playTrack(track.name)}>Name : {track.name}</h2 >
+            < h2 onClick={() => playTrack(track.url)}>Name : {track.name}</h2 >
           </div >
           :
           <div className="track-box">
