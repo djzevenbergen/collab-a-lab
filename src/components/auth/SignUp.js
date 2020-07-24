@@ -19,7 +19,7 @@ function SignUp() {
       console.log(data.user.uid);
       message.success("successfully signed up!");
       setHidden(!hidden);
-      return firestore.collection("users").add({ userId: data.user.uid, userName: data.user.email, liked: [] });
+      return firestore.collection("users").add({ userId: data.user.uid, userName: data.user.email, tracks: [] });
 
     }).catch(function (error) {
       console.log(error.message);

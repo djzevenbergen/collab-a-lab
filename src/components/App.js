@@ -9,6 +9,7 @@ import { ThemeProvider } from 'styled-components';
 import { UserContext } from './userContext';
 
 import 'antd/dist/antd.css';
+import ReusableTrackForm from './ReusableTrackForm';
 
 const theme = {
   font: 'Courier',
@@ -26,7 +27,7 @@ function App() {
 
 
     <Router>
-      <UserContext.Provider value={{ value, setValue }}>
+      <UserContext.Provider value={{ value, setValue }} theme={theme}>
 
         <Header theme={theme} />
         <Switch>
@@ -38,6 +39,9 @@ function App() {
           </Route>
           <Route path='/profile'>
             <Profile />
+          </Route>
+          <Route path='/addtrack'>
+            <ReusableTrackForm />
           </Route>
         </Switch>
       </UserContext.Provider>
