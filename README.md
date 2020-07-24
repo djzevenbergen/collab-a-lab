@@ -1,3 +1,28 @@
+### time log
+- 8-9 attempted to do things, but ended up scrapping everything and starting over
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCdUlmB1btZDcwFf-6PNpF_ln1IfsNexZg",
+    authDomain: "collab-a-lab.firebaseapp.com",
+    databaseURL: "https://collab-a-lab.firebaseio.com",
+    projectId: "collab-a-lab",
+    storageBucket: "collab-a-lab.appspot.com",
+    messagingSenderId: "890714112224",
+    appId: "1:890714112224:web:4c46a9c3bb55d4624fd085"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
