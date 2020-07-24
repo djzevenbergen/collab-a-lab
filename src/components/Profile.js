@@ -25,7 +25,7 @@ const theme = {
 
 const Profile = () => {
   const firestore = useFirestore();
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(UserContext);
   const [trackList, setTrackList] = useState([])
   const context = useContext(MyContext);
   const [user, setUser] = useState(null);
@@ -36,11 +36,16 @@ const Profile = () => {
   // let myTracks = trackRef.where('owner', "==", firebase.auth.currentUser.uid);
 
   const getTrackList = () => {
-    let data;
+    let data = [];
+    let count = 0;
     firestore.collection("tracks").where("owner", "==", auth.currentUser.uid).get()
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
-          data = doc.data()
+          data.push(doc.data());
+          console.log(count);
+          console.log(data);
+          count++;
+
         });
 
         setTrackList(data);

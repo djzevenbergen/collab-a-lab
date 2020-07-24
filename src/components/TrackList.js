@@ -11,6 +11,8 @@ import * as t from "tone";
 
 
 export default function TrackList(props) {
+  const { tracks } = props;
+
   const [songList, setList] = useState(null);
   const [favePage, goToFaves] = useState(false);
   const [user, setUser] = useState(null);
@@ -59,6 +61,7 @@ export default function TrackList(props) {
       });
   }
 
+  console.log(tracks);
 
   const onClickTrack = (post) => {
     const synth = new t.MembraneSynth().toMaster();
@@ -74,7 +77,7 @@ export default function TrackList(props) {
           <p>This should be a list of tracks</p>
 
         </div>
-        {props.tracks ? props.tracks.map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} event={onClickTrack} setTrackList={setList} />) : ''}
+        {props.tracks ? Object.values(props.tracks).map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} event={onClickTrack} setTrackList={setList} />) : ''}
       </div>
       <button onClick={likesPage} > Likes </button>
 

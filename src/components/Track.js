@@ -10,6 +10,10 @@ export default function Track(props) {
   const [user, setUser] = useState(null);
 
   const auth = firebase.auth();
+
+  const synth = new t.MembraneSynth().toMaster();
+  // play a note with the synth we setup
+
   //dnd start
   // eslint-disable-next-line
   // const [{ isDragging }, drag] = useDrag({
@@ -38,15 +42,13 @@ export default function Track(props) {
       {
         user ?
           <div className="track-box">
-            < h2 > {track.name}</h2 >
 
-            <p><strong>Ingedients:</strong> {track.ingredients}</p>
-            <p><strong>Instructions: </strong>{track.details}</p>
-            <h3>Category: {track.category}</h3>
+
+            < h2 onClick={() => synth.triggerAttackRelease("C2", "8n")}>Name : {track.name}</h2 >
           </div >
           :
           <div className="track-box">
-            <h2>{track.name}</h2>
+            <h2>Name : {track.name}</h2>
             <p>{track.details}</p>
             <h3>category: {track.category}</h3>
           </div>
