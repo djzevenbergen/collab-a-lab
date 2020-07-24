@@ -55,7 +55,12 @@ export default function SongList(props) {
 
   //       console.log("Error getting documents: ", error);
   //     });
+
   // }
+
+  const onClickSong = (post) => {
+
+  }
 
   return (
 
@@ -64,7 +69,7 @@ export default function SongList(props) {
         <div className="song-box">
           <p>Drag and drop remedies to add to your list</p>
         </div>
-        {songList ? songList.map((song, i) => <Song key={i} song={song} dragProp="list" canDelete={false} event={onLike} setsongList={setList} />) : ''}
+        {songList ? songList.map((song, i) => <Song key={i} song={song} dragProp="list" canDelete={false} event={onClickSong} setsongList={setList} />) : ''}
       </div>
       <button onClick={likesPage} > Likes </button>
     </div >

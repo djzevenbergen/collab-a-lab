@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Track from "./Track";
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Song from "./Song";
 import { useFirestore } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import { message } from "antd";
 
 
-export default function TrackList() {
+export default function TrackList(props) {
   const [songList, setList] = useState(null);
   const [favePage, goToFaves] = useState(false);
   const [user, setUser] = useState(null);
@@ -61,15 +62,21 @@ export default function TrackList() {
   return (
 
     <div className="main-container">
-      <div className="song-container">
-        <div className="song-box">
-          <p>Drag and drop remedies to add to your list</p>
+      <div className="track-container">
+        <div className="track-box">
+          <p>This should be a list of tracks</p>
         </div>
-        {songList ? songList.map((song, i) => <Song key={i} song={song} dragProp="list" canDelete={false} event={onLike} setSongList={setList} />) : ''}
+        {props.tracks ? props.tracks.map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} event={onLike} setTrackList={setList} />) : ''}
       </div>
       <button onClick={likesPage} > Likes </button>
 
     </div >
 
   );
+
+
 }
+TrackList.propTypes = {
+  tracks: PropTypes.object
+};
+
