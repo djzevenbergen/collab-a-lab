@@ -77,7 +77,7 @@ export default function TrackList(props) {
           <p>This should be a list of tracks</p>
 
         </div>
-        {props.tracks ? Object.values(props.tracks).map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} event={onClickTrack} setTrackList={setList} />) : ''}
+        {props.tracks ? Object.values(props.tracks).map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} playTrack={onClickTrack} setTrackList={setList} />) : ''}
       </div>
       <button onClick={likesPage} > Likes </button>
 

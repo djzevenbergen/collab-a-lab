@@ -6,7 +6,7 @@ import * as t from "tone";
 
 
 export default function Track(props) {
-  const { track, event } = props;
+  const { track, playTrack } = props;
   const [user, setUser] = useState(null);
 
   const auth = firebase.auth();
@@ -44,7 +44,7 @@ export default function Track(props) {
           <div className="track-box">
 
 
-            < h2 onClick={() => synth.triggerAttackRelease("C2", "8n")}>Name : {track.name}</h2 >
+            < h2 onClick={() => playTrack(track.name)}>Name : {track.name}</h2 >
           </div >
           :
           <div className="track-box">
