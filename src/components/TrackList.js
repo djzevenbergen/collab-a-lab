@@ -67,29 +67,29 @@ export default function TrackList(props) {
     var storage = firebase.storage();
     var pathReference = storage.ref('tracks/')
 
-    // pathReference.child(`${name}`).getDownloadURL().then(function (url) {
-    // `url` is the download URL for 'images/stars.jpg'
-    console.log("1");
-    // This can be downloaded directly:
-    var xhr = new XMLHttpRequest();
-    console.log("2");
-    xhr.responseType = 'blob';
-    console.log("3");
-    xhr.onload = function (event) {
-      event.preventDefault();
+    pathReference.child(`${name}`).getDownloadURL().then(function (url) {
+      // `url` is the download URL for 'images/stars.jpg'
+      console.log("1");
+      // This can be downloaded directly:
+      var xhr = new XMLHttpRequest();
+      console.log("2");
+      xhr.responseType = 'blob';
+      console.log("3");
+      xhr.onload = function (event) {
+        event.preventDefault();
 
-      var blob = xhr.response;
-      console.log(blob);
-    };
-    console.log("4");
-    xhr.open('GET', "https://firebasestorage.googleapis.com/v0/b/collab-a-lab.appspot.com/o/tracks%2Fhorison.mp3?alt=media&token=d0a2c3ae-4ab1-4447-827f-e7a3d3617673");
-    console.log("5");
-    xhr.send();
-    console.log("6");
+        var blob = xhr.response;
+        console.log(blob);
+      };
+      console.log("4");
+      xhr.open('GET', url);
+      console.log("5");
+      xhr.send();
+      console.log("6");
 
-    // }).catch(function (error) {
-    //   console.log('error downloading');
-    // });
+    }).catch(function (error) {
+      console.log('error downloading');
+    });
 
     // const synth = new t.MembraneSynth().toMaster();
     // // play a note with the synth we setup
