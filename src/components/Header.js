@@ -36,7 +36,9 @@ const Header = (props) => {
         <Navbar.Collapse id="basic-navbar-nav">
 
           <Nav className="mr-auto">
-            <Nav.Link> <Link className='navLink' to="/signin">Sign in</Link></Nav.Link>
+
+            <Nav.Link> <Link className='navLink' to="/signin">{auth.currentUser ? "Sign Out" : "Sign in"}</Link></Nav.Link>
+
             <Nav.Link> <Link className='navLink' to="/profile">Profile</Link></Nav.Link>
             <Nav.Link> <Link className='navLink' to="/addtrack">Add track</Link></Nav.Link>
             <Nav.Link> <Link className='navLink' to="/">Home</Link></Nav.Link>

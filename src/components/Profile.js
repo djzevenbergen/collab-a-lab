@@ -7,7 +7,7 @@ import SongList from './SongList';
 import firebase from "firebase/app";
 import SignIn from './auth/SignIn';
 import { withFirestore, useFirestore } from 'react-redux-firebase';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { UserContext } from './userContext';
 import { MyContext } from "../context.js"
@@ -68,6 +68,7 @@ const Profile = () => {
 
   return (
     <React.Fragment>
+      {auth.currentUser ? "" : <Redirect to="/signin" />}
       {/* column */}
       {console.log("sheebs")}
       <TrackList tracks={trackList} />

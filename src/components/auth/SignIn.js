@@ -1,15 +1,21 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import firebase from 'firebase/app';
 import { Redirect } from 'react-router-dom';
 import { message } from 'antd'
 import SignUp from "./SignUp";
 import { UserContext } from '../userContext'
 
+import { MyContext } from "../../context.js"
+
+
 function SignIn() {
 
   const [hidden, setHidden] = useState(false);
   const [signup, setSignup] = useState(false);
   const { value, setValue } = useContext(UserContext);
+  const context = useContext(MyContext);
+  const [user, setUser] = useState(null);
+  const auth = firebase.auth();
 
   function doSignIn(event) {
     event.preventDefault();
@@ -38,27 +44,39 @@ function SignIn() {
     });
   }
 
-  return (
-    <div className="main-container">
+  useEffect(() => {
+    console.log(context.state)
+    setUser(auth.currentUser)
 
-      {hidden ? <Redirect to="/profile" /> : ''}
-      <h1>Sign In</h1>
-      <form onSubmit={doSignIn}>
-        <input
-          type='text'
-          name='signInEmail'
-          placeholder='Email' />
-        <input
-          type='password'
-          name='signInPassword'
-          placeholder='Password' />
-        <button type='submit'>Sign In</button>
-      </form>
-      <button onClick={onClick}>Sign Up</button>
-      {signup ? <SignUp /> : ''}
-      <h1>Sign Out</h1>
-      <button onClick={doSignOut}>Sign Out</button>
-    </div>
+  }, [context.state.user])
+
+
+  return (
+    <React.Fragment>
+
+
+      <div className="main-container">
+
+        {hidden ? <Redirect to="/profile" /> : ''}
+        {auth.currentUser ? "" : <div>
+          <h1>Sign In</h1>
+          <form onSubmit={doSignIn}>
+            <input
+              type='text'
+              name='signInEmail'
+              placeholder='Email' />
+            <input
+              type='password'
+              name='signInPassword'
+              placeholder='Password' />
+            <button type='submit'>Sign In</button>
+          </form>
+          <button onClick={onClick}>Sign Up</button>
+        </div>}
+        {signup ? <SignUp /> : ''}
+        {auth.currentUser ? <div><h1>Sign Out</h1><button onClick={doSignOut}>Sign Out</button></div> : ""}
+      </div>
+    </React.Fragment>
   );
 
 }
