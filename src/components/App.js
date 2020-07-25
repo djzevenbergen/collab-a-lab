@@ -8,8 +8,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { UserContext } from './userContext';
 
+
 import 'antd/dist/antd.css';
 import ReusableTrackForm from './ReusableTrackForm';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const theme = {
   font: 'Courier',
@@ -22,13 +24,12 @@ const theme = {
 function App() {
   const [value, setValue] = useState(null)
 
-
   return (
 
     <Router>
       <UserContext.Provider value={{ value, setValue }} theme={theme}>
 
-        <Header theme={theme} />
+        <Header />
         <Switch>
           <Route path='/signin'>
             <SignIn />

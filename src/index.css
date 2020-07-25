@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.header {
+  font-size: large;
+  margin: 0 auto;
+}
+
+.navLink {
+  color: rgb(184, 184, 184)
+}
+
+.navLink:hover {
+  color: rgb(236, 235, 235)
+}

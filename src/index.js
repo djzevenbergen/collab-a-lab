@@ -4,6 +4,7 @@ import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import 'firebase/auth';
+
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './components/reducers/index';
 import { Provider } from 'react-redux';
@@ -12,9 +13,10 @@ import { createFirestoreInstance } from 'redux-firestore';
 import firebase from "./firebase";
 import 'firebase/auth';
 import thunkMiddleware from 'redux-thunk';
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
-import MyProvider from './context'
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import MyProvider from './context';
+
 
 const store = createStore(rootReducer);
 
@@ -33,9 +35,9 @@ ReactDOM.render(
     <Provider store={store}>
       <MyProvider>
         <ReactReduxFirebaseProvider {...rrfProps}>
-          <DndProvider backend={HTML5Backend}>
-            <App />
-          </DndProvider>
+
+          <App />
+
         </ReactReduxFirebaseProvider>
       </MyProvider>
     </Provider>

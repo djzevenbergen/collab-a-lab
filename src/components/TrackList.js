@@ -28,39 +28,6 @@ export default function TrackList(props) {
     setUser(auth.currentUser)
   }, [auth])
 
-  const onLike = (post) => {
-    let neededId = ''
-    let data = { liked: [] };
-    let haslikedPost = false;
-    firestore.collection("users").where("userId", "==", user.uid).get()
-      .then(function (querySnapshot) {
-        querySnapshot.forEach(function (doc) {
-          neededId = doc.id
-          data = doc.data()
-        });
-        if (data.liked !== undefined) {
-          data.liked.forEach(likedPost => {
-            if (likedPost.songId === post.songId) {
-              haslikedPost = true;
-            }
-          })
-          if (haslikedPost) {
-            message.warn("Already liked this my dude!")
-          } else {
-            message.success("Post added to profile!")
-            return firestore.update({ collection: 'users', doc: neededId }, { liked: [...data.liked, post] })
-
-          }
-        } else {
-          return firestore.update({ collection: 'users', doc: neededId }, { liked: [post] })
-        }
-      })
-      .catch(function (error) {
-
-        console.log("Error getting documents: ", error);
-      });
-  }
-
   console.log(tracks);
 
   const onClickTrack = (name) => {
@@ -94,9 +61,6 @@ export default function TrackList(props) {
       console.log('error downloading');
     });
 
-    // const synth = new t.MembraneSynth().toMaster();
-    // // play a note with the synth we setup
-    // synth.triggerAttackRelease("C2", "8n");
   }
 
   return (
