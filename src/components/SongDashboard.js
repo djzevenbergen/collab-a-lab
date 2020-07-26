@@ -53,6 +53,46 @@ function SongDashboard(props) {
     getTrackList();
 
   }, [auth])
+  let player;
+  async function onPlaySong() {
+    var storage = firebase.storage();
+    var pathReference = storage.ref('tracks/')
+    await trackList.forEach((track) => {
+      pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
+        // `url` is the download URL for 'images/stars.jpg'
+        console.log("1");
+        // This can be downloaded directly:
+        var xhr = new XMLHttpRequest();
+        console.log("2");
+        xhr.responseType = 'blob';
+        console.log("3");
+        xhr.onload = function (event) {
+          event.preventDefault();
+
+          var blob = xhr.response;
+          console.log(blob);
+        };
+        console.log("4");
+        xhr.open('GET', url);
+        console.log("5");
+        xhr.send();
+        console.log("6");
+        player = new t.Player(url).toMaster();
+        //play as soon as the buffer is loaded
+        player.autostart = true;
+
+      }).catch(function (error) {
+        console.log('error downloading');
+      });
+
+    })
+
+  }
+
+
+  trackList.forEach((track, i) => {
+    console.log(track.name + " " + i);
+  });
 
   return (
     <>
@@ -60,26 +100,36 @@ function SongDashboard(props) {
 
       {
         user ?
-          <div className="song-box">
+          <div className="song-dash">
 
             {song ? <div>
               < h2 >Name : {song.name}</h2 >
+              <button onClick={onPlaySong}>Play Song</button>
               {console.log(typeof (trackList))}
-              {trackList ?
-                (Object.values(trackList).map((track, i) =>
-                  < div >
-                    {console.log(trackList[i])}
-                    {console.log(trackList[i + 1])}
-                    <p>{i}</p>
-                    <Track key={i} track={trackList[i]} />
+              {console.table(trackList)};
+              <div>
+                <ul>
+                  {trackList ?
+                    trackList.forEach((track, i) => {
+                      return (
+                        <React.Fragment>
+                          <li>
+                            < div >
+                              {console.log("thisthatfiretrack" + track.name)}
+                              <p>Hello</p>
+                              <p>{i}</p>
+                              <Track key={i} track={track} />
 
-                  </div>
+                            </div>
+                          </li>
+                        </React.Fragment>)
+                    })
 
-                ))
-
-                :
-                "nothing yet"
-              }
+                    :
+                    "nothing yet"
+                  }
+                </ul>
+              </div>
               {/* 
               <h2>Track 1: {song.track1}</h2>
               <h2>Track 2: {song.track2}</h2>
@@ -97,10 +147,6 @@ function SongDashboard(props) {
           : ""
 
       }
-
-      <div>
-
-      </div>
 
     </>
   )
