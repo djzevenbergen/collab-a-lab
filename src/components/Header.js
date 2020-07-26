@@ -24,13 +24,13 @@ const Header = (props) => {
   if (auth.currentUser) {
     setValue(auth.currentUser);
   }
-
+  console.log("hi");
   //dnd end
   useEffect(() => {
     console.log(auth.currentUser)
     // console.log(context.state)
     setUser(auth.currentUser)
-  }, [auth])
+  }, [value])
 
   return (
     <React.Fragment>

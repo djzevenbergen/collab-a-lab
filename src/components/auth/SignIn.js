@@ -48,7 +48,7 @@ function SignIn() {
   useEffect(() => {
     console.log(context.state)
     setUser(auth.currentUser)
-
+    setValue(auth.currentUser)
   }, [auth.currentUser])
 
 
@@ -59,7 +59,7 @@ function SignIn() {
       <div className="main-container">
 
         {hidden ? <Redirect to="/profile" /> : ''}
-        {auth.currentUser ? "" : <div>
+        {auth.currentUser ? <div><h1>Sign Out</h1><button onClick={doSignOut}>Sign Out</button></div> : <div>
           <h1>Sign In</h1>
           <form onSubmit={doSignIn}>
             <input
@@ -75,7 +75,7 @@ function SignIn() {
           <button onClick={onClick}>Sign Up</button>
         </div>}
         {signup ? <SignUp /> : ''}
-        {auth.currentUser ? <div><h1>Sign Out</h1><button onClick={doSignOut}>Sign Out</button></div> : ""}
+
       </div>
     </React.Fragment>
   );

@@ -18,6 +18,7 @@ export default function TrackList(props) {
   const [user, setUser] = useState(null);
   const auth = firebase.auth();
   const firestore = useFirestore();
+  let player;
 
   const likesPage = () => {
     goToFaves(!favePage);
@@ -53,7 +54,7 @@ export default function TrackList(props) {
       console.log("5");
       xhr.send();
       console.log("6");
-      var player = new t.Player(url).toMaster();
+      player = new t.Player(url).toMaster();
       //play as soon as the buffer is loaded
       player.autostart = true;
 
@@ -63,17 +64,21 @@ export default function TrackList(props) {
 
   }
 
+  function onClickStop() {
+    player.stop();
+  }
+
   return (
 
     <div className="main-container">
       <div className="track-container">
         <div className="track-box">
-          <p>This should be a list of tracks</p>
+          <h2></h2>
 
         </div>
-        {props.tracks ? Object.values(props.tracks).map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} playTrack={onClickTrack} setTrackList={setList} />) : ''}
+        {props.tracks ? Object.values(props.tracks).map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} stopTrack={onClickStop} playTrack={onClickTrack} setTrackList={setList} />) : ''}
       </div>
-      <button onClick={likesPage} > Likes </button>
+
 
     </div >
 

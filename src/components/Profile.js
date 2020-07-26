@@ -93,7 +93,9 @@ const Profile = () => {
       {auth.currentUser ? "" : <Redirect to="/signin" />}
       {/* column */}
       {console.log("sheebs")}
+      <h2>Your Tracks</h2>
       <TrackList tracks={trackList} />
+      <h2>Your Songs</h2>
       <SongList songs={songList} />
       {console.log("screech")}
     </React.Fragment>

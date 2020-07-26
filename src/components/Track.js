@@ -2,11 +2,15 @@ import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/app';
 import { useDrag } from 'react-dnd';
 import * as t from "tone";
+import {
+  Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button
+} from 'reactstrap';
 
 
 
 export default function Track(props) {
-  const { track, playTrack } = props;
+  const { track, playTrack, stopTrack } = props;
   const [user, setUser] = useState(null);
 
   const auth = firebase.auth();
@@ -42,9 +46,18 @@ export default function Track(props) {
       {
         user ?
           <div className="track-box">
+            <Card>
+
+              <CardBody>
+                <CardTitle>Name : {track.name}</CardTitle>
+                <CardSubtitle>Card subtitle</CardSubtitle>
+                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                <Button onClick={() => playTrack(track.url)}>Play</Button>
+                <Button onClick={() => stopTrack()}>Stop</Button>
+              </CardBody>
+            </Card>
 
 
-            < h2 onClick={() => playTrack(track.url)}>Name : {track.name}</h2 >
           </div >
           :
           <div className="track-box">

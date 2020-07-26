@@ -10,38 +10,49 @@ import firebase from 'firebase/app';
 import { useDrag } from 'react-dnd';
 import * as t from "tone";
 import PropTypes from "prop-types";
+import { withFirestore, useFirestore } from 'react-redux-firebase';
+import Track from "./Track";
+import TrackList from "./TrackList";
 
 
-export default function SongDashboard(props) {
+function SongDashboard(props) {
   const { song } = props;
   const [user, setUser] = useState(null);
+  const [trackList, setTrackList] = useState([]);
+  const firestore = useFirestore();
 
   const auth = firebase.auth();
 
-  const synth = new t.MembraneSynth().toMaster();
-  // play a note with the synth we setup
+  const getTrackList = () => {
+    let data = [];
+    let count = 0;
+    for (let i = 1; i <= 8; i++) {
 
-  //dnd start
-  // eslint-disable-next-line
-  // const [{ isDragging }, drag] = useDrag({
-  //   item: { track, type: "track", },
-  //   end: async (item, monitor) => {
-  //     const dropResult = monitor.getDropResult()
-  //     if (item && dropResult && dragProp === "list") {
-  //       await event(track);
 
-  //     }
-  //   },
-  //   collect: (monitor) => ({
-  //     isDragging: monitor.isDragging(),
-  //   }),
-  // })
-  //dnd end
+      firestore.collection("tracks").where("trackId", "==", song["track" + i.toString()]).get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            data.push(doc.data());
+            console.log(doc.id);
+            console.log(data);
+            count++;
+
+          });
+
+          setTrackList(data);
+        })
+        .catch(function (error) {
+          console.log("Error getting documents: ", error);
+        });
+    }
+
+  }
+
   useEffect(() => {
     setUser(auth.currentUser)
+    getTrackList();
 
   }, [auth])
-
 
   return (
     <>
@@ -53,7 +64,23 @@ export default function SongDashboard(props) {
 
             {song ? <div>
               < h2 >Name : {song.name}</h2 >
+              {console.log(typeof (trackList))}
+              {trackList ?
+                (Object.values(trackList).map((track, i) =>
+                  < div >
+                    {console.log(trackList[i])}
+                    {console.log(trackList[i + 1])}
+                    <p>{i}</p>
+                    <Track key={i} track={trackList[i]} />
 
+                  </div>
+
+                ))
+
+                :
+                "nothing yet"
+              }
+              {/* 
               <h2>Track 1: {song.track1}</h2>
               <h2>Track 2: {song.track2}</h2>
               <h2>Track 3: {song.track3}</h2>
@@ -61,16 +88,20 @@ export default function SongDashboard(props) {
               <h2>Track 5: {song.track5}</h2>
               <h2>Track 6: {song.track6}</h2>
               <h2>Track 7: {song.track7}</h2>
-              <h2>Track 8: {song.track8}</h2>
+              <h2>Track 8: {song.track8}</h2> */}
 
             </div>
-
 
               : ""}
           </div >
           : ""
 
       }
+
+      <div>
+
+      </div>
+
     </>
   )
 }
@@ -78,3 +109,5 @@ export default function SongDashboard(props) {
 SongDashboard.propTypes = {
   song: PropTypes.object
 };
+
+export default withFirestore(SongDashboard);
