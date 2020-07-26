@@ -9,8 +9,10 @@ import { withFirestore, useFirestore } from 'react-redux-firebase';
 import { connect } from "react-redux";
 import { useSelector } from 'react-redux'
 import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
+import { v4 } from 'uuid';
 import firebase from 'firebase/app';
 import 'firebase/auth';
+import { message } from 'antd'
 // import history from '../history';
 
 
@@ -61,6 +63,15 @@ function ReusableTrackForm(props) {
       function (snapshot) {
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log('Upload Progress: ' + progress);
+        switch (progress) {
+          case 100:
+            message.success("file uploaded");
+            break;
+          default:
+            break;
+        }
+
+
       }, function (error) {
         console.log(error);
         switch (error.code) {
@@ -81,6 +92,7 @@ function ReusableTrackForm(props) {
         name: event.target.name.value,
         url: file.name,
         owner: auth.currentUser.uid,
+        trackId: v4(),
 
         timeCreated: firestore.FieldValue.serverTimestamp()
       }

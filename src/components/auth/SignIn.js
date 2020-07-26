@@ -38,6 +38,7 @@ function SignIn() {
     firebase.auth().signOut().then(function () {
       console.log("Successfully signed out!");
       setValue(null);
+      setUser(null);
 
     }).catch(function (error) {
       console.log(error.message);
@@ -48,7 +49,7 @@ function SignIn() {
     console.log(context.state)
     setUser(auth.currentUser)
 
-  }, [context.state.user])
+  }, [auth.currentUser])
 
 
   return (

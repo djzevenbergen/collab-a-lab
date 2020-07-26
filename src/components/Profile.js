@@ -27,6 +27,7 @@ const Profile = () => {
   const firestore = useFirestore();
   const [value, setValue] = useState(UserContext);
   const [trackList, setTrackList] = useState([])
+  const [songList, setSongList] = useState([])
   const context = useContext(MyContext);
   const [user, setUser] = useState(null);
   const auth = firebase.auth();
@@ -42,13 +43,33 @@ const Profile = () => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           data.push(doc.data());
-          console.log(count);
+          console.log(doc.id);
           console.log(data);
           count++;
 
         });
 
         setTrackList(data);
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
+  }
+
+  const getSongList = () => {
+    let data = [];
+    let count = 0;
+    firestore.collection("songs").where("owner", "==", auth.currentUser.uid).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          data.push(doc.data());
+          console.log(doc.id);
+          console.log(data);
+          count++;
+
+        });
+
+        setSongList(data);
       })
       .catch(function (error) {
         console.log("Error getting documents: ", error);
@@ -62,6 +83,7 @@ const Profile = () => {
     setUser(auth.currentUser)
     if (auth.currentUser) {
       getTrackList();
+      getSongList();
     }
     //
   }, [context.state.user])
@@ -72,6 +94,7 @@ const Profile = () => {
       {/* column */}
       {console.log("sheebs")}
       <TrackList tracks={trackList} />
+      <SongList songs={songList} />
       {console.log("screech")}
     </React.Fragment>
 

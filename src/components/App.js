@@ -7,10 +7,12 @@ import SignIn from './auth/SignIn';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { UserContext } from './userContext';
+import SongDashboard from "./SongDashboard";
 
 
 import 'antd/dist/antd.css';
 import ReusableTrackForm from './ReusableTrackForm';
+import ReusableSongForm from './ReusableSongForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const theme = {
@@ -42,6 +44,12 @@ function App() {
           </Route>
           <Route path='/addtrack'>
             <ReusableTrackForm />
+          </Route>
+          <Route path="/addsong">
+            <ReusableSongForm />
+          </Route>
+          <Route path="/songdashboard">
+            <SongDashboard />
           </Route>
         </Switch>
       </UserContext.Provider>
