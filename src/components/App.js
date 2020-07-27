@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { UserContext } from './userContext';
 import SongDashboard from "./SongDashboard";
+import Home from "./Home";
 
 
 import 'antd/dist/antd.css';
@@ -37,7 +38,7 @@ function App() {
             <SignIn />
           </Route>
           <Route exact path='/'>
-            <SongList />
+            <Home />
           </Route>
           <Route path='/profile'>
             <Profile />

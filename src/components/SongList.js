@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import Song from "./Song";
 import { useFirestore } from 'react-redux-firebase';
 import firebase from 'firebase/app';
@@ -12,18 +12,15 @@ import SongDashboard from "./SongDashboard";
 import { Redirect } from 'react-router-dom';
 
 export default function SongList(props) {
-  const { songs } = props;
+  const { songs, fromHome } = props;
   const [songList, setList] = useState(null);
-  const [favePage, goToFaves] = useState(false);
+
   const [user, setUser] = useState(null);
   const auth = firebase.auth();
   const [songDetail, selectSong] = useState(false);
   const [tempSong, changeTempSong] = useState({});
   const firestore = useFirestore();
 
-  const likesPage = () => {
-    goToFaves(!favePage);
-  }
 
   const songSelect = (song) => {
     console.log(song);
@@ -46,19 +43,21 @@ export default function SongList(props) {
   return (
     <React.Fragment>
 
-      {songDetail ? <SongDashboard song={tempSong} /> :
+      {songDetail ? <SongDashboard song={tempSong} songSelect={songSelect} fromHome={fromHome} /> :
 
         <div className="main-container">
           <div className="song-container">
             <div className="song-box">
             </div>
-            
-            {songs ? songs.map((song, i) => <Song key={i} song={song} dragProp="list" canDelete={false} event={onClickSong} selectSong={songSelect} />) : ''}
+            {songs ? songs.map((song, i) => <Song key={i} song={song} dragProp="list" canDelete={false} event={onClickSong} selectSong={songSelect} fromHome={fromHome} />) : ''}
           </div>
-
         </div >}
     </React.Fragment>
 
-
   );
 }
+
+SongList.propTypes = {
+  songs: PropTypes.object,
+  fromHome: PropTypes.bool
+};

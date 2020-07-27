@@ -96,7 +96,7 @@ const Profile = () => {
       <h2>Your Tracks</h2>
       <TrackList tracks={trackList} />
       <h2>Your Songs</h2>
-      <SongList songs={songList} />
+      <SongList songs={songList} fromHome={false} />
       {console.log("screech")}
     </React.Fragment>
 

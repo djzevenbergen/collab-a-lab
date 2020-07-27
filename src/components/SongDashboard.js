@@ -16,7 +16,7 @@ import TrackList from "./TrackList";
 
 
 function SongDashboard(props) {
-  const { song } = props;
+  const { song, songSelect, fromHome } = props;
   const [user, setUser] = useState(null);
   const [trackList, setTrackList] = useState([]);
   const firestore = useFirestore();
@@ -48,11 +48,16 @@ function SongDashboard(props) {
 
   }
 
+  const openTrackDropDown = () => {
+
+  }
+
   useEffect(() => {
     setUser(auth.currentUser)
     getTrackList();
 
   }, [auth])
+
   let player;
   async function onPlaySong() {
     var storage = firebase.storage();
@@ -96,17 +101,17 @@ function SongDashboard(props) {
 
   return (
     <>
-
-
       {
         user ?
           <div className="song-dash">
 
             {song ? <div>
               < h2 >Name : {song.name}</h2 >
+              <button onClick={songSelect}>Go Back</button>
               <button onClick={onPlaySong}>Play Song</button>
+              {fromHome ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Propose New Track</button>}
               {console.log(typeof (trackList))}
-              {console.table(trackList)};
+              {console.table(trackList)}
               <div>
                 <ul>
                   {trackList ?
@@ -114,11 +119,12 @@ function SongDashboard(props) {
                       return (
                         <React.Fragment>
                           <li>
-                            < div >
+                            <div>
                               {console.log("thisthatfiretrack" + track.name)}
                               <p>Hello</p>
                               <p>{i}</p>
-                              <Track key={i} track={track} />
+                              <p>{track.name}</p>
+                              {/* <Track key={i} track={track} /> */}
 
                             </div>
                           </li>
@@ -130,6 +136,7 @@ function SongDashboard(props) {
                   }
                 </ul>
               </div>
+
               {/* 
               <h2>Track 1: {song.track1}</h2>
               <h2>Track 2: {song.track2}</h2>

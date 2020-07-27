@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 
 
 export default function Song(props) {
-  const { song, selectSong } = props;
+  const { song, selectSong, fromHome } = props;
   const [user, setUser] = useState(null);
 
   const auth = firebase.auth();
@@ -16,22 +16,7 @@ export default function Song(props) {
   const synth = new t.MembraneSynth().toMaster();
   // play a note with the synth we setup
 
-  //dnd start
-  // eslint-disable-next-line
-  // const [{ isDragging }, drag] = useDrag({
-  //   item: { track, type: "track", },
-  //   end: async (item, monitor) => {
-  //     const dropResult = monitor.getDropResult()
-  //     if (item && dropResult && dragProp === "list") {
-  //       await event(track);
 
-  //     }
-  //   },
-  //   collect: (monitor) => ({
-  //     isDragging: monitor.isDragging(),
-  //   }),
-  // })
-  //dnd end
   useEffect(() => {
     setUser(auth.currentUser)
   }, [auth])
@@ -56,5 +41,6 @@ export default function Song(props) {
 
 Song.propTypes = {
   tracks: PropTypes.object,
-  song: PropTypes.object
+  song: PropTypes.object,
+  fromHome: PropTypes.bool
 };
