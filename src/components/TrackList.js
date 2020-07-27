@@ -54,7 +54,7 @@ export default function TrackList(props) {
       console.log("5");
       xhr.send();
       console.log("6");
-      player = new t.Player(url).toMaster();
+      player = new t.Player(url).toDestination();
       //play as soon as the buffer is loaded
       player.autostart = true;
 

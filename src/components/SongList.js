@@ -25,7 +25,10 @@ export default function SongList(props) {
   const songSelect = (song) => {
     console.log(song);
     selectSong(!songDetail);
+
     changeTempSong(song);
+
+
     console.log(tempSong);
   }
 
@@ -35,15 +38,21 @@ export default function SongList(props) {
   }, [auth])
 
   const onClickSong = (post) => {
-    const synth = new t.MembraneSynth().toMaster();
+    const synth = new t.MembraneSynth().toDestination();
     // play a note with the synth we setup
     synth.triggerAttackRelease("C2", "8n");
   }
 
+  const deleteSong = (songToDelete) => {
+    console.log(songToDelete);
+    songSelect({});
+  }
+
+
   return (
     <React.Fragment>
 
-      {songDetail ? <SongDashboard song={tempSong} songSelect={songSelect} fromHome={fromHome} /> :
+      {songDetail ? <SongDashboard deleteSong={() => deleteSong()} selectSong={() => songSelect} song={tempSong} songSelect={songSelect} fromHome={fromHome} /> :
 
         <div className="main-container">
           <div className="song-container">

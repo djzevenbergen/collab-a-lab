@@ -15,7 +15,7 @@ export default function Track(props) {
 
   const auth = firebase.auth();
 
-  const synth = new t.MembraneSynth().toMaster();
+  const synth = new t.MembraneSynth().toDestination();
   // play a note with the synth we setup
 
   //dnd start

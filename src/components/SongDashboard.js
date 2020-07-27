@@ -19,13 +19,14 @@ import Request from "./Request";
 
 
 function SongDashboard(props) {
-  const { song, songSelect, fromHome } = props;
+  const { song, songSelect, fromHome, selectSong, deleteSong } = props;
   const [user, setUser] = useState(null);
   const [trackList, setTrackList] = useState([]);
   const firestore = useFirestore();
   const [dropdown, showDropdown] = useState(false);
   const [ownerBool, setOwnerBool] = useState(false);
-  const [requestList, setRequest] = useState(null);
+  const [requestList, setRequest] = useState([]);
+  const [thisId, setId] = useState(null);
 
   const auth = firebase.auth();
 
@@ -83,8 +84,24 @@ function SongDashboard(props) {
     getTrackList();
     changeOwnerBool();
     checkRequests();
+    getSongId(song.songId);
 
   }, [auth])
+
+  const getSongId = (songId) => {
+    firestore.collection("songs").where("songId", "==", songId).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          setId(doc.id);
+
+        });
+
+      })
+      .catch(function (error) {
+
+        console.log("Error getting documents: ", error);
+      });
+  }
 
   let player;
   async function onPlaySong() {
@@ -110,7 +127,7 @@ function SongDashboard(props) {
         console.log("5");
         xhr.send();
         console.log("6");
-        player = new t.Player(url).toMaster();
+        player = new t.Player(url).toDestination();
         //play as soon as the buffer is loaded
         player.autostart = true;
 
@@ -137,6 +154,7 @@ function SongDashboard(props) {
   // const  = (track, song) => {
 
   // }
+
 
   const updateSong = (trackId, songId) => {
     let neededId = ''
@@ -228,7 +246,7 @@ function SongDashboard(props) {
       console.log("5");
       xhr.send();
       console.log("6");
-      player3 = new t.Player(url).toMaster();
+      player3 = new t.Player(url).toDestination();
       //play as soon as the buffer is loaded
       player3.autostart = true;
 
@@ -263,7 +281,7 @@ function SongDashboard(props) {
         console.log("5");
         xhr.send();
         console.log("6");
-        player2 = new t.Player(url).toMaster();
+        player2 = new t.Player(url).toDestination();
         //play as soon as the buffer is loaded
         player2.autostart = true;
 
@@ -272,6 +290,13 @@ function SongDashboard(props) {
       });
 
     })
+
+  }
+
+  const deleteThisSong = (id) => {
+    deleteSong();
+    console.log(id);
+    return firestore.delete({ collection: 'songs', doc: thisId })
 
   }
 
@@ -285,8 +310,6 @@ function SongDashboard(props) {
     if (player3) {
       player3.stop();
     }
-
-
   }
 
   return (
@@ -295,19 +318,24 @@ function SongDashboard(props) {
         user ?
           <div className="song-dash" style={{ border: "1px solid black" }}>
 
-            {requestList ?
+            {requestList[0] ?
               <div>
                 <p>Pending Request</p>
                 <Request request={requestList[0]} onPlaySong={onPlaySong} setRequest={setRequest} onPlaySongWithRequest={onPlaySongWithRequest} playRequestTrack={playRequestTrack} stopPlayers={stopPlayers} />
               </div>
               :
-              <p>No Requests</p>
+              <div>
+                <p>No Requests</p>
+                {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>}
+              </div>
             }
             {song ? <div>
               < h2 >Name : {song.name}</h2 >
               <button onClick={songSelect}>Go Back</button>
               <button onClick={onPlaySong}>Play Song</button>
-              {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>}
+              {console.log(song)}
+              <div>{(user.uid == song.owner) ? <button onClick={() => deleteThisSong(song.id)}>Delete Song</button> : <div></div>}</div>
+              {/* {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>} */}
               {dropdown ?
                 <div>
                   <form id="trackUpdate" name="trackUpdate" onSubmit={submitRequest}>
@@ -373,7 +401,8 @@ function SongDashboard(props) {
 }
 
 SongDashboard.propTypes = {
-  song: PropTypes.object
+  song: PropTypes.object,
+  deleteSong: PropTypes.func
 };
 
 export default withFirestore(SongDashboard);
