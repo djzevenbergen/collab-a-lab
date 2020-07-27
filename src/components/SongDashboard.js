@@ -8,11 +8,13 @@
 import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/app';
 import { useDrag } from 'react-dnd';
+import { message } from 'antd';
 import * as t from "tone";
 import PropTypes from "prop-types";
 import { withFirestore, useFirestore } from 'react-redux-firebase';
 import Track from "./Track";
 import TrackList from "./TrackList";
+import { Redirect } from 'react-router-dom';
 
 
 function SongDashboard(props) {
@@ -21,6 +23,7 @@ function SongDashboard(props) {
   const [trackList, setTrackList] = useState([]);
   const firestore = useFirestore();
   const [dropdown, showDropdown] = useState(false);
+  const [ownerBool, setOwnerBool] = useState(false);
 
   const auth = firebase.auth();
 
@@ -50,9 +53,14 @@ function SongDashboard(props) {
     showDropdown(true);
   }
 
+  const changeOwnerBool = () => {
+    setOwnerBool(song.owner == auth.currentUser.uid)
+  }
+
   useEffect(() => {
     setUser(auth.currentUser)
     getTrackList();
+    changeOwnerBool()
 
   }, [auth])
 
@@ -92,6 +100,77 @@ function SongDashboard(props) {
 
   }
 
+  const submitRequest = (event) => {
+    event.preventDefault();
+    if (ownerBool) {
+      console.log("yours", event.target.track1.value, song.songId)
+      updateSong(event.target.track1.value, song.songId);
+    } else {
+      console.log("not yours", event.target.track1.value, song.songId)
+      createRequest(event.target.track1.value, song.songId)
+    }
+
+  }
+
+  // const  = (track, song) => {
+
+  // }
+
+  const updateSong = (trackId, songId) => {
+    let neededId = ''
+    let data = { tracks: [] };
+    let alreadyContainsTrack = false;
+    let songFull = true;
+    let songSlot = null;
+    firestore.collection("songs").where("songId", "==", songId).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          neededId = doc.id
+          data = doc.data()
+        });
+        console.log("i'm here");
+        if (data.songId !== undefined) {
+          let i = 1
+          while (i <= 8) {
+
+            if (data["track" + i] === trackId) {
+              alreadyContainsTrack = true;
+
+            }
+            if (data["track" + i] === "Choose a track") {
+              console.log("track" + i);
+              console.log(data["track" + i]);
+              songFull = false;
+              songSlot = i;
+              i = 9;
+            }
+            i++;
+          }
+          if (alreadyContainsTrack) {
+            message.warn("Already tracks this my dude!")
+          } else if (songFull) {
+            message.warn("this song is already full");
+          }
+          else {
+            message.success("Post added to profile!")
+            return firestore.update({ collection: 'songs', doc: neededId }, { ["track" + songSlot]: trackId })
+
+          }
+        }
+        // else {
+        //   return firestore.update({ collection: 'song', doc: neededId }, { tracks: [post] })
+        // }
+      })
+      .catch(function (error) {
+
+        console.log("Error getting documents: ", error);
+      });
+  }
+
+  const createRequest = (track, song) => {
+
+  }
+
 
   trackList.forEach((track, i) => {
     console.log(track.name + " " + i);
@@ -107,18 +186,22 @@ function SongDashboard(props) {
               < h2 >Name : {song.name}</h2 >
               <button onClick={songSelect}>Go Back</button>
               <button onClick={onPlaySong}>Play Song</button>
-              {(fromHome && song.owner != user.uid) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>}
+              {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>}
               {dropdown ?
                 <div>
-                  <select defaultValue={null} name="track1" id="track1">
-                    {console.table(trackList)}
-                    <option value={null}>Choose a track</option>
+                  <form id="trackUpdate" name="trackUpdate" onSubmit={submitRequest}>
 
-                    {trackList ? trackList.map((track) => { return <option value={track.trackId}>{track.name}</option> }) : ""}
+                    <select defaultValue={null} name="track1" id="track1">
+                      {console.table(trackList)}
+                      <option value={null}>Choose a track</option>
 
-                  </select>
+                      {trackList ? trackList.map((track) => { return <option value={track.trackId}>{track.name}</option> }) : ""}
+
+                    </select>
+                    <button>Submit Track</button>
+                  </form>
                 </div>
-                : ""}
+                : ''}
               {console.log(typeof (trackList))}
               {console.table(trackList)}
               <div>
