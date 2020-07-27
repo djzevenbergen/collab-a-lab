@@ -21,7 +21,6 @@ function MyProvider(props) {
         console.log("logged in" + user.email);
         setState({ user, isLogged: true })
 
-
       } else {
         console.log("not logged in")
       }

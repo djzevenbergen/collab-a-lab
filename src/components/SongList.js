@@ -52,6 +52,7 @@ export default function SongList(props) {
           <div className="song-container">
             <div className="song-box">
             </div>
+            
             {songs ? songs.map((song, i) => <Song key={i} song={song} dragProp="list" canDelete={false} event={onClickSong} selectSong={songSelect} />) : ''}
           </div>
 
