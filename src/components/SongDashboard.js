@@ -20,36 +20,34 @@ function SongDashboard(props) {
   const [user, setUser] = useState(null);
   const [trackList, setTrackList] = useState([]);
   const firestore = useFirestore();
+  const [dropdown, showDropdown] = useState(false);
 
   const auth = firebase.auth();
 
   const getTrackList = () => {
     let data = [];
     let count = 0;
-    for (let i = 1; i <= 8; i++) {
 
+    firestore.collection("tracks").where("owner", "==", auth.currentUser.uid).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          data.push(doc.data());
+          console.log(doc.id);
+          console.log(data);
+          count++;
 
-      firestore.collection("tracks").where("trackId", "==", song["track" + i.toString()]).get()
-        .then(function (querySnapshot) {
-          querySnapshot.forEach(function (doc) {
-            data.push(doc.data());
-            console.log(doc.id);
-            console.log(data);
-            count++;
-
-          });
-
-          setTrackList(data);
-        })
-        .catch(function (error) {
-          console.log("Error getting documents: ", error);
         });
-    }
+
+        setTrackList(data);
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
 
   }
 
   const openTrackDropDown = () => {
-
+    showDropdown(true);
   }
 
   useEffect(() => {
@@ -109,7 +107,18 @@ function SongDashboard(props) {
               < h2 >Name : {song.name}</h2 >
               <button onClick={songSelect}>Go Back</button>
               <button onClick={onPlaySong}>Play Song</button>
-              {fromHome ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Propose New Track</button>}
+              {(fromHome && song.owner != user.uid) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>}
+              {dropdown ?
+                <div>
+                  <select defaultValue={null} name="track1" id="track1">
+                    {console.table(trackList)}
+                    <option value={null}>Choose a track</option>
+
+                    {trackList ? trackList.map((track) => { return <option value={track.trackId}>{track.name}</option> }) : ""}
+
+                  </select>
+                </div>
+                : ""}
               {console.log(typeof (trackList))}
               {console.table(trackList)}
               <div>
