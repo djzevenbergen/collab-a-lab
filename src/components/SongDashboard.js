@@ -15,6 +15,7 @@ import { withFirestore, useFirestore } from 'react-redux-firebase';
 import Track from "./Track";
 import TrackList from "./TrackList";
 import { Redirect } from 'react-router-dom';
+import Request from "./Request";
 
 
 function SongDashboard(props) {
@@ -203,6 +204,91 @@ function SongDashboard(props) {
     console.log(track.name + " " + i);
   });
 
+  let player3;
+  const playRequestTrack = (track) => {
+    var storage = firebase.storage();
+    var pathReference = storage.ref('tracks/')
+
+    pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
+      // `url` is the download URL for 'images/stars.jpg'
+      console.log("1");
+      // This can be downloaded directly:
+      var xhr = new XMLHttpRequest();
+      console.log("2");
+      xhr.responseType = 'blob';
+      console.log("3");
+      xhr.onload = function (event) {
+        event.preventDefault();
+
+        var blob = xhr.response;
+        console.log(blob);
+      };
+      console.log("4");
+      xhr.open('GET', url);
+      console.log("5");
+      xhr.send();
+      console.log("6");
+      player3 = new t.Player(url).toMaster();
+      //play as soon as the buffer is loaded
+      player3.autostart = true;
+
+    }).catch(function (error) {
+      console.log('error downloading');
+    });
+
+  }
+
+  let player2;
+  async function onPlaySongWithRequest(wholeTrack) {
+    let tempTrackList = [...trackList, wholeTrack];
+    var storage = firebase.storage();
+    var pathReference = storage.ref('tracks/')
+    await tempTrackList.forEach((track) => {
+      pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
+        // `url` is the download URL for 'images/stars.jpg'
+        console.log("1");
+        // This can be downloaded directly:
+        var xhr = new XMLHttpRequest();
+        console.log("2");
+        xhr.responseType = 'blob';
+        console.log("3");
+        xhr.onload = function (event) {
+          event.preventDefault();
+
+          var blob = xhr.response;
+          console.log(blob);
+        };
+        console.log("4");
+        xhr.open('GET', url);
+        console.log("5");
+        xhr.send();
+        console.log("6");
+        player2 = new t.Player(url).toMaster();
+        //play as soon as the buffer is loaded
+        player2.autostart = true;
+
+      }).catch(function (error) {
+        console.log('error downloading');
+      });
+
+    })
+
+  }
+
+  const stopPlayers = () => {
+    if (player) {
+      player.stop();
+    }
+    if (player2) {
+      player2.stop();
+    }
+    if (player3) {
+      player3.stop();
+    }
+
+
+  }
+
   return (
     <>
       {
@@ -210,7 +296,10 @@ function SongDashboard(props) {
           <div className="song-dash" style={{ border: "1px solid black" }}>
 
             {requestList ?
-              <p>Pending Request</p>
+              <div>
+                <p>Pending Request</p>
+                <Request request={requestList[0]} onPlaySong={onPlaySong} setRequest={setRequest} onPlaySongWithRequest={onPlaySongWithRequest} playRequestTrack={playRequestTrack} stopPlayers={stopPlayers} />
+              </div>
               :
               <p>No Requests</p>
             }
