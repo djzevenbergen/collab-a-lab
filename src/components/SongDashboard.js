@@ -24,6 +24,7 @@ function SongDashboard(props) {
   const firestore = useFirestore();
   const [dropdown, showDropdown] = useState(false);
   const [ownerBool, setOwnerBool] = useState(false);
+  const [requestList, setRequest] = useState(null);
 
   const auth = firebase.auth();
 
@@ -57,10 +58,30 @@ function SongDashboard(props) {
     setOwnerBool(song.owner == auth.currentUser.uid)
   }
 
+  const checkRequests = () => {
+    let data = [];
+    firestore.collection("requests").where("songId", "==", song.songId).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          data.push(doc.data());
+          console.log(doc.id);
+          console.log(data);
+
+
+        });
+
+        setRequest(data);
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
+  }
+
   useEffect(() => {
     setUser(auth.currentUser)
     getTrackList();
-    changeOwnerBool()
+    changeOwnerBool();
+    checkRequests();
 
   }, [auth])
 
@@ -135,7 +156,6 @@ function SongDashboard(props) {
 
             if (data["track" + i] === trackId) {
               alreadyContainsTrack = true;
-
             }
             if (data["track" + i] === "Choose a track") {
               console.log("track" + i);
@@ -157,9 +177,6 @@ function SongDashboard(props) {
 
           }
         }
-        // else {
-        //   return firestore.update({ collection: 'song', doc: neededId }, { tracks: [post] })
-        // }
       })
       .catch(function (error) {
 
@@ -167,8 +184,18 @@ function SongDashboard(props) {
       });
   }
 
-  const createRequest = (track, song) => {
+  const createRequest = (trackId, songId) => {
 
+    return firestore.collection('requests').add(
+      {
+        trackId: trackId,
+        songId: songId,
+        requester: auth.currentUser.uid,
+        approved: null,
+
+        timeCreated: firestore.FieldValue.serverTimestamp()
+      }
+    );
   }
 
 
@@ -180,8 +207,13 @@ function SongDashboard(props) {
     <>
       {
         user ?
-          <div className="song-dash">
+          <div className="song-dash" style={{ border: "1px solid black" }}>
 
+            {requestList ?
+              <p>Pending Request</p>
+              :
+              <p>No Requests</p>
+            }
             {song ? <div>
               < h2 >Name : {song.name}</h2 >
               <button onClick={songSelect}>Go Back</button>
