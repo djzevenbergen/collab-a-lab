@@ -23,6 +23,7 @@ function SongDashboard(props) {
   const { song, songSelect, fromHome, selectSong, deleteSong, changeTempSong } = props;
   const [user, setUser] = useState(null);
   const [trackList, setTrackList] = useState([]);
+  const [songTracks, setSongTracks] = useState([]);
   const firestore = useFirestore();
   const [dropdown, showDropdown] = useState(false);
   const [ownerBool, setOwnerBool] = useState(false);
@@ -51,6 +52,29 @@ function SongDashboard(props) {
         console.log("Error getting documents: ", error);
       });
 
+  }
+
+  const getSongTrackList = () => {
+    let data = [];
+    let count = 0;
+    for (let i = 1; i <= 8; i++) {
+
+      firestore.collection("tracks").where("trackId", "==", song['track' + i]).get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            data.push(doc.data());
+            console.log(doc.id);
+            console.log(data);
+            count++;
+
+          });
+
+          setSongTracks(data);
+        })
+        .catch(function (error) {
+          console.log("Error getting documents: ", error);
+        });
+    }
   }
 
   const openTrackDropDown = () => {
@@ -86,6 +110,7 @@ function SongDashboard(props) {
     changeOwnerBool();
     checkRequests();
     getSongId(song.songId);
+    getSongTrackList();
 
   }, [auth])
 
@@ -108,7 +133,8 @@ function SongDashboard(props) {
   async function onPlaySong() {
     var storage = firebase.storage();
     var pathReference = storage.ref('tracks/')
-    await trackList.forEach((track) => {
+    console.log(trackList);
+    await songTracks.forEach((track) => {
       pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
         // `url` is the download URL for 'images/stars.jpg'
         console.log("1");
