@@ -27,6 +27,9 @@ code {
 .mixer-play-button {
   float: right;
 }
+.mix-slider {
+  width: 50%;
+}
 
 .whole-mixer {
   --gutter: 14px;
@@ -34,7 +37,7 @@ code {
   --soft-color: #fafafa;
   top: 0;
   left: 0;
-  width: 200;
+  width: 100vh;
   height: 100vh;
   z-index: 2000;
   position: fixed;
@@ -44,6 +47,7 @@ code {
 .modal-main {
   flex: 1;
   text-align: left;
+  width: 140vh;
   overflow: auto;
   padding: var(--gutter);
 }
