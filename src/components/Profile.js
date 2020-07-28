@@ -103,8 +103,6 @@ const Profile = () => {
       <SongList changeList={() => changeList} songs={songList} fromHome={false} />
       {console.log("screech")}
     </React.Fragment>
-
-
   );
 }
 
