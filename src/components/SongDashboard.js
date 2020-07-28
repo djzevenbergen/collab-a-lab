@@ -9,6 +9,7 @@ import React, { useState, useEffect } from 'react';
 import firebase from 'firebase/app';
 import { useDrag } from 'react-dnd';
 import { message } from 'antd';
+import { v4 } from "uuid";
 import * as t from "tone";
 import PropTypes from "prop-types";
 import { withFirestore, useFirestore } from 'react-redux-firebase';
@@ -19,7 +20,7 @@ import Request from "./Request";
 
 
 function SongDashboard(props) {
-  const { song, songSelect, fromHome, selectSong, deleteSong } = props;
+  const { song, songSelect, fromHome, selectSong, deleteSong, changeTempSong } = props;
   const [user, setUser] = useState(null);
   const [trackList, setTrackList] = useState([]);
   const firestore = useFirestore();
@@ -155,6 +156,49 @@ function SongDashboard(props) {
 
   // }
 
+  const rejectRequest = (rejectId) => {
+    console.log(rejectId);
+    let tempId = [];
+    let count = 0;
+    firestore.collection("requests").where("requestId", "==", rejectId).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          console.log(doc.id);
+          console.log(doc);
+          tempId.push(doc.id);
+          if (count == 0) {
+            deleteThisRequest(doc.id);
+          }
+
+          console.log(tempId[0]);
+          count++;
+
+        });
+
+      })
+      .catch(function (error) {
+
+        console.log("Error getting documents: ", error);
+      });
+    console.log(tempId[0]);
+    changeTempSong(song);
+    checkRequests();
+
+  }
+
+  const deleteThisRequest = (id) => {
+
+    console.log(id);
+
+    return firestore.delete({ collection: 'requests', doc: id })
+
+  }
+
+  const acceptRequest = (trackId, songId, requestId) => {
+    console.log('before update')
+    updateSong(trackId, songId);
+    rejectRequest(requestId);
+  }
 
   const updateSong = (trackId, songId) => {
     let neededId = ''
@@ -210,6 +254,7 @@ function SongDashboard(props) {
         trackId: trackId,
         songId: songId,
         requester: auth.currentUser.uid,
+        requestId: v4(),
         approved: null,
 
         timeCreated: firestore.FieldValue.serverTimestamp()
@@ -321,7 +366,7 @@ function SongDashboard(props) {
             {requestList[0] ?
               <div>
                 <p>Pending Request</p>
-                <Request request={requestList[0]} onPlaySong={onPlaySong} setRequest={setRequest} onPlaySongWithRequest={onPlaySongWithRequest} playRequestTrack={playRequestTrack} stopPlayers={stopPlayers} />
+                <Request request={requestList[0]} rejectRequest={rejectRequest} acceptRequest={acceptRequest} onPlaySong={onPlaySong} setRequest={setRequest} onPlaySongWithRequest={onPlaySongWithRequest} playRequestTrack={playRequestTrack} stopPlayers={stopPlayers} />
               </div>
               :
               <div>
@@ -333,6 +378,7 @@ function SongDashboard(props) {
               < h2 >Name : {song.name}</h2 >
               <button onClick={songSelect}>Go Back</button>
               <button onClick={onPlaySong}>Play Song</button>
+              <button onClick={stopPlayers}>Stop Song</button>
               {console.log(song)}
               <div>{(user.uid == song.owner) ? <button onClick={() => deleteThisSong(song.id)}>Delete Song</button> : <div></div>}</div>
               {/* {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>} */}
@@ -354,7 +400,17 @@ function SongDashboard(props) {
               {console.log(typeof (trackList))}
               {console.table(trackList)}
               <div>
-                <ul>
+
+                <h2>Track 1: {song.track1}</h2>
+                <h2>Track 2: {song.track2}</h2>
+                <h2>Track 3: {song.track3}</h2>
+                <h2>Track 4: {song.track4}</h2>
+                <h2>Track 5: {song.track5}</h2>
+                <h2>Track 6: {song.track6}</h2>
+                <h2>Track 7: {song.track7}</h2>
+                <h2>Track 8: {song.track8}</h2>
+
+                {/* <ul>
                   {trackList ?
                     trackList.forEach((track, i) => {
                       return (
@@ -365,17 +421,17 @@ function SongDashboard(props) {
                               <p>Hello</p>
                               <p>{i}</p>
                               <p>{track.name}</p>
-                              {/* <Track key={i} track={track} /> */}
+                       
 
                             </div>
                           </li>
                         </React.Fragment>)
-                    })
-
+                    }) */}
+                {/* 
                     :
                     "nothing yet"
                   }
-                </ul>
+                </ul> */}
               </div>
 
               {/* 

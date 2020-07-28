@@ -1,15 +1,17 @@
 //shows- song name, owner name, how many tracks are open, if open to collab, date created
 //has on click to take you to the songdashboard
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import firebase from 'firebase/app';
 import { useDrag } from 'react-dnd';
 import * as t from "tone";
 import PropTypes from "prop-types";
+import { UserContext } from './userContext';
 
 
 export default function Song(props) {
   const { song, selectSong, fromHome } = props;
   const [user, setUser] = useState(null);
+  const { value, setValue } = useContext(UserContext);
 
   const auth = firebase.auth();
 
@@ -18,7 +20,8 @@ export default function Song(props) {
 
 
   useEffect(() => {
-    setUser(auth.currentUser)
+    setUser(auth.currentUser);
+    setValue(auth.currentUser)
   }, [auth])
 
 
@@ -28,9 +31,10 @@ export default function Song(props) {
 
       {
         user ?
-          <div className="song-box">
+          <div className="song-box" style={{ border: "1px solid black" }}>
 
-            < h2 onClick={() => selectSong(song)}>Name : {song.name}</h2 >
+            < h2 >{song.name}</h2 >
+            <button onClick={() => selectSong(song)}>Details</button>
           </div >
           : ""
 

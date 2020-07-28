@@ -10,11 +10,12 @@ import { message } from "antd";
 import * as t from "tone";
 import SongDashboard from "./SongDashboard";
 import { Redirect } from 'react-router-dom';
+import { UserContext } from './userContext';
 
 export default function SongList(props) {
-  const { songs, fromHome } = props;
+  const { songs, fromHome, changeList } = props;
   const [songList, setList] = useState(null);
-
+  const [value, setValue] = useState(UserContext);
   const [user, setUser] = useState(null);
   const auth = firebase.auth();
   const [songDetail, selectSong] = useState(false);
@@ -35,6 +36,7 @@ export default function SongList(props) {
   useEffect(() => {
     console.log(auth.currentUser)
     setUser(auth.currentUser)
+    setValue(auth.currentUser)
   }, [auth])
 
   const onClickSong = (post) => {
@@ -43,16 +45,17 @@ export default function SongList(props) {
     synth.triggerAttackRelease("C2", "8n");
   }
 
-  const deleteSong = (songToDelete) => {
-    console.log(songToDelete);
+  const deleteSong = () => {
     songSelect({});
+    changeList();
+
   }
 
 
   return (
     <React.Fragment>
 
-      {songDetail ? <SongDashboard deleteSong={() => deleteSong()} selectSong={() => songSelect} song={tempSong} songSelect={songSelect} fromHome={fromHome} /> :
+      {songDetail ? <SongDashboard changeTempSong={changeTempSong} deleteSong={() => deleteSong()} selectSong={() => songSelect} song={tempSong} songSelect={songSelect} fromHome={fromHome} /> :
 
         <div className="main-container">
           <div className="song-container">
@@ -68,5 +71,6 @@ export default function SongList(props) {
 
 SongList.propTypes = {
   songs: PropTypes.object,
-  fromHome: PropTypes.bool
+  fromHome: PropTypes.bool,
+  changeList: PropTypes.func
 };

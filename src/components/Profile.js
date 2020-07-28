@@ -78,12 +78,16 @@ const Profile = () => {
 
   console.table(trackList);
 
+  const changeList = () => {
+    getTrackList();
+    getSongList();
+  }
+
   useEffect(() => {
     console.log(context.state)
     setUser(auth.currentUser)
     if (auth.currentUser) {
-      getTrackList();
-      getSongList();
+      changeList();
     }
     //
   }, [context.state.user])
@@ -94,9 +98,9 @@ const Profile = () => {
       {/* column */}
       {console.log("sheebs")}
       <h2>Your Tracks</h2>
-      <TrackList tracks={trackList} />
+      <TrackList changeList={() => changeList} tracks={trackList} />
       <h2>Your Songs</h2>
-      <SongList songs={songList} fromHome={false} />
+      <SongList changeList={() => changeList} songs={songList} fromHome={false} />
       {console.log("screech")}
     </React.Fragment>
 

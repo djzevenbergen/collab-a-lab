@@ -30,7 +30,7 @@ const Header = (props) => {
     console.log(auth.currentUser)
     // console.log(context.state)
     setUser(auth.currentUser)
-  }, [value])
+  }, [auth.currentUser])
 
   return (
     <React.Fragment>

@@ -11,7 +11,7 @@ import { withFirestore, useFirestore } from 'react-redux-firebase';
 
 
 export default function Request(props) {
-  const { request, setRequest, onPlaySongWithRequest, playRequestTrack, stopPlayers, onPlaySong } = props;
+  const { request, setRequest, rejectRequest, onPlaySongWithRequest, playRequestTrack, stopPlayers, onPlaySong, acceptRequest } = props;
   const [user, setUser] = useState(null);
   const [track, setTrack] = useState(null);
   const firestore = useFirestore();
@@ -60,6 +60,8 @@ export default function Request(props) {
                 <Button onClick={() => onPlaySongWithRequest(track)}>Play Song With Track</Button>
                 <Button onClick={() => onPlaySong()}>Play Song Without Track</Button>
                 <Button onClick={() => stopPlayers()}>Stop</Button>
+                <Button onClick={() => rejectRequest(request.requestId)}>Reject Track</Button>
+                <Button onClick={() => acceptRequest(request.trackId, request.songId, request.requestId)}>Accept Track</Button>
               </CardBody>
             </Card>
 

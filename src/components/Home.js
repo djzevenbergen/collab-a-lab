@@ -53,13 +53,17 @@ const Profile = () => {
         console.log("Error getting documents: ", error);
       });
   }
+  const changeList = () => {
 
+    getSongList();
+  }
 
   useEffect(() => {
-    console.log(context.state)
+    console.log(context.state.user)
     setUser(auth.currentUser)
     if (auth.currentUser) {
-      getSongList();
+      changeList();
+      setValue("");
       setValue(auth.currentUser);
     }
 
@@ -67,11 +71,9 @@ const Profile = () => {
 
   return (
     <React.Fragment>
-      <SongList songs={songList} fromHome={true} />
+      <SongList changeList={() => changeList} songs={songList} fromHome={true} />
       {console.log("screech")}
     </React.Fragment>
-
-
   );
 }
 
