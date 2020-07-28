@@ -10,24 +10,28 @@ const MixerEditor = (props) => {
 
   const settings = { vol1: 1, vol2: 2, vol3: 3, vol4: 4, vol5: 5, vol6: 6, vol7: 7, vol8: 8 }
   console.log(effects);
+
   const { vol1, vol2, vol3, vol4, vol5, vol6, vol7, vol8 } = effects;
+
+
   console.log(vol1);
 
   const [mixerOpen, openMixer] = useState(false);
 
-  const [track1Vol, changeTrack1Vol] = useState(null);
-  const [track2Vol, changeTrack2Vol] = useState(null);
-  const [track3Vol, changeTrack3Vol] = useState(null);
-  const [track4Vol, changeTrack4Vol] = useState(null);
-  const [track5Vol, changeTrack5Vol] = useState(null);
-  const [track6Vol, changeTrack6Vol] = useState(null);
-  const [track7Vol, changeTrack7Vol] = useState(null);
-  const [track8Vol, changeTrack8Vol] = useState(null);
+  const [track1Vol, changeTrack1Vol] = useState(vol1);
+  const [track2Vol, changeTrack2Vol] = useState(vol2);
+  const [track3Vol, changeTrack3Vol] = useState(vol3);
+  const [track4Vol, changeTrack4Vol] = useState(vol4);
+  const [track5Vol, changeTrack5Vol] = useState(vol5);
+  const [track6Vol, changeTrack6Vol] = useState(vol6);
+  const [track7Vol, changeTrack7Vol] = useState(vol7);
+  const [track8Vol, changeTrack8Vol] = useState(vol8);
   const toggleModal = () => { openMixer(!mixerOpen); }
 
   function update1(e) {
     console.log(e);
     changeTrack1Vol(e);
+    console.log(track1Vol);
   }
   function update2(e) {
     console.log(e);
@@ -57,6 +61,8 @@ const MixerEditor = (props) => {
     console.log(e);
     changeTrack8Vol(e);
   }
+
+  console.log(track1Vol, track2Vol, track3Vol, track4Vol, track5Vol, track6Vol, track7Vol, track8Vol);
 
   const initializeVals = () => {
 
@@ -109,6 +115,7 @@ const MixerEditor = (props) => {
   const saveChanges = (event) => {
     event.preventDefault();
     rerenderCounter(0);
+    console.log(track1Vol, track2Vol)
     updateSong(song.songId, track1Vol, track2Vol, track3Vol, track4Vol, track5Vol, track6Vol, track7Vol, track8Vol);
     toggleModal();
   }
