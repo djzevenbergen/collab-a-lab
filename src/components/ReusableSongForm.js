@@ -33,6 +33,7 @@ function ReusableTrackForm(props) {
   const context = useContext(MyContext);
   const [user, setUser] = useState(null);
   const auth = firebase.auth();
+  let tempId;
 
 
   const [hidden, setHidden] = useState(true);
@@ -76,12 +77,14 @@ function ReusableTrackForm(props) {
 
   function addStuffToFirestore(event) {
     event.preventDefault();
+    tempId = v4();
+    createDefaultMixSettings(tempId);
     return firestore.collection('songs').add(
       {
         name: event.target.name.value,
         owner: auth.currentUser.uid,
         bpm: event.target.bpm.value,
-        songId: v4(),
+        songId: tempId,
         track1: event.target.track1.value,
         track2: event.target.track2.value,
         track3: event.target.track3.value,
@@ -93,6 +96,24 @@ function ReusableTrackForm(props) {
         timeCreated: firestore.FieldValue.serverTimestamp()
       });
   }
+
+  function createDefaultMixSettings(songId) {
+    return firestore.collection('songSettings').add(
+      {
+        songId: songId,
+        vol1: 50,
+        vol2: 50,
+        vol3: 50,
+        vol4: 50,
+        vol5: 50,
+        vol6: 50,
+        vol7: 50,
+        vol8: 50
+
+      }
+    );
+  }
+
 
   return (
     <React.Fragment>

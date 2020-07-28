@@ -31,6 +31,8 @@ function SongDashboard(props) {
   const [requestList, setRequest] = useState([]);
   const [thisId, setId] = useState(null);
   const [mixerVisible, toggleMixer] = useState(false);
+  const [effects, setEffects] = useState([]);
+  const [rerenderCount, rerenderCounter] = useState(0);
   const auth = firebase.auth();
 
   const getTrackList = () => {
@@ -105,6 +107,27 @@ function SongDashboard(props) {
       });
   }
 
+
+  async function getEffects() {
+    let data;
+    await firestore.collection("songSettings").where("songId", "==", song.songId).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          data = doc.data();
+          console.log(doc.id);
+          console.log(data);
+
+
+        });
+
+        setEffects(data);
+      })
+      .catch(function (error) {
+        console.log("Error getting documents: ", error);
+      });
+  }
+
+
   useEffect(() => {
     setUser(auth.currentUser)
     getTrackList();
@@ -112,6 +135,7 @@ function SongDashboard(props) {
     checkRequests();
     getSongId(song.songId);
     getSongTrackList();
+    getEffects();
 
   }, [auth])
 
@@ -407,7 +431,7 @@ function SongDashboard(props) {
 
 
               {console.log(song)}
-              <div>{(user.uid == song.owner) ? <div><MixerEditor song={song} /><button onClick={() => deleteThisSong(song.id)}>Delete Song</button></div> : <div></div>}</div>
+              <div>{(user.uid == song.owner) ? <div><MixerEditor effects={effects} rerenderCounter={rerenderCounter} rerenderCount={rerenderCount} song={song} /><button onClick={() => deleteThisSong(song.id)}>Delete Song</button></div> : <div></div>}</div>
               {/* {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>} */}
               {dropdown ?
                 <div>
