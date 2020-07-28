@@ -42,46 +42,6 @@ function ReusableTrackForm(props) {
     setHidden(false);
   }
 
-  // function addStuffToFirestore(event) {
-  //   event.preventDefault();
-  //   console.log("file" + file)
-  //   const fileType = event.target.track.type;
-  //   console.log(fileType);
-  //   const metadata = {
-  //     contentType: fileType
-  //   }
-  //   var blob = new Blob([file], { type: fileType });
-  //   storageRef = firebase.storage().ref('tracks/' + file.name);
-  //   const uploadTask = storageRef.put(blob, metadata);
-  //   uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-  //     function (snapshot) {
-  //       var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //       console.log('Upload Progress: ' + progress);
-  //     }, function (error) {
-  //       console.log(error);
-  //       switch (error.code) {
-  //         case 'storage/unauthorized':
-  //           console.log("User doesn't have permission to access the object");
-  //           break;
-  //         case 'storage/canceled':
-  //           console.log("User canceled the upload");
-  //           break;
-  //         case 'storage/unknown':
-  //           console.log("Unknown error occurred, inspect error.serverResponse");
-  //           break;
-  //       }
-  //     });
-
-  //   return firestore.collection('tracks').add(
-  //     {
-  //       name: event.target.name.value,
-  //       url: file.name,
-  //       owner: auth.currentUser.uid,
-
-  //       timeCreated: firestore.FieldValue.serverTimestamp()
-  //     }
-  //   );
-  // }
 
   const getTrackList = () => {
     let data = [];
@@ -244,9 +204,6 @@ function ReusableTrackForm(props) {
 
                 </select>
               </li>
-
-
-
             </ul>
             <button type="submit">Update</button>
           </form>
@@ -257,6 +214,5 @@ function ReusableTrackForm(props) {
     </React.Fragment >
   );
 }
-
 
 export default withFirestore(ReusableTrackForm);

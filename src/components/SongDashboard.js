@@ -17,6 +17,7 @@ import Track from "./Track";
 import TrackList from "./TrackList";
 import { Redirect } from 'react-router-dom';
 import Request from "./Request";
+import MixerEditor from './MixerEditor';
 
 
 function SongDashboard(props) {
@@ -29,7 +30,7 @@ function SongDashboard(props) {
   const [ownerBool, setOwnerBool] = useState(false);
   const [requestList, setRequest] = useState([]);
   const [thisId, setId] = useState(null);
-
+  const [mixerVisible, toggleMixer] = useState(false);
   const auth = firebase.auth();
 
   const getTrackList = () => {
@@ -161,9 +162,7 @@ function SongDashboard(props) {
       }).catch(function (error) {
         console.log('error downloading');
       });
-
     })
-
   }
 
   const submitRequest = (event) => {
@@ -175,12 +174,7 @@ function SongDashboard(props) {
       console.log("not yours", event.target.track1.value, song.songId)
       createRequest(event.target.track1.value, song.songId)
     }
-
   }
-
-  // const  = (track, song) => {
-
-  // }
 
   const rejectRequest = (rejectId) => {
     console.log(rejectId);
@@ -364,6 +358,10 @@ function SongDashboard(props) {
 
   }
 
+  const openMixer = () => {
+    toggleMixer(!mixerVisible);
+  }
+
   const deleteThisSong = (id) => {
     deleteSong();
     console.log(id);
@@ -403,10 +401,13 @@ function SongDashboard(props) {
             {song ? <div>
               < h2 >Name : {song.name}</h2 >
               <button onClick={songSelect}>Go Back</button>
+
               <button onClick={onPlaySong}>Play Song</button>
               <button onClick={stopPlayers}>Stop Song</button>
+
+
               {console.log(song)}
-              <div>{(user.uid == song.owner) ? <button onClick={() => deleteThisSong(song.id)}>Delete Song</button> : <div></div>}</div>
+              <div>{(user.uid == song.owner) ? <div><MixerEditor song={song} /><button onClick={() => deleteThisSong(song.id)}>Delete Song</button></div> : <div></div>}</div>
               {/* {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>} */}
               {dropdown ?
                 <div>
@@ -436,39 +437,8 @@ function SongDashboard(props) {
                 <h2>Track 7: {song.track7}</h2>
                 <h2>Track 8: {song.track8}</h2>
 
-                {/* <ul>
-                  {trackList ?
-                    trackList.forEach((track, i) => {
-                      return (
-                        <React.Fragment>
-                          <li>
-                            <div>
-                              {console.log("thisthatfiretrack" + track.name)}
-                              <p>Hello</p>
-                              <p>{i}</p>
-                              <p>{track.name}</p>
-                       
 
-                            </div>
-                          </li>
-                        </React.Fragment>)
-                    }) */}
-                {/* 
-                    :
-                    "nothing yet"
-                  }
-                </ul> */}
               </div>
-
-              {/* 
-              <h2>Track 1: {song.track1}</h2>
-              <h2>Track 2: {song.track2}</h2>
-              <h2>Track 3: {song.track3}</h2>
-              <h2>Track 4: {song.track4}</h2>
-              <h2>Track 5: {song.track5}</h2>
-              <h2>Track 6: {song.track6}</h2>
-              <h2>Track 7: {song.track7}</h2>
-              <h2>Track 8: {song.track8}</h2> */}
 
             </div>
 
