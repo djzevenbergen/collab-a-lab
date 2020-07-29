@@ -169,9 +169,6 @@ const MixerEditor = (props) => {
     toggleModal();
   }
 
-
-
-
   // //tone js stuff
   let player1 = null;
   let player2 = null;
