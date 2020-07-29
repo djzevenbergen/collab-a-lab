@@ -134,8 +134,6 @@ const MixerEditor = (props) => {
   }
 
 
-
-
   const saveChanges = (event) => {
     event.preventDefault();
     rerenderCounter(0);
