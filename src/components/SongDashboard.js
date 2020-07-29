@@ -58,12 +58,12 @@ function SongDashboard(props) {
 
   }
 
-  const getSongTrackList = () => {
+  async function getSongTrackList() {
     let data = [];
     let count = 0;
     for (let i = 1; i <= 8; i++) {
 
-      firestore.collection("tracks").where("trackId", "==", song['track' + i]).get()
+      await firestore.collection("tracks").where("trackId", "==", song['track' + i]).get()
         .then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
             data.push(doc.data());
@@ -73,12 +73,13 @@ function SongDashboard(props) {
 
           });
 
-          setSongTracks(data);
+
         })
         .catch(function (error) {
           console.log("Error getting documents: ", error);
         });
     }
+    setSongTracks(data);
   }
 
   const openTrackDropDown = () => {
