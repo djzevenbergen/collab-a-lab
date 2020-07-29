@@ -22,12 +22,13 @@ const MixerEditor = (props) => {
     for (let i = 1; i <= 8; i++) {
       if (track.trackId == song["track" + i]) {
         orderedTrackList.push(track);
+
       }
     }
   })
 
 
-
+  console.log(trackList)
   console.log(orderedTrackList);
 
   console.log(vol1);
