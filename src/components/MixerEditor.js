@@ -143,6 +143,10 @@ const MixerEditor = (props) => {
   }
 
 
+
+
+  //tone js stuff
+
   const playTrack = (trackNumber) => {
     console.log(trackNumber);
   }
