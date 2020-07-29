@@ -15,7 +15,20 @@ const MixerEditor = (props) => {
   const { vol1, vol2, vol3, vol4, vol5, vol6, vol7, vol8 } = effects;
 
 
+  const orderedTrackList = [];
 
+
+  trackList.forEach((track) => {
+    for (let i = 1; i <= 8; i++) {
+      if (track.trackId == song["track" + i]) {
+        orderedTrackList.push(track);
+      }
+    }
+  })
+
+
+
+  console.log(orderedTrackList);
 
   console.log(vol1);
 
@@ -29,40 +42,49 @@ const MixerEditor = (props) => {
   const [track6Vol, changeTrack6Vol] = useState(vol6);
   const [track7Vol, changeTrack7Vol] = useState(vol7);
   const [track8Vol, changeTrack8Vol] = useState(vol8);
+  const [playerListHook, setPlayerList] = useState(null);
+  const [urlListHook, setUrlList] = useState(null);
   const toggleModal = () => { openMixer(!mixerOpen); }
 
   function update1(e) {
     console.log(e);
-    changeTrack1Vol(e);
+    changeTrack1Vol(e / 100);
+    // console.table(playerListHook);
+    // console.log(playerList.player1.volume);
+    // playerListHook.player1.volume.value = track1Vol;
     console.log(track1Vol);
   }
   function update2(e) {
     console.log(e);
-    changeTrack2Vol(e);
+
+    changeTrack2Vol(e / 100);
+
+    // playerListHook.player2.volume.value = track2Vol;
   }
   function update3(e) {
     console.log(e);
-    changeTrack3Vol(e);
+    changeTrack3Vol(e / 100);
+
   }
   function update4(e) {
     console.log(e);
-    changeTrack4Vol(e);
+    changeTrack4Vol(e / 100);
   }
   function update5(e) {
     console.log(e);
-    changeTrack5Vol(e);
+    changeTrack5Vol(e / 100);
   }
   function update6(e) {
     console.log(e);
-    changeTrack6Vol(e);
+    changeTrack6Vol(e / 100);
   }
   function update7(e) {
     console.log(e);
-    changeTrack7Vol(e);
+    changeTrack7Vol(e / 100);
   }
   function update8(e) {
     console.log(e);
-    changeTrack8Vol(e);
+    changeTrack8Vol(e / 100);
   }
 
   console.log(track1Vol, track2Vol, track3Vol, track4Vol, track5Vol, track6Vol, track7Vol, track8Vol);
@@ -182,7 +204,7 @@ const MixerEditor = (props) => {
     var storage = firebase.storage();
     var pathReference = storage.ref('tracks/')
     let count = 1;
-    await trackList.forEach((track) => {
+    await orderedTrackList.forEach((track) => {
       pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
         // `url` is the download URL for 'images/stars.jpg'
         console.log("1");
@@ -203,7 +225,7 @@ const MixerEditor = (props) => {
         console.log("5");
         xhr.send();
         console.log("6");
-
+        thisUrlList.push(url);
         playerList["player" + count] = new t.Player(url).toDestination();
         // thisUrlList.push(url);
         count++;
@@ -221,6 +243,14 @@ const MixerEditor = (props) => {
     //   console.log("hi")
     // })
     // setPlayers();
+
+    makePlayerList(playerList);
+    setUrlList(thisUrlList);
+
+  }
+
+  const makePlayerList = (playerL) => {
+    setPlayerList(playerL);
   }
 
   // function setUp() {
@@ -276,20 +306,100 @@ const MixerEditor = (props) => {
 
 
 
-  const playTrack = (trackNumber) => {
-    console.log(playerList["player" + trackNumber]);
-    playerList["player" + trackNumber].start();
+  async function playTrack(trackNumber) {
+    console.log(playerListHook["player" + trackNumber]);
+
+    await playerListHook["player" + trackNumber].start();
+    let vol;
+    // { track3Vol ? vol = track3Vol : vol = vol3 }
+    switch (trackNumber) {
+      case 1:
+        vol = vol1;
+        break;
+      case 2:
+        vol = vol2;
+        break;
+      case 3:
+        vol = vol3;
+        break;
+      case 4:
+        vol = vol4;
+        break;
+      case 5:
+        vol = vol5;
+        break;
+      case 6:
+        vol = vol6;
+        break;
+      case 7:
+        vol = vol7;
+        break;
+      case 8:
+        vol = vol8;
+        break;
+      default:
+        break;
+    }
+    playerListHook["player" + trackNumber].volume.value = vol;
+
     console.log(trackNumber);
   }
 
   const stopTrack = (trackNumber) => {
-    console.log(playerList["player" + trackNumber]);
-    playerList["player" + trackNumber].stop();
+    console.log(playerListHook["player" + trackNumber]);
+    playerListHook["player" + trackNumber].stop();
     console.log(trackNumber);
   }
 
   const playSong = () => {
     console.log(trackList);
+    console.log(playerListHook)
+    console.log(playerListHook["player1"])
+    console.log(playerListHook.player1)
+    let volume1;
+    { track1Vol ? volume1 = track1Vol : volume1 = vol1 }
+    let player11 = new t.Player(urlListHook[0]).toDestination();
+    const channel1 = new t.Channel(0, volume1);
+    player11.connect(channel1);
+
+
+    let volume2;
+    { track2Vol ? volume2 = track2Vol : volume2 = vol2 }
+    let player22 = new t.Player(urlListHook[1]).toDestination();
+    const channel2 = new t.Channel(0, volume2);
+    player22.connect(channel2);
+
+
+    let volume3;
+    { track3Vol ? volume3 = track3Vol : volume3 = vol3 }
+    let player33 = new t.Player(urlListHook[2]).toDestination();
+    const channel3 = new t.Channel(0, volume3);
+    player33.connect(channel3);
+
+    // let volume4;
+    // { track4Vol ? volume4 = track4Vol : volume4 = vol4 }
+    // playerList[player3].connect(channel3);
+    // const channel4 = new t.Channel(0, volume4);
+
+    const channel5 = new t.Channel().toDestination();
+
+    // channel4.connect(channel5);
+    channel3.connect(channel5);
+    channel2.connect(channel5);
+    channel1.connect(channel5);
+
+    const theBuffer = new t.Buffer.fromUrl(urlListHook[0]);
+
+    theBuffer.on('load', () => {
+      player11.start();
+      player22.start();
+      player33.start();
+
+    })
+
+
+
+    console.log("what is happening")
 
   }
 
