@@ -101,6 +101,7 @@ function ReusableTrackForm(props) {
     return firestore.collection('songSettings').add(
       {
         songId: songId,
+        requestId: v4(),
         vol1: 50,
         vol2: 50,
         vol3: 50,

@@ -83,12 +83,36 @@ const MixerEditor = (props) => {
     initializeVals();
   }, [])
 
-  const updateSong = (songId, vol1, vol2, vol3, vol4, vol5, vol6, vol7, vol8) => {
+  const updateSong = (songId, v1, v2, v3, v4, v5, v6, v7, v8) => {
+
+    if (!v1) {
+      v1 = vol1;
+    }
+    if (!v2) {
+      v2 = vol2;
+    }
+    if (!v3) {
+      v3 = vol3;
+    }
+    if (!v4) {
+      v4 = vol4;
+    }
+    if (!v5) {
+      v5 = vol5;
+    }
+    if (!v6) {
+      v6 = vol6;
+    }
+    if (!v7) {
+      v7 = vol7;
+    }
+    if (!v8) {
+      v8 = vol8;
+    }
 
     let neededId = ''
     let data = { tracks: [] };
 
-    console.log(document.getElementById("track1Slide").value);
 
     firestore.collection("songSettings").where("songId", "==", songId).get()
       .then(function (querySnapshot) {
@@ -98,8 +122,8 @@ const MixerEditor = (props) => {
         });
 
         message.success("Post added to profile!")
-        return firestore.update({ collection: 'songs', doc: neededId }, {
-          songId: songId, vol1: vol1, vol2: vol2, vol3: vol3, vol4: vol4, vol5: vol5, vol6: vol6, vol7: vol7, vol8: vol8
+        return firestore.update({ collection: 'songSettings', doc: neededId }, {
+          songId: songId, vol1: v1, vol2: v2, vol3: v3, vol4: v4, vol5: v5, vol6: v6, vol7: v7, vol8: v8
         })
 
       })
