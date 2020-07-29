@@ -11,6 +11,9 @@ import { ThemeProvider } from 'styled-components';
 import { UserContext } from './userContext';
 import { MyContext } from "../context.js"
 
+import { Jumbotron, Navbar, Nav, Col } from 'react-bootstrap';
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import 'antd/dist/antd.css';
 import ReusableTrackForm from './ReusableTrackForm';
 
@@ -68,7 +71,10 @@ const Profile = () => {
 
   return (
     <React.Fragment>
+
       <SongList changeList={() => changeList} songs={songList} fromHome={true} />
+
+
       {console.log("screech")}
     </React.Fragment>
   );

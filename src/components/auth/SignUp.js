@@ -15,11 +15,13 @@ function SignUp() {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
+    const userName = event.target.userName.value;
     firebase.auth().createUserWithEmailAndPassword(email, password).then(function (data) {
       console.log(data.user.uid);
       message.success("successfully signed up!");
       setHidden(!hidden);
-      return firestore.collection("users").add({ userId: data.user.uid, userName: data.user.email, tracks: [] });
+      checkUsername(userName, data);
+      AddUserToDb(data, userName);
 
     }).catch(function (error) {
       console.log(error.message);
@@ -27,6 +29,42 @@ function SignUp() {
   }
 
 
+  const checkUsername = (uName, data) => {
+    try {
+      let userNameList = [];
+      firestore.collection("usernames").where("username", "==", uName).get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            userNameList.push(doc.data().username);
+            console.log(doc.id);
+            console.log(doc.data().username);
+
+
+          })
+        })
+
+      if (userNameList.includes(uName)) {
+        throw ("this username is take");
+      }
+      else {
+        return firestore.collection("usernames").add({ username: uName, userId: data.user.uid });
+      }
+
+
+    } catch (error) {
+      message.error(error.message);
+    }
+
+
+  }
+
+  const AddUserToDb = (data, userName) => {
+    try {
+      return firestore.collection("users").add({ userId: data.user.uid, email: data.user.email, username: userName, tracks: [] });
+    } catch (error) {
+      message.error(error.message)
+    }
+  }
 
 
   return (
@@ -34,6 +72,10 @@ function SignUp() {
       {hidden ? '' : <Redirect to="/" />}
       <h1>Sign up</h1>
       <form onSubmit={doSignUp}>
+        <input
+          type='text'
+          name='userName'
+          placeholder='userName' />
         <input
           type='text'
           name='email'

@@ -9,7 +9,7 @@ import { ThemeProvider } from 'styled-components';
 import { UserContext } from './userContext';
 import SongDashboard from "./SongDashboard";
 import Home from "./Home";
-
+import Footer from "./Footer";
 
 import 'antd/dist/antd.css';
 import ReusableTrackForm from './ReusableTrackForm';
