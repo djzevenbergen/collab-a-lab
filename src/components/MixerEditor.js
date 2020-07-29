@@ -49,9 +49,7 @@ const MixerEditor = (props) => {
   function update1(e) {
     console.log(e);
     changeTrack1Vol(e);
-    // console.table(playerListHook);
-    // console.log(playerList.player1.volume);
-    // playerListHook.player1.volume.value = track1Vol;
+
     console.log(track1Vol);
   }
   function update2(e) {
@@ -59,7 +57,6 @@ const MixerEditor = (props) => {
 
     changeTrack2Vol(e);
 
-    // playerListHook.player2.volume.value = track2Vol;
   }
   function update3(e) {
     console.log(e);
@@ -105,8 +102,6 @@ const MixerEditor = (props) => {
   }
   console.log(rerenderCount);
   useEffect(() => {
-    // initializeVals();
-    // console.log("setting up players");
     setUpPlayers();
   }, [mixerOpen])
 
@@ -181,19 +176,6 @@ const MixerEditor = (props) => {
 
   let playerList = {};
 
-  // function firstFunction(_callback) {
-  //   // do some asynchronous work
-  //   // and when the asynchronous stuff is complete
-  //   _callback();
-  // }
-
-  // function secondFunction() {
-  //   // call first function and pass in a callback function which
-  //   // first function runs when it has completed
-  //   firstFunction(function () {
-  //     console.log('huzzah, I\'m done!');
-  //   }
-  // }
   let urlList;
 
   async function setUpPlayers(setPlayers) {
@@ -203,7 +185,7 @@ const MixerEditor = (props) => {
     let count = 1;
     await orderedTrackList.forEach((track) => {
       pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
-        // `url` is the download URL for 'images/stars.jpg'
+        //`url` is the download URL for 'images/stars.jpg'
         console.log("1");
         // This can be downloaded directly:
         var xhr = new XMLHttpRequest();
@@ -223,7 +205,7 @@ const MixerEditor = (props) => {
         xhr.send();
         console.log("6");
         thisUrlList.push(url);
-        playerList["player" + count] = new t.Player(url).toDestination();
+        // playerList["player" + count] = new t.Player(url).toDestination();
         // thisUrlList.push(url);
         count++;
 
@@ -233,13 +215,6 @@ const MixerEditor = (props) => {
       });
 
     })
-    // console.log("setPlayers", thisUrlList);
-    // urlList = thisUrlList;
-    // console.log(thisUrlList.length);
-    // thisUrlList.forEach((url) => {
-    //   console.log("hi")
-    // })
-    // setPlayers();
 
     makePlayerList(playerList);
     setUrlList(thisUrlList);
@@ -249,58 +224,6 @@ const MixerEditor = (props) => {
   const makePlayerList = (playerL) => {
     setPlayerList(playerL);
   }
-
-  // function setUp() {
-
-
-  //   setUpPlayers(function () {
-
-
-  //     if (urlList[1]) {
-  //       console.log('made player 1')
-  //       player1 = new t.Player(urlList[0]).toDestination();
-  //       playerList["player1"] = player1;
-
-  //     }
-  //     if (urlList[1]) {
-  //       player2 = new t.Player(urlList[1]).toDestination();
-  //       playerList["player1"] = player1;
-  //     }
-  //     if (urlList[2]) {
-  //       player3 = new t.Player(urlList[2]).toDestination();
-  //       playerList["player1"] = player1;
-  //     }
-  //     if (urlList[3]) {
-  //       player4 = new t.Player(urlList[3]).toDestination();
-  //       playerList["player1"] = player1;
-  //     }
-  //     if (urlList[4]) {
-  //       player5 = new t.Player(urlList[4]).toDestination();
-  //       playerList["player1"] = player1;
-  //     }
-  //     if (urlList[5]) {
-  //       player6 = new t.Player(urlList[5]).toDestination();
-  //       playerList["player1"] = player1;
-  //     }
-  //     if (urlList[6]) {
-  //       player7 = new t.Player(urlList[6]).toDestination();
-  //       playerList["player1"] = player1;
-  //     }
-  //     if (urlList[7]) {
-  //       player8 = new t.Player(urlList[7]).toDestination();
-  //       playerList["player1"] = player1;
-  //     }
-  //   }
-  //   )
-  // }
-
-
-
-  // player2 = new t.Player(url).toDestination();
-  // //play as soon as the buffer is loaded
-  // player2.autostart = true;
-
-
 
 
   async function playTrack(trackNumber) {
@@ -359,58 +282,6 @@ const MixerEditor = (props) => {
 
     let volume1;
 
-    const playThem = () => {
-      console.log('i happen')
-      { track1Vol ? volume1 = track1Vol : volume1 = vol1 }
-      let player11 = new t.Player(urlListHook[0]).toDestination();
-      player11.start();
-      // const channel1 = new t.Channel(0, volume1);
-      // player11.connect(channel1);
-
-
-      let volume2;
-      { track2Vol ? volume2 = track2Vol : volume2 = vol2 }
-      let player22 = new t.Player(urlListHook[1]).toDestination(); player22.start();
-
-      // const channel2 = new t.Channel(0, volume2);
-      // player22.connect(channel2);
-
-
-      let volume3;
-      { track3Vol ? volume3 = track3Vol : volume3 = vol3 }
-      let player33 = new t.Player(urlListHook[2]).toDestination();
-      player33.start();
-
-      // const channel3 = new t.Channel(0, volume3);
-      // player33.connect(channel3);
-
-      // let volume4;
-      // { track4Vol ? volume4 = track4Vol : volume4 = vol4 }
-      // playerList[player3].connect(channel3);
-      // const channel4 = new t.Channel(0, volume4);
-
-      // const channel5 = new t.Channel().toDestination();
-
-      // channel4.connect(channel5);
-      // channel3.connect(channel5);
-      // channel2.connect(channel5);
-      // channel1.connect(channel5);
-
-
-      // theBuffer.on('load', () => {
-
-
-      // })
-
-    }
-    // const buffer = new t.Buffer(urlListHook[0], function () {
-    //   let buff = buffer.get();
-    //   let player222 = new t.Player(buff).toDestination();
-    //   player222.start();
-    // });
-
-    let player = new t.Player();
-
     var pianoSamples = new t.Buffers(urlListHook, function () {
       let volumesForThis = {};
 
@@ -438,29 +309,16 @@ const MixerEditor = (props) => {
         playersFromBuffs['buffplay' + i] = new t.Player(tempBuff).toDestination();
 
         playersFromBuffs['buffplay' + i].volume.value = volumesForThis["volumpt" + (i + 1)];
+
         i++
       });
 
       Object.keys(playersFromBuffs).map((key) => {
         console.log(key);
+        // players.add(playersFromBuffs[key]);
         playersFromBuffs[key].start();
+        // players.add(playersFromBuffs[key]);
       })
-
-      // let buff = pianoSamples.get(0);
-      // let buff2 = pianoSamples.get(1);
-      // let buff3 = pianoSamples.get(2);
-      // let player111 = new t.Player(buff).toDestination();
-      // let player333 = new t.Player(buff2).toDestination();
-      // let player444 = new t.Player(buff3).toDestination();
-
-      // player111.start();
-      // player333.start();
-      // player444.start();
-      // players.add(player111);
-      // players.add(player333);
-      // players.add(player444);
-
-
 
     });
 
@@ -469,7 +327,7 @@ const MixerEditor = (props) => {
   }
 
   const stopSong = () => {
-
+    console.log(players);
     players.stopAll();
   }
 
