@@ -10,30 +10,17 @@ import {
 
 
 export default function Track(props) {
-  const { track, playTrack, stopTrack } = props;
+  const { track, playTrack, stopTrack, changeList, deleteTrack } = props;
   const [user, setUser] = useState(null);
 
   const auth = firebase.auth();
 
-  const synth = new t.MembraneSynth().toDestination();
-  // play a note with the synth we setup
+  const deleteThisTrack = (id) => {
+    console.log(id);
+    deleteTrack(id);
+    changeList();
+  }
 
-  //dnd start
-  // eslint-disable-next-line
-  // const [{ isDragging }, drag] = useDrag({
-  //   item: { track, type: "track", },
-  //   end: async (item, monitor) => {
-  //     const dropResult = monitor.getDropResult()
-  //     if (item && dropResult && dragProp === "list") {
-  //       await event(track);
-
-  //     }
-  //   },
-  //   collect: (monitor) => ({
-  //     isDragging: monitor.isDragging(),
-  //   }),
-  // })
-  //dnd end
   useEffect(() => {
     setUser(auth.currentUser)
   }, [auth])
@@ -50,10 +37,11 @@ export default function Track(props) {
 
               <CardBody>
                 <CardTitle>Name : {track.name}</CardTitle>
-                <CardSubtitle>Card subtitle</CardSubtitle>
-                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                <CardSubtitle>Author: {track.username}</CardSubtitle>
+                <CardText>BPM: {track.bpm} Description: {track.description}</CardText>
                 <Button onClick={() => playTrack(track.url)}>Play</Button>
                 <Button onClick={() => stopTrack()}>Stop</Button>
+                <Button onClick={() => deleteThisTrack(track.trackId)}>Delete</Button>
               </CardBody>
             </Card>
 

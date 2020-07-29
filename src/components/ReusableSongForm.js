@@ -30,6 +30,7 @@ function ReusableTrackForm(props) {
   const firestore = useFirestore();
   const [value, setValue] = useState(UserContext);
   const [trackList, setTrackList] = useState([])
+  const [username, setUsername] = useState(null);
   const context = useContext(MyContext);
   const [user, setUser] = useState(null);
   const auth = firebase.auth();
@@ -41,6 +42,25 @@ function ReusableTrackForm(props) {
 
   if (firebase.auth().currentUser === null) {
     setHidden(false);
+  } else {
+    getUserName();
+  }
+
+  async function getUserName() {
+    let userNameList = [];
+    await firestore.collection("usernames").where("userId", "==", firebase.auth().currentUser.uid).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          userNameList.push(doc.data().username);
+          setUsername(doc.data().username)
+          console.log(doc.id);
+          console.log(doc.data().username);
+
+
+        })
+      })
+
+    console.log(userNameList[0])
   }
 
 
@@ -83,6 +103,8 @@ function ReusableTrackForm(props) {
       {
         name: event.target.name.value,
         owner: auth.currentUser.uid,
+        username: username,
+        description: event.target.description.value,
         bpm: event.target.bpm.value,
         songId: tempId,
         track1: event.target.track1.value,
@@ -134,6 +156,13 @@ function ReusableTrackForm(props) {
                 <label>
                   BPM:
           <input type="number" name="bpm" id="bpm" />
+                </label>
+              </li>
+
+              <li>
+                <label>
+                  Description:
+          <input type="number" name="description" id="description" />
                 </label>
               </li>
               <li>

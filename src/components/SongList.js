@@ -13,7 +13,7 @@ import { Redirect } from 'react-router-dom';
 import { UserContext } from './userContext';
 
 export default function SongList(props) {
-  const { songs, fromHome, changeList } = props;
+  const { songs, fromHome, changeList, setDelete } = props;
   const [songList, setList] = useState(null);
   const [value, setValue] = useState(UserContext);
   const [user, setUser] = useState(null);
@@ -48,6 +48,8 @@ export default function SongList(props) {
   const deleteSong = () => {
     songSelect({});
     changeList();
+    setDelete();
+    console.log("delete");
 
   }
 

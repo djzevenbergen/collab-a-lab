@@ -27,6 +27,7 @@ const Profile = () => {
   const firestore = useFirestore();
   const [value, setValue] = useState(UserContext);
   const [trackList, setTrackList] = useState([])
+  const [deleteBool, setDeleteBool] = useState(false);
   const [songList, setSongList] = useState([])
   const context = useContext(MyContext);
   const [user, setUser] = useState(null);
@@ -83,6 +84,14 @@ const Profile = () => {
     getSongList();
   }
 
+  const setDelete = () => {
+    console.log("setting delete bool");
+    setDeleteBool(!deleteBool);
+    getTrackList();
+    getSongList();
+
+  }
+
   useEffect(() => {
     console.log(context.state)
     setUser(auth.currentUser)
@@ -90,7 +99,7 @@ const Profile = () => {
       changeList();
     }
     //
-  }, [context.state.user])
+  }, [context.state.user, deleteBool])
 
   return (
     <React.Fragment>
@@ -98,9 +107,9 @@ const Profile = () => {
       {/* column */}
       {console.log("sheebs")}
       <h2>Your Tracks</h2>
-      <TrackList changeList={() => changeList} tracks={trackList} />
+      <TrackList changeList={() => changeList} getTrackList={getTrackList} setDelete={setDelete} tracks={trackList} />
       <h2>Your Songs</h2>
-      <SongList changeList={() => changeList} songs={songList} fromHome={false} />
+      <SongList changeList={() => changeList} setDelete={setDelete} songs={songList} fromHome={false} />
       {console.log("screech")}
     </React.Fragment>
   );

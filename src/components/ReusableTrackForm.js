@@ -32,13 +32,33 @@ function ReusableTrackForm(props) {
 
   const auth = firebase.auth();
 
+  const [username, setUsername] = useState(null);
+
   const [hidden, setHidden] = useState(true);
   let storageRef;
 
   if (firebase.auth().currentUser === null) {
     setHidden(false);
+  } else {
+    getUserName();
   }
 
+  async function getUserName() {
+    let userNameList = [];
+    await firestore.collection("usernames").where("userId", "==", firebase.auth().currentUser.uid).get()
+      .then(function (querySnapshot) {
+        querySnapshot.forEach(function (doc) {
+          userNameList.push(doc.data().username);
+          setUsername(doc.data().username)
+          console.log(doc.id);
+          console.log(doc.data().username);
+
+
+        })
+      })
+
+    console.log(userNameList[0])
+  }
   let file = {};
   const onFileChange = (event) => {
 
@@ -90,8 +110,11 @@ function ReusableTrackForm(props) {
     return firestore.collection('tracks').add(
       {
         name: event.target.name.value,
+        bpm: event.target.bpm.value,
+        description: event.target.description.value,
         url: file.name,
         owner: auth.currentUser.uid,
+        username: username,
         trackId: v4(),
 
         timeCreated: firestore.FieldValue.serverTimestamp()
@@ -113,8 +136,18 @@ function ReusableTrackForm(props) {
           <input type="text" name="name" id="name" />
                 </label>
               </li>
+              <li>
+                <label>
+                  Description:
+          <input type="text" name="description" id="description" />
+                </label>
+              </li>
 
               <li>
+                <label>
+                  BPM:
+          <input type="number" name="bpm" id="bpm" />
+                </label>
               </li>
               <li>
                 <label>

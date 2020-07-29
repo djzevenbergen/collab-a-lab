@@ -11,7 +11,7 @@ import * as t from "tone";
 
 
 export default function TrackList(props) {
-  const { tracks } = props;
+  const { tracks, changeList, getTrackList, setDelete } = props;
 
   const [songList, setList] = useState(null);
   const [favePage, goToFaves] = useState(false);
@@ -68,6 +68,32 @@ export default function TrackList(props) {
     player.stop();
   }
 
+  const deleteTrack = (thisId) => {
+    let empId;
+    async function getTrackId(thisId) {
+      let tempId;
+      await firestore.collection("tracks").where("trackId", "==", thisId).get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+
+            tempId = doc.id;
+          })
+        })
+      console.log(tempId);
+      empId = tempId;
+      deleteThisTrack(empId);
+      setDelete();
+    }
+    getTrackId(thisId);
+
+
+
+  }
+
+  const deleteThisTrack = (empId) => {
+    return firestore.delete({ collection: 'tracks', doc: empId })
+  }
+
   return (
 
     <div className="main-container">
@@ -76,7 +102,7 @@ export default function TrackList(props) {
           <h2></h2>
 
         </div>
-        {props.tracks ? Object.values(props.tracks).map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} stopTrack={onClickStop} playTrack={onClickTrack} setTrackList={setList} />) : ''}
+        {props.tracks ? Object.values(props.tracks).map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} stopTrack={onClickStop} playTrack={onClickTrack} changeList={changeList} deleteTrack={deleteTrack} />) : ''}
       </div>
 
 
