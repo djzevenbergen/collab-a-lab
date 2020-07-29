@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import firebase from 'firebase/app';
 import { useFirestore } from 'react-redux-firebase';
 import { Redirect } from 'react-router-dom';
 import { message } from 'antd'
+import { UserContext } from '../userContext';
 
 
 
 function SignUp() {
 
   const [hidden, setHidden] = useState(true);
+  const { value, setValue } = useContext(UserContext);
+
+  const [user, setUser] = useState(null);
+
+
 
   const firestore = useFirestore();
   async function doSignUp(event) {
@@ -38,7 +44,9 @@ function SignUp() {
         message.success("successfully signed up!");
         setHidden(!hidden);
 
+        setValue(firebase.auth().currentUser);
 
+        setUser(firebase.auth().currentUser);
         AddUserToDb(data, userName);
         AddUsername(data, userName)
 
