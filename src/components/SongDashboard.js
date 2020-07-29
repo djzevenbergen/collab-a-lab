@@ -43,8 +43,8 @@ function SongDashboard(props) {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           data.push(doc.data());
-          console.log(doc.id);
-          console.log(data);
+          // console.log(doc.id);
+          // console.log(data);
           count++;
 
         });
@@ -66,8 +66,8 @@ function SongDashboard(props) {
         .then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
             data.push(doc.data());
-            console.log(doc.id);
-            console.log(data);
+            // console.log(doc.id);
+            // console.log(data);
             count++;
 
           });
@@ -94,8 +94,8 @@ function SongDashboard(props) {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           data.push(doc.data());
-          console.log(doc.id);
-          console.log(data);
+          // console.log(doc.id);
+          // console.log(data);
 
 
         });
@@ -114,8 +114,8 @@ function SongDashboard(props) {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           data = doc.data();
-          console.log(doc.id);
-          console.log(data);
+          // console.log(doc.id);
+          // console.log(data);
 
 
         });
@@ -158,7 +158,7 @@ function SongDashboard(props) {
   async function onPlaySong() {
     var storage = firebase.storage();
     var pathReference = storage.ref('tracks/')
-    console.log(trackList);
+    // console.log(trackList);
     await songTracks.forEach((track) => {
       pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
         // `url` is the download URL for 'images/stars.jpg'
@@ -192,10 +192,10 @@ function SongDashboard(props) {
   const submitRequest = (event) => {
     event.preventDefault();
     if (ownerBool) {
-      console.log("yours", event.target.track1.value, song.songId)
+      // console.log("yours", event.target.track1.value, song.songId)
       updateSong(event.target.track1.value, song.songId);
     } else {
-      console.log("not yours", event.target.track1.value, song.songId)
+      // console.log("not yours", event.target.track1.value, song.songId)
       createRequest(event.target.track1.value, song.songId)
     }
   }
@@ -306,9 +306,8 @@ function SongDashboard(props) {
     );
   }
 
-
   trackList.forEach((track, i) => {
-    console.log(track.name + " " + i);
+    // console.log(track.name + " " + i);
   });
 
   let player3;
@@ -393,6 +392,7 @@ function SongDashboard(props) {
 
   }
 
+
   const stopPlayers = () => {
     if (player) {
       player.stop();
@@ -430,8 +430,8 @@ function SongDashboard(props) {
               <button onClick={stopPlayers}>Stop Song</button>
 
 
-              {console.log(song)}
-              <div>{(user.uid == song.owner) ? <div><MixerEditor effects={effects} rerenderCounter={rerenderCounter} rerenderCount={rerenderCount} song={song} /><button onClick={() => deleteThisSong(song.id)}>Delete Song</button></div> : <div></div>}</div>
+              {/* {console.log(song)} */}
+              <div>{(user.uid == song.owner) ? <div><MixerEditor effects={effects} rerenderCounter={rerenderCounter} rerenderCount={rerenderCount} trackList={songTracks} song={song} /><button onClick={() => deleteThisSong(song.id)}>Delete Song</button></div> : <div></div>}</div>
               {/* {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>} */}
               {dropdown ?
                 <div>
@@ -448,8 +448,8 @@ function SongDashboard(props) {
                   </form>
                 </div>
                 : ''}
-              {console.log(typeof (trackList))}
-              {console.table(trackList)}
+              {/* {console.log(typeof (trackList))}
+              {console.table(trackList)} */}
               <div>
 
                 <h2>Track 1: {song.track1}</h2>

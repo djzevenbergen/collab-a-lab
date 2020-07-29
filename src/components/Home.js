@@ -31,9 +31,6 @@ const Profile = () => {
   const [user, setUser] = useState(null);
   const auth = firebase.auth();
 
-  // let trackRef = firestore.collection("
-
-
   const getSongList = () => {
     let data = [];
     let count = 0;

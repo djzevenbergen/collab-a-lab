@@ -102,14 +102,14 @@ function ReusableTrackForm(props) {
       {
         songId: songId,
         requestId: v4(),
-        vol1: 50,
-        vol2: 50,
-        vol3: 50,
-        vol4: 50,
-        vol5: 50,
-        vol6: 50,
-        vol7: 50,
-        vol8: 50
+        vol1: 0,
+        vol2: 0,
+        vol3: 0,
+        vol4: 0,
+        vol5: 0,
+        vol6: 0,
+        vol7: 0,
+        vol8: 0
 
       }
     );
