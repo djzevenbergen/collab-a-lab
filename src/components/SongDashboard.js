@@ -176,7 +176,7 @@ function SongDashboard(props) {
           console.log(blob);
         };
         console.log("4");
-        xhr.open('GET', url);
+        xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + url);
         console.log("5");
         xhr.send();
         console.log("6");
@@ -337,7 +337,7 @@ function SongDashboard(props) {
         console.log(blob);
       };
       console.log("4");
-      xhr.open('GET', url);
+      xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + url);
       console.log("5");
       xhr.send();
       console.log("6");
@@ -372,7 +372,7 @@ function SongDashboard(props) {
           console.log(blob);
         };
         console.log("4");
-        xhr.open('GET', url);
+        xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + url);
         console.log("5");
         xhr.send();
         console.log("6");

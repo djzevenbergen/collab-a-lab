@@ -200,12 +200,12 @@ const MixerEditor = (props) => {
           console.log(blob);
         };
         console.log("4");
-        xhr.open('GET', url);
+        xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + url);
         console.log("5");
         xhr.send();
         console.log("6");
-        thisUrlList.push(url);
-        // playerList["player" + count] = new t.Player(url).toDestination();
+        thisUrlList.push("https://cors-anywhere.herokuapp.com/" + url);
+        playerList["player" + count] = new t.Player(url).toDestination();
         // thisUrlList.push(url);
         count++;
 
@@ -286,19 +286,12 @@ const MixerEditor = (props) => {
       let volumesForThis = {};
 
       { track1Vol ? volumesForThis.volumpt1 = track1Vol : volumesForThis.volumpt1 = vol1 }
-
       { track2Vol ? volumesForThis.volumpt2 = track2Vol : volumesForThis.volumpt2 = vol2 }
-
       { track3Vol ? volumesForThis.volumpt3 = track3Vol : volumesForThis.volumpt3 = vol3 }
-
       { track4Vol ? volumesForThis.volumpt3 = track4Vol : volumesForThis.volumpt3 = vol4 }
-
       { track5Vol ? volumesForThis.volumpt3 = track5Vol : volumesForThis.volumpt3 = vol5 }
-
       { track6Vol ? volumesForThis.volumpt3 = track6Vol : volumesForThis.volumpt3 = vol6 }
-
       { track7Vol ? volumesForThis.volumpt3 = track7Vol : volumesForThis.volumpt3 = vol7 }
-
       { track8Vol ? volumesForThis.volumpt3 = track8Vol : volumesForThis.volumpt3 = vol8 }
 
       //play one of the samples when they all load
