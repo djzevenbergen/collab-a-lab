@@ -162,7 +162,7 @@ function ReusableTrackForm(props) {
               <li>
                 <label>
                   Description:
-          <input type="number" name="description" id="description" />
+          <input type="text" name="description" id="description" />
                 </label>
               </li>
               <li>

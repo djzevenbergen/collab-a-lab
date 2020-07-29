@@ -33,6 +33,7 @@ const Profile = () => {
   const context = useContext(MyContext);
   const [user, setUser] = useState(null);
   const auth = firebase.auth();
+  const [deleteBool, setDeleteBool] = useState(false);
 
   const getSongList = () => {
     let data = [];
@@ -58,6 +59,13 @@ const Profile = () => {
     getSongList();
   }
 
+  const setDelete = () => {
+    console.log("setting delete bool");
+    setDeleteBool(!deleteBool);
+    changeList();
+    getSongList();
+  }
+
   useEffect(() => {
     console.log(context.state.user)
     setUser(auth.currentUser)
@@ -72,8 +80,7 @@ const Profile = () => {
   return (
     <React.Fragment>
 
-      <SongList changeList={() => changeList} songs={songList} fromHome={true} />
-
+      <SongList changeList={() => changeList} songs={songList} fromHome={true} setDelete={setDelete} />
 
       {console.log("screech")}
     </React.Fragment>

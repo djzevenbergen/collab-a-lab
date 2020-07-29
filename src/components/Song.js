@@ -34,6 +34,7 @@ export default function Song(props) {
           <div className="song-box" style={{ border: "1px solid black" }}>
 
             < h2 >{song.name}</h2 >
+            <h2>by: {song.username}</h2>
             <button onClick={() => selectSong(song)}>Details</button>
           </div >
           : ""

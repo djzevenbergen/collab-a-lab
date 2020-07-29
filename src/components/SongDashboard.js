@@ -33,6 +33,7 @@ function SongDashboard(props) {
   const [mixerVisible, toggleMixer] = useState(false);
   const [effects, setEffects] = useState([]);
   const [rerenderCount, rerenderCounter] = useState(0);
+  const [requestBool, setRequestBool] = useState(false);
   const auth = firebase.auth();
 
   const getTrackList = () => {
@@ -137,7 +138,7 @@ function SongDashboard(props) {
     getSongTrackList();
     getEffects();
 
-  }, [auth])
+  }, [auth, requestBool])
 
   const getSongId = (songId) => {
     firestore.collection("songs").where("songId", "==", songId).get()
@@ -227,7 +228,13 @@ function SongDashboard(props) {
     console.log(tempId[0]);
     changeTempSong(song);
     checkRequests();
+    booboo();
 
+  }
+
+  const booboo = () => {
+
+    setRequestBool(!requestBool);
   }
 
   const deleteThisRequest = (id) => {
@@ -424,6 +431,7 @@ function SongDashboard(props) {
             }
             {song ? <div>
               < h2 >Name : {song.name}</h2 >
+              <h3>Author: {song.username}</h3>
               <button onClick={songSelect}>Go Back</button>
 
               <button onClick={onPlaySong}>Play Song</button>
