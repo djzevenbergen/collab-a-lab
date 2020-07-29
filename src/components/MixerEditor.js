@@ -48,7 +48,7 @@ const MixerEditor = (props) => {
 
   function update1(e) {
     console.log(e);
-    changeTrack1Vol(e / 100);
+    changeTrack1Vol(e);
     // console.table(playerListHook);
     // console.log(playerList.player1.volume);
     // playerListHook.player1.volume.value = track1Vol;
@@ -57,34 +57,34 @@ const MixerEditor = (props) => {
   function update2(e) {
     console.log(e);
 
-    changeTrack2Vol(e / 100);
+    changeTrack2Vol(e);
 
     // playerListHook.player2.volume.value = track2Vol;
   }
   function update3(e) {
     console.log(e);
-    changeTrack3Vol(e / 100);
+    changeTrack3Vol(e);
 
   }
   function update4(e) {
     console.log(e);
-    changeTrack4Vol(e / 100);
+    changeTrack4Vol(e);
   }
   function update5(e) {
     console.log(e);
-    changeTrack5Vol(e / 100);
+    changeTrack5Vol(e);
   }
   function update6(e) {
     console.log(e);
-    changeTrack6Vol(e / 100);
+    changeTrack6Vol(e);
   }
   function update7(e) {
     console.log(e);
-    changeTrack7Vol(e / 100);
+    changeTrack7Vol(e);
   }
   function update8(e) {
     console.log(e);
-    changeTrack8Vol(e / 100);
+    changeTrack8Vol(e);
   }
 
   console.log(track1Vol, track2Vol, track3Vol, track4Vol, track5Vol, track6Vol, track7Vol, track8Vol);
@@ -312,30 +312,32 @@ const MixerEditor = (props) => {
     await playerListHook["player" + trackNumber].start();
     let vol;
     // { track3Vol ? vol = track3Vol : vol = vol3 }
+
     switch (trackNumber) {
       case 1:
-        vol = vol1;
+        { track1Vol ? vol = track1Vol : vol = vol1 }
+
         break;
       case 2:
-        vol = vol2;
+        { track2Vol ? vol = track2Vol : vol = vol2 }
         break;
       case 3:
-        vol = vol3;
+        { track3Vol ? vol = track3Vol : vol = vol3 }
         break;
       case 4:
-        vol = vol4;
+        { track4Vol ? vol = track4Vol : vol = vol4 }
         break;
       case 5:
-        vol = vol5;
+        { track5Vol ? vol = track5Vol : vol = vol5 }
         break;
       case 6:
-        vol = vol6;
+        { track6Vol ? vol = track6Vol : vol = vol6 }
         break;
       case 7:
-        vol = vol7;
+        { track7Vol ? vol = track7Vol : vol = vol7 }
         break;
       case 8:
-        vol = vol8;
+        { track8Vol ? vol = track8Vol : vol = vol8 }
         break;
       default:
         break;
@@ -350,54 +352,120 @@ const MixerEditor = (props) => {
     playerListHook["player" + trackNumber].stop();
     console.log(trackNumber);
   }
-
+  let players = new t.Players();
   const playSong = () => {
     console.log(trackList);
     console.log(playerListHook)
     console.log(playerListHook["player1"])
     console.log(playerListHook.player1)
+    // const theBuffer = new t.Buffer.fromUrl();
+
     let volume1;
-    { track1Vol ? volume1 = track1Vol : volume1 = vol1 }
-    let player11 = new t.Player(urlListHook[0]).toDestination();
-    const channel1 = new t.Channel(0, volume1);
-    player11.connect(channel1);
 
-
-    let volume2;
-    { track2Vol ? volume2 = track2Vol : volume2 = vol2 }
-    let player22 = new t.Player(urlListHook[1]).toDestination();
-    const channel2 = new t.Channel(0, volume2);
-    player22.connect(channel2);
-
-
-    let volume3;
-    { track3Vol ? volume3 = track3Vol : volume3 = vol3 }
-    let player33 = new t.Player(urlListHook[2]).toDestination();
-    const channel3 = new t.Channel(0, volume3);
-    player33.connect(channel3);
-
-    // let volume4;
-    // { track4Vol ? volume4 = track4Vol : volume4 = vol4 }
-    // playerList[player3].connect(channel3);
-    // const channel4 = new t.Channel(0, volume4);
-
-    const channel5 = new t.Channel().toDestination();
-
-    // channel4.connect(channel5);
-    channel3.connect(channel5);
-    channel2.connect(channel5);
-    channel1.connect(channel5);
-
-    const theBuffer = new t.Buffer.fromUrl(urlListHook[0]);
-
-    theBuffer.on('load', () => {
+    const playThem = () => {
+      console.log('i happen')
+      { track1Vol ? volume1 = track1Vol : volume1 = vol1 }
+      let player11 = new t.Player(urlListHook[0]).toDestination();
       player11.start();
-      player22.start();
+      // const channel1 = new t.Channel(0, volume1);
+      // player11.connect(channel1);
+
+
+      let volume2;
+      { track2Vol ? volume2 = track2Vol : volume2 = vol2 }
+      let player22 = new t.Player(urlListHook[1]).toDestination(); player22.start();
+
+      // const channel2 = new t.Channel(0, volume2);
+      // player22.connect(channel2);
+
+
+      let volume3;
+      { track3Vol ? volume3 = track3Vol : volume3 = vol3 }
+      let player33 = new t.Player(urlListHook[2]).toDestination();
       player33.start();
 
-    })
+      // const channel3 = new t.Channel(0, volume3);
+      // player33.connect(channel3);
+
+      // let volume4;
+      // { track4Vol ? volume4 = track4Vol : volume4 = vol4 }
+      // playerList[player3].connect(channel3);
+      // const channel4 = new t.Channel(0, volume4);
+
+      // const channel5 = new t.Channel().toDestination();
+
+      // channel4.connect(channel5);
+      // channel3.connect(channel5);
+      // channel2.connect(channel5);
+      // channel1.connect(channel5);
 
 
+      // theBuffer.on('load', () => {
+
+
+      // })
+
+    }
+    // const buffer = new t.Buffer(urlListHook[0], function () {
+    //   let buff = buffer.get();
+    //   let player222 = new t.Player(buff).toDestination();
+    //   player222.start();
+    // });
+
+    let player = new t.Player();
+
+    var pianoSamples = new t.Buffers(urlListHook, function () {
+      let volumesForThis = {};
+
+      { track1Vol ? volumesForThis.volumpt1 = track1Vol : volumesForThis.volumpt1 = vol1 }
+
+      { track2Vol ? volumesForThis.volumpt2 = track2Vol : volumesForThis.volumpt2 = vol2 }
+
+      { track3Vol ? volumesForThis.volumpt3 = track3Vol : volumesForThis.volumpt3 = vol3 }
+
+      { track4Vol ? volumesForThis.volumpt3 = track4Vol : volumesForThis.volumpt3 = vol4 }
+
+      { track5Vol ? volumesForThis.volumpt3 = track5Vol : volumesForThis.volumpt3 = vol5 }
+
+      { track6Vol ? volumesForThis.volumpt3 = track6Vol : volumesForThis.volumpt3 = vol6 }
+
+      { track7Vol ? volumesForThis.volumpt3 = track7Vol : volumesForThis.volumpt3 = vol7 }
+
+      { track8Vol ? volumesForThis.volumpt3 = track8Vol : volumesForThis.volumpt3 = vol8 }
+
+      //play one of the samples when they all load
+      const playersFromBuffs = {};
+      let i = 0;
+      urlListHook.forEach((url) => {
+        let tempBuff = pianoSamples.get(i);
+        playersFromBuffs['buffplay' + i] = new t.Player(tempBuff).toDestination();
+
+        playersFromBuffs['buffplay' + i].volume.value = volumesForThis["volumpt" + (i + 1)];
+        i++
+      });
+
+      Object.keys(playersFromBuffs).map((key) => {
+        console.log(key);
+        playersFromBuffs[key].start();
+      })
+
+      // let buff = pianoSamples.get(0);
+      // let buff2 = pianoSamples.get(1);
+      // let buff3 = pianoSamples.get(2);
+      // let player111 = new t.Player(buff).toDestination();
+      // let player333 = new t.Player(buff2).toDestination();
+      // let player444 = new t.Player(buff3).toDestination();
+
+      // player111.start();
+      // player333.start();
+      // player444.start();
+      // players.add(player111);
+      // players.add(player333);
+      // players.add(player444);
+
+
+
+    });
 
     console.log("what is happening")
 
@@ -405,6 +473,7 @@ const MixerEditor = (props) => {
 
   const stopSong = () => {
 
+    players.stopAll();
   }
 
 
