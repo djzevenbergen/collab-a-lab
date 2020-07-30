@@ -13,6 +13,10 @@ const navImg = {
   width: "110px",
 };
 
+const navColor = {
+  backgroundColor: "rgb(0, 50, 0)",
+}
+
 const HeaderLogged = styled.h2`
   color: gray;
   font-size: small;
@@ -53,7 +57,7 @@ const Header = (props) => {
 
   return (
     <React.Fragment>
-      <Navbar variant='dark' bg="dark" expand='lg'>
+      <Navbar style={navColor} variant='dark' expand='lg'>
         <Navbar.Brand><a href="https://collab-a-lab.web.app/"><img href="" style={navImg} src="https://i.ibb.co/FJ4Lw2R/b519fcb3-7a98-4b34-be27-6237d07c2966-200x200.png" /></a></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

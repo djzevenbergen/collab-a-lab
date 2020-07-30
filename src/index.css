@@ -24,6 +24,8 @@ code {
   margin-top: 2%;
 }
 
+
+
 .navLink1 {
   color: rgb(122, 122, 122)
 }
@@ -260,6 +262,67 @@ button.control-buttons.btn.btn-secondary{
 
   padding-top: 2%;
 }
+.modal-content div.card-body{
+  padding: 3px;
+  margin: 3px; 
+  font-size: 1.5em;
+  float: none;
+  font-weight: bolder;
+  color: lightgoldenrodyellow;
+  background-color: rgb(170, 106, 9);
+}
+.modal-content .mixer-play-button{
+  padding: 3px;
+  margin: 3px;
+  float: right;
+  font-weight: bold;
+  color: lightgoldenrodyellow;
+  background-color:maroon;
+}
+
+.modal-header {
+  background-color: maroon;
+  text-align: center;
+}
+
+.modal-header .modal-title {
+  background-color: maroon;
+  margin: auto;
+  color: lightgoldenrodyellow;
+}
+
+.modal-body {
+  background-color: #654321;
+}
+
+.modal-footer {
+  color: lightgoldenrodyellow;
+  background-color: rgb(170, 106, 9);
+}
+
+#mixer-form > div > div {
+   background-color: orangered;
+}
+
+
+
+.modal-footer button{
+  padding: 3px;
+  margin: 3px;
+  float: none;
+  font-weight: bold;
+  color: lightgoldenrodyellow;
+  background-color:maroon;
+}
+
+.modal-dialog{
+  overflow-y: initial !important
+}
+.modal-body{
+  height: 70%;
+  overflow-y: auto;
+}
+
 .modal-main {
   flex: 1;
   text-align: left;
@@ -269,3 +332,6 @@ button.control-buttons.btn.btn-secondary{
   padding: var(--gutter);
 }
 
+#root > nav {
+  background-color: maroon;
+}
