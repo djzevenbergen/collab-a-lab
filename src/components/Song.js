@@ -6,6 +6,10 @@ import { useDrag } from 'react-dnd';
 import * as t from "tone";
 import PropTypes from "prop-types";
 import { UserContext } from './userContext';
+import {
+  Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button
+} from 'reactstrap';
 
 
 export default function Song(props) {
@@ -32,10 +36,12 @@ export default function Song(props) {
       {
         user ?
           <div className="song-box" style={{ border: "1px solid black" }}>
+            <CardBody>
+              <CardTitle>{song.name}</CardTitle>
+              <CardSubtitle>by: {song.username}</CardSubtitle>
+              <button onClick={() => selectSong(song)}>Details</button>
+            </CardBody>
 
-            < h2 >{song.name}</h2 >
-            <h2>by: {song.username}</h2>
-            <button onClick={() => selectSong(song)}>Details</button>
           </div >
           : ""
 

@@ -36,6 +36,29 @@ code {
   width: 50%;
 }
 
+.your-tracks div.card {
+  background-color: lightslategray;
+}
+
+.your-tracks div.card-body{
+  padding: 3px;
+  margin: 3px;
+  float: none;
+  background-color: lightgray;
+}
+
+.your-songs div.card {
+  background-color: lightslategray;
+}
+
+.your-songs div.card-body{
+  padding: 3px;
+  margin: 3px;
+  float: none;
+  background-color: lightgray;
+}
+
+
 .whole-mixer {
   --gutter: 14px;
   --modal-color: #800000;

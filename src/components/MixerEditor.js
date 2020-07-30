@@ -351,11 +351,10 @@ const MixerEditor = (props) => {
                   <Col>
                     <Button className="mixer-play-button" onClick={() => playTrack(1)}>Play</Button>
                     <Button className="mixer-play-button" onClick={() => stopTrack(1)}>Stop</Button>
-                    <Label>
-                      Volume
+                    <h3 className="mixer-track-name">{orderedTrackList[0] ? <span>{orderedTrackList[0].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track1Slide" id="track1Slide" min={-50} max={50} defaultValue={vol1} onChange={update1} />
-                    </Label>
-                    <p>{track1Vol}</p>
+
+                    <p>New Volume: {track1Vol}</p>
                   </Col>
                 </CardBody>
               </Card>
@@ -365,8 +364,9 @@ const MixerEditor = (props) => {
                   <Col>
                     <Button className="mixer-play-button" onClick={() => playTrack(2)}>Play</Button>
                     <Button className="mixer-play-button" onClick={() => stopTrack(2)}>Stop</Button>
+                    <h3 className="mixer-track-name">{orderedTrackList[1] ? <span>{orderedTrackList[1].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track2Slide" id="track2Slide" min={-50} max={50} defaultValue={vol2} onChange={update2} />
-                    <p>{track2Vol}</p>
+                    <p>New Volume: {track2Vol}</p>
                   </Col>
                 </CardBody>
               </Card>
@@ -376,8 +376,9 @@ const MixerEditor = (props) => {
                   <Col>
                     <Button className="mixer-play-button" onClick={() => playTrack(3)}>Play</Button>
                     <Button className="mixer-play-button" onClick={() => stopTrack(3)}>Stop</Button>
+                    <h3 className="mixer-track-name">{orderedTrackList[2] ? <span>{orderedTrackList[2].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track3Slide" id="track3Slide" min={-50} max={50} defaultValue={vol3} onChange={update3} />
-                    <p>{track3Vol}</p>
+                    <p>New Volume: {track3Vol}</p>
                   </Col>
                 </CardBody>
               </Card>
@@ -387,8 +388,9 @@ const MixerEditor = (props) => {
                   <Col>
                     <Button className="mixer-play-button" onClick={() => playTrack(4)}>Play</Button>
                     <Button className="mixer-play-button" onClick={() => stopTrack(4)}>Stop</Button>
+                    <h3 className="mixer-track-name">{orderedTrackList[3] ? <span>{orderedTrackList[3].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track4Slide" id="track4Slide" min={-50} max={50} defaultValue={vol4} onChange={update4} />
-                    <p>{track4Vol}</p>
+                    <p>New Volume: {track4Vol}</p>
                   </Col>
                 </CardBody>
               </Card>
@@ -398,6 +400,7 @@ const MixerEditor = (props) => {
                   <Col>
                     <Button className="mixer-play-button" onClick={() => playTrack(5)}>Play</Button>
                     <Button className="mixer-play-button" onClick={() => stopTrack(5)}>Stop</Button>
+                    <h3 className="mixer-track-name">{orderedTrackList[4] ? <span>{orderedTrackList[4].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track5Slide" id="track5Slide" min={-50} max={50} defaultValue={vol5} onChange={update5} />
                     <p>{track5Vol}</p>
                   </Col>
@@ -409,8 +412,9 @@ const MixerEditor = (props) => {
                   <Col>
                     <Button className="mixer-play-button" onClick={() => playTrack(6)}>Play</Button>
                     <Button className="mixer-play-button" onClick={() => stopTrack(6)}>Stop</Button>
+                    <h3 className="mixer-track-name">{orderedTrackList[5] ? <span>{orderedTrackList[5].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track6Slide" id="track6Slide" min={-50} max={50} defaultValue={vol6} onChange={update6} />
-                    <p>{track6Vol}</p>
+                    <p>New Volume: {track6Vol}</p>
                   </Col>
                 </CardBody>
               </Card>
@@ -420,8 +424,9 @@ const MixerEditor = (props) => {
                   <Col>
                     <Button className="mixer-play-button" onClick={() => playTrack(7)}>Play</Button>
                     <Button className="mixer-play-button" onClick={() => stopTrack(7)}>Stop</Button>
+                    <h3 className="mixer-track-name">{orderedTrackList[6] ? <span>{orderedTrackList[6].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track7Slide" id="track7Slide" min={-50} max={50} defaultValue={vol7} onChange={update7} />
-                    <p>{track7Vol}</p>
+                    <p>New Volume: {track7Vol}</p>
                   </Col>
                 </CardBody>
               </Card>
@@ -431,8 +436,9 @@ const MixerEditor = (props) => {
                   <Col>
                     <Button className="mixer-play-button" onClick={() => playTrack(8)}>Play</Button>
                     <Button className="mixer-play-button" onClick={() => stopTrack(8)}>Stop</Button>
+                    <h3 className="mixer-track-name">{orderedTrackList[7] ? <span>{orderedTrackList[7].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track8Slide" id="track8Slide" min={-50} max={50} defaultValue={vol8} onChange={update8} />
-                    <p>{track8Vol}</p>
+                    <p>New Volume: {track8Vol}</p>
                   </Col>
                 </CardBody>
               </Card>

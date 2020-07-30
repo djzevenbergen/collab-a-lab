@@ -417,134 +417,124 @@ function SongDashboard(props) {
     <>
       {
         user ?
-          <div>
-            <div className="song-dash" style={{ border: "1px solid black" }}>
 
-              {requestList[0] ?
+          <div className="song-dash" style={{ border: "1px solid black" }}>
+
+            {requestList[0] ?
+              <div>
+                <p>Pending Request</p>
+                <Request request={requestList[0]} rejectRequest={rejectRequest} acceptRequest={acceptRequest} onPlaySong={onPlaySong} setRequest={setRequest} onPlaySongWithRequest={onPlaySongWithRequest} playRequestTrack={playRequestTrack} stopPlayers={stopPlayers} />
+              </div>
+              :
+              <div>
+                <p>No Requests</p>
+                {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>}
+              </div>
+            }
+            {song ? <div>
+              < h2 >Name : {song.name}</h2 >
+              <h3>Author: {song.username}</h3>
+              <button onClick={songSelect}>Go Back</button>
+
+              <button onClick={onPlaySong}>Play Song</button>
+              <button onClick={stopPlayers}>Stop Song</button>
+
+
+              {/* {console.log(song)} */}
+              <div>{(user.uid == song.owner) ? <div><MixerEditor effects={effects} rerenderCounter={rerenderCounter} rerenderCount={rerenderCount} trackList={songTracks} song={song} /><button onClick={() => deleteThisSong(song.id)}>Delete Song</button></div> : <div></div>}</div>
+              {/* {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>} */}
+              {dropdown ?
                 <div>
-                  <p>Pending Request</p>
-                  <Request request={requestList[0]} rejectRequest={rejectRequest} acceptRequest={acceptRequest} onPlaySong={onPlaySong} setRequest={setRequest} onPlaySongWithRequest={onPlaySongWithRequest} playRequestTrack={playRequestTrack} stopPlayers={stopPlayers} />
+                  <form id="trackUpdate" name="trackUpdate" onSubmit={submitRequest}>
+
+                    <select defaultValue={null} name="track1" id="track1">
+                      {console.table(trackList)}
+                      <option value={null}>Choose a track</option>
+
+                      {trackList ? trackList.map((track) => { return <option value={track.trackId}>{track.name}</option> }) : ""}
+
+                    </select>
+                    <button>Submit Track</button>
+                  </form>
                 </div>
-                :
-                <div>
-                  <p>No Requests</p>
-                  {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>}
+                : ''}
+
+              <div id="song-tracks">
+
+                <div className="song-track">
+                  <h2>Track 1: </h2>{songTracks.map((track, i) => {
+                    if (track.trackId == song.track1) {
+                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
+                    }
+
+                  })}
                 </div>
-              }
-              {song ? <div>
-                < h2 >Name : {song.name}</h2 >
-                <h3>Author: {song.username}</h3>
-                <button onClick={songSelect}>Go Back</button>
+                <div className="song-track">
+                  <h2>Track 2: </h2>{songTracks.map((track, i) => {
+                    if (track.trackId == song.track2) {
+                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
+                    }
 
-                <button onClick={onPlaySong}>Play Song</button>
-                <button onClick={stopPlayers}>Stop Song</button>
-
-
-                {/* {console.log(song)} */}
-                <div>{(user.uid == song.owner) ? <div><MixerEditor effects={effects} rerenderCounter={rerenderCounter} rerenderCount={rerenderCount} trackList={songTracks} song={song} /><button onClick={() => deleteThisSong(song.id)}>Delete Song</button></div> : <div></div>}</div>
-                {/* {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>} */}
-                {dropdown ?
-                  <div>
-                    <form id="trackUpdate" name="trackUpdate" onSubmit={submitRequest}>
-
-                      <select defaultValue={null} name="track1" id="track1">
-                        {console.table(trackList)}
-                        <option value={null}>Choose a track</option>
-
-                        {trackList ? trackList.map((track) => { return <option value={track.trackId}>{track.name}</option> }) : ""}
-
-                      </select>
-                      <button>Submit Track</button>
-                    </form>
-                  </div>
-                  : ''}
-
-                <div id="song-tracks">
-
-                  <div className="song-track">
-                    <h2>Track 1: </h2>{songTracks.map((track, i) => {
-                      if (track.trackId == song.track1) {
-                        return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                      }
-
-                    })}
-                  </div>
-                  <div className="song-track">
-                    <h2>Track 2: </h2>{songTracks.map((track, i) => {
-                      if (track.trackId == song.track2) {
-                        return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                      }
-
-                    })}
-                  </div>
-                  <div className="song-track">
-                    <h2>Track 3: </h2>{songTracks.map((track, i) => {
-                      if (track.trackId == song.track3) {
-                        return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                      }
-
-                    })}
-                  </div>
-                  <div className="song-track">
-                    <h2>Track 4: </h2>{songTracks.map((track, i) => {
-                      if (track.trackId == song.track4) {
-                        return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                      }
-
-                    })}
-                  </div>
-                  <div className="song-track">
-                    <h2>Track 5: </h2>{songTracks.map((track, i) => {
-                      if (track.trackId == song.track5) {
-                        return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                      }
-
-                    })}
-                  </div>
-                  <div className="song-track">
-                    <h2>Track 6: </h2>{songTracks.map((track, i) => {
-                      if (track.trackId == song.track6) {
-                        return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                      }
-
-                    })}
-                  </div>
-                  <div className="song-track">
-                    <h2>Track 7: </h2>{songTracks.map((track, i) => {
-                      if (track.trackId == song.track7) {
-                        return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                      }
-
-                    })}
-                  </div>
-                  <div className="song-track">
-                    <h2>Track 8: </h2>{songTracks.map((track, i) => {
-                      if (track.trackId == song.track8) {
-                        return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                      }
-
-                    })}
-                  </div>
-                  {/* 
-                <h2>Track 2: {song.track2}</h2>
-                <h2>Track 3: {song.track3}</h2>
-                <h2>Track 4: {song.track4}</h2>
-                <h2>Track 5: {song.track5}</h2>
-                <h2>Track 6: {song.track6}</h2>
-                <h2>Track 7: {song.track7}</h2>
-                <h2>Track 8: {song.track8}</h2> */}
-
-
+                  })}
                 </div>
+                <div className="song-track">
+                  <h2>Track 3: </h2>{songTracks.map((track, i) => {
+                    if (track.trackId == song.track3) {
+                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
+                    }
+
+                  })}
+                </div>
+                <div className="song-track">
+                  <h2>Track 4: </h2>{songTracks.map((track, i) => {
+                    if (track.trackId == song.track4) {
+                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
+                    }
+
+                  })}
+                </div>
+                <div className="song-track">
+                  <h2>Track 5: </h2>{songTracks.map((track, i) => {
+                    if (track.trackId == song.track5) {
+                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
+                    }
+
+                  })}
+                </div>
+                <div className="song-track">
+                  <h2>Track 6: </h2>{songTracks.map((track, i) => {
+                    if (track.trackId == song.track6) {
+                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
+                    }
+
+                  })}
+                </div>
+                <div className="song-track">
+                  <h2>Track 7: </h2>{songTracks.map((track, i) => {
+                    if (track.trackId == song.track7) {
+                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
+                    }
+
+                  })}
+                </div>
+                <div className="song-track">
+                  <h2>Track 8: </h2>{songTracks.map((track, i) => {
+                    if (track.trackId == song.track8) {
+                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
+                    }
+
+                  })}
+                </div>
+
 
               </div>
 
-                : ""}
-            </div >
-          </div>
+            </div>
+
+              : ""}
+          </div >
+
           : ""}
-
-
 
     </>
   )

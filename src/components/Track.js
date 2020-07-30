@@ -33,17 +33,17 @@ export default function Track(props) {
       {
         user ?
           <div className="track-box">
-            <Card>
 
-              <CardBody>
-                <CardTitle>Name : {track.name}</CardTitle>
-                <CardSubtitle>Author: {track.username}</CardSubtitle>
-                <CardText>BPM: {track.bpm} Description: {track.description}</CardText>
-                <Button onClick={() => playTrack(track.url)}>Play</Button>
-                <Button onClick={() => stopTrack()}>Stop</Button>
-                <Button onClick={() => deleteThisTrack(track.trackId)}>Delete</Button>
-              </CardBody>
-            </Card>
+
+            <CardBody>
+              <CardTitle>Name : {track.name}</CardTitle>
+              <CardSubtitle>Author: {track.username}</CardSubtitle>
+              <CardText>BPM: {track.bpm} Description: {track.description}</CardText>
+              <Button onClick={() => playTrack(track.url)}>Play</Button>
+              <Button onClick={() => stopTrack()}>Stop</Button>
+              <Button onClick={() => deleteThisTrack(track.trackId)}>Delete</Button>
+            </CardBody>
+
 
 
           </div >

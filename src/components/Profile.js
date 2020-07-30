@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { ThemeProvider } from 'styled-components';
 import { UserContext } from './userContext';
 import { MyContext } from "../context.js"
+import { Row, Col } from "reactstrap";
 
 import 'antd/dist/antd.css';
 import ReusableTrackForm from './ReusableTrackForm';
@@ -22,6 +23,16 @@ const theme = {
   light: '#ccd6f6',
   white: '#e6f1ff'
 };
+
+const ColoredLine = ({ color1, color, text }) => (
+  <h2
+    style={{
+      color: color1,
+      backgroundColor: color,
+      height: 50
+    }}
+  >{text}</h2>
+);
 
 const Profile = () => {
   const firestore = useFirestore();
@@ -106,12 +117,25 @@ const Profile = () => {
       {auth.currentUser ? "" : <Redirect to="/signin" />}
       {/* column */}
       {console.log("sheebs")}
-      <h2>Your Tracks</h2>
-      <TrackList changeList={() => changeList} getTrackList={getTrackList} setDelete={setDelete} tracks={trackList} />
-      <h2>Your Songs</h2>
-      <SongList changeList={() => changeList} setDelete={setDelete} songs={songList} fromHome={false} />
+      <Row>
+        <Col>
+          <ColoredLine color1="white" color="gray" text="Your Tracks"></ColoredLine>
+          <div className="your-tracks">
+            <TrackList changeList={() => changeList} getTrackList={getTrackList} setDelete={setDelete} tracks={trackList} />
+          </div>
+        </Col>
+        <Col>
+          <ColoredLine color1="white" color="gray" text="Your Songs"></ColoredLine>
+          <div className="your-songs">
+
+
+            <SongList changeList={() => changeList} setDelete={setDelete} songs={songList} fromHome={false} />
+          </div>
+        </Col>
+      </Row>
+
       {console.log("screech")}
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 

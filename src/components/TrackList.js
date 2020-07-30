@@ -8,6 +8,7 @@ import { useFirestore } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import { message } from "antd";
 import * as t from "tone";
+import { Card } from 'reactstrap';
 
 
 export default function TrackList(props) {
@@ -102,7 +103,9 @@ export default function TrackList(props) {
           <h2></h2>
 
         </div>
-        {props.tracks ? Object.values(props.tracks).map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} stopTrack={onClickStop} playTrack={onClickTrack} changeList={changeList} deleteTrack={deleteTrack} />) : ''}
+        <Card>
+          {props.tracks ? Object.values(props.tracks).map((track, i) => <Track key={i} track={track} dragProp="list" canDelete={false} stopTrack={onClickStop} playTrack={onClickTrack} changeList={changeList} deleteTrack={deleteTrack} />) : ''}
+        </Card>
       </div>
 
 
