@@ -15,18 +15,6 @@ The owner of the song can then listen to that uploaded track and determine wheth
 This application also has the beginnings of an 8-track mixer that allow the owner to adjust levels of individual tracks and save them. 
 <hr />
 
-## Component Diagrams
-
-### App Design
-
-<img src='src\Assets\component-diagram.drawio.png'>
-
-### Card Design
-
-<img src='src\Assets\card-diagram.drawio.png'>
-
-<hr/>
-
 ## Live Site
 You can view the live site here. [Collabulous](https://code.visualstudio.com/Download)
 
