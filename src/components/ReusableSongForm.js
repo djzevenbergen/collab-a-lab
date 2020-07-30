@@ -40,13 +40,12 @@ function ReusableTrackForm(props) {
   const [hidden, setHidden] = useState(true);
   let storageRef;
 
-  if (firebase.auth().currentUser === null) {
-    setHidden(false);
-  } else {
-    getUserName();
+  if (value) {
+
   }
 
   async function getUserName() {
+
     let userNameList = [];
     await firestore.collection("usernames").where("userId", "==", firebase.auth().currentUser.uid).get()
       .then(function (querySnapshot) {
@@ -91,6 +90,7 @@ function ReusableTrackForm(props) {
     setUser(auth.currentUser)
     if (auth.currentUser) {
       getTrackList();
+      getUserName();
     }
     //
   }, [auth.currentUser])
@@ -137,10 +137,9 @@ function ReusableTrackForm(props) {
     );
   }
 
-
   return (
     <React.Fragment>
-      {hidden ?
+      {auth.currentUser ?
         <IntroContainer>
 
           <form onSubmit={addStuffToFirestore}>
@@ -259,7 +258,7 @@ function ReusableTrackForm(props) {
             <button type="submit">Update</button>
           </form>
         </IntroContainer>
-        : <Redirect to="/signin" />}
+        : <Redirect to="/" />}
 
 
     </React.Fragment >

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import PropTypes from "prop-types";
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { v4 } from 'uuid';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { message } from 'antd'
+import { UserContext } from './userContext';
 // import history from '../history';
 
 
@@ -28,6 +29,7 @@ const IntroContainer = styled.section`
 
 function ReusableTrackForm(props) {
 
+  const { value, setValue } = useContext(UserContext);
   const firestore = useFirestore();
 
   const auth = firebase.auth();
@@ -37,9 +39,7 @@ function ReusableTrackForm(props) {
   const [hidden, setHidden] = useState(true);
   let storageRef;
 
-  if (firebase.auth().currentUser === null) {
-    setHidden(false);
-  } else {
+  if (value) {
     getUserName();
   }
 
@@ -125,7 +125,7 @@ function ReusableTrackForm(props) {
 
   return (
     <React.Fragment>
-      {hidden ?
+      {value ?
         <div>
 
           <form onSubmit={addStuffToFirestore}>
@@ -160,7 +160,7 @@ function ReusableTrackForm(props) {
             <button type="submit">Update</button>
           </form>
         </div>
-        : <Redirect to="/signin" />}
+        : <Redirect to="/" />}
 
 
     </React.Fragment >
