@@ -35,7 +35,7 @@ const Header = (props) => {
     if ((window.location.href).endsWith("3000/") || (window.location.href).endsWith("app/")) {
       window.location.reload();
     } else {
-      window.location = 'http://localhost:3000/';
+      window.location = 'https://collab-a-lab.web.app/';
     }
 
     console.log("reload");
@@ -49,7 +49,7 @@ const Header = (props) => {
   return (
     <React.Fragment>
       <Navbar variant='dark' bg="dark" expand='lg'>
-        <Navbar.Brand><a href="http://localhost:3000/"><img href="" style={navImg} src="https://i.ibb.co/FJ4Lw2R/b519fcb3-7a98-4b34-be27-6237d07c2966-200x200.png" /></a></Navbar.Brand>
+        <Navbar.Brand><a href="https://collab-a-lab.web.app/"><img href="" style={navImg} src="https://i.ibb.co/FJ4Lw2R/b519fcb3-7a98-4b34-be27-6237d07c2966-200x200.png" /></a></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
 
