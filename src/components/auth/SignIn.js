@@ -68,26 +68,29 @@ function SignIn() {
             <h6 className="tinyButton" onClick={signToggle}>{signup ? <span>..Sign In</span> : <span>..Sign Up</span>} </h6>
           </div>
         </div>}
-        {signup ? <SignUp onClick={onClick} /> :
-          <div >
-            <h1>Sign In</h1>
-            <form onSubmit={doSignIn}>
-              <input
-                type='text'
-                name='signInEmail'
-                placeholder='Email' />
-              <br />
-              <input
-                type='password'
-                name='signInPassword'
-                placeholder='Password' />
-              <br /><br />
-              <button
-                className="card-button"
-                type='submit'
-                variant="danger"
-              >Sign In</button>
-            </form>
+        {auth.currentUser ? "" :
+          <div>
+            {signup ? <SignUp onClick={onClick} /> :
+              <div >
+                <h1>Sign In</h1>
+                <form onSubmit={doSignIn}>
+                  <input
+                    type='text'
+                    name='signInEmail'
+                    placeholder='Email' />
+                  <br />
+                  <input
+                    type='password'
+                    name='signInPassword'
+                    placeholder='Password' />
+                  <br /><br />
+                  <button
+                    className="card-button"
+                    type='submit'
+                    variant="danger"
+                  >Sign In</button>
+                </form>
+              </div>}
           </div>}
 
       </div >
