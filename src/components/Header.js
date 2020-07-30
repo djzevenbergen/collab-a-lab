@@ -28,7 +28,12 @@ const Header = (props) => {
   }, [auth.currentUser])
 
   function gitHubRepo() {
-    window.location.reload();
+    if ((window.location.href).endsWith("3000/") || (window.location.href).endsWith("app/")) {
+      window.location.reload();
+    } else {
+      window.location = 'http://localhost:3000/';
+    }
+
     console.log("reload");
     return false;
   }
