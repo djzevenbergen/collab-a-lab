@@ -328,7 +328,7 @@ const MixerEditor = (props) => {
 
   return (
     <React.Fragment>
-      <Button onClick={toggleModal}>Open Mixer/Edit</Button>
+      <Button className="control-buttons" onClick={toggleModal}>Open Mixer/Edit</Button>
       <Modal isOpen={mixerOpen} toggle={toggleModal} className="whole-mixer" backdrop="static">
         <ModalHeader toggle={toggleModal}>{song.name}</ModalHeader>
         <ModalBody>

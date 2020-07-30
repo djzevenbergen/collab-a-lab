@@ -73,7 +73,7 @@ color: rgb(1, 86, 88);
 cursor: pointer;
 color: rgb(187, 112, 51);
 }
-.card-button{
+/* .card-button{
   height: auto;
   font-size: 25px;
   display: inline-block;
@@ -85,6 +85,24 @@ color: rgb(187, 112, 51);
   color: lightgoldenrodyellow;
   background-color:maroon;
   border-radius: 8%; 
+} */
+
+button.control-buttons.btn.btn-secondary{
+  padding: 3px;
+  margin: 3px;
+  float: none;
+  font-weight: bold;
+  color: lightgoldenrodyellow;
+  background-color:maroon;
+}
+
+.card-button{
+  padding: 3px;
+  margin: 3px;
+  float: none;
+  font-weight: bold;
+  color: lightgoldenrodyellow;
+  background-color:maroon;
 }
 
 .navBar {
@@ -125,6 +143,17 @@ color: rgb(187, 112, 51);
 }
 
 .your-tracks div.card-body{
+  padding: 3px;
+  margin: 3px; 
+  font-size: 1.5em;
+  float: none;
+  font-weight: bolder;
+  color: lightgoldenrodyellow;
+  text-shadow: 1px yellow ;
+  background-color: #654321;
+}
+
+.song-dash{
   padding: 3px;
   margin: 3px; 
   font-size: 1.5em;
@@ -182,6 +211,7 @@ color: rgb(187, 112, 51);
 }
 
 .song-track div.card-title{
+  color: maroon;
   font-size: large;
 }
 

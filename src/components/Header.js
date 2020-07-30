@@ -13,6 +13,11 @@ const navImg = {
   width: "110px",
 };
 
+const HeaderLogged = styled.h2`
+  color: gray;
+  font-size: small;
+`;
+
 const Header = (props) => {
   const { value, setValue } = useContext(UserContext);
   const context = useContext(MyContext);
@@ -54,6 +59,7 @@ const Header = (props) => {
         <Navbar.Collapse id="basic-navbar-nav">
 
           <Nav className="mr-auto">
+
             <Nav.Link> <Link className='navLink1' to="/signin">{user ? "Sign Out" : "Sign in"}</Link></Nav.Link>
             <Nav.Link> <Link className='navLink2' to="/profile">Profile</Link></Nav.Link>
             <Nav.Link> <Link className='navLink3' to="/addtrack">{auth.currentUser ? "Add track" : ""}</Link></Nav.Link>
@@ -64,7 +70,7 @@ const Header = (props) => {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-
+      <HeaderLogged>{user ? <p>Logged in as {user.email}</p> : <p>Not logged in</p>}</HeaderLogged>
     </React.Fragment>
 
   );

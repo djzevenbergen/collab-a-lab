@@ -432,7 +432,7 @@ function SongDashboard(props) {
               :
               <div>
                 <p>No Requests</p>
-                {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>}
+                {(fromHome && !ownerBool) ? <Button className="control-buttons" onClick={openTrackDropDown}>Propose New Track</Button> : <Button className="control-buttons" onClick={openTrackDropDown}>Add New Track</Button>}
               </div>
             }
             {song ? <div>
@@ -440,15 +440,15 @@ function SongDashboard(props) {
                 <Card>
                   < CardTitle>Name : {song.name}</CardTitle>
                   <CardSubtitle>Author: {song.username}</CardSubtitle>
-                  <Button onClick={songSelect}>Go Back</Button>
+                  <Button className="control-buttons" onClick={songSelect}>Go Back</Button>
 
-                  <Button onClick={onPlaySong}>Play Song</Button>
-                  <Button onClick={stopPlayers}>Stop Song</Button>
+                  <Button className="control-buttons" onClick={onPlaySong}>Play Song</Button>
+                  <Button className="control-buttons" onClick={stopPlayers}>Stop Song</Button>
 
                 </Card>
               </div>
               {/* {console.log(song)} */}
-              <div>{(user.uid == song.owner) ? <div><MixerEditor effects={effects} rerenderCounter={rerenderCounter} rerenderCount={rerenderCount} trackList={songTracks} song={song} /><button onClick={() => deleteThisSong(song.id)}>Delete Song</button></div> : <div></div>}</div>
+              <div>{(user.uid == song.owner) ? <div class="your-songs"><MixerEditor effects={effects} rerenderCounter={rerenderCounter} rerenderCount={rerenderCount} trackList={songTracks} song={song} /><Button className="control-buttons" onClick={() => deleteThisSong(song.id)}>Delete Song</Button></div> : <div></div>}</div>
               {/* {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>} */}
               {dropdown ?
                 <div>
@@ -470,7 +470,7 @@ function SongDashboard(props) {
                 <Card>
                   <CardBody>
                     <div className="song-track">
-                      <CardTitle>Track 1: </CardTitle>{songTracks.map((track, i) => {
+                      <CardTitle>1: </CardTitle>{songTracks.map((track, i) => {
                         if (track.trackId == song.track1) {
                           return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
                         }
@@ -479,7 +479,7 @@ function SongDashboard(props) {
                     </div></CardBody>
                   <CardBody>
                     <div className="song-track">
-                      <CardTitle>Track 2: </CardTitle>{songTracks.map((track, i) => {
+                      <CardTitle>2: </CardTitle>{songTracks.map((track, i) => {
                         if (track.trackId == song.track2) {
                           return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
                         }
@@ -488,7 +488,7 @@ function SongDashboard(props) {
                     </div></CardBody>
                   <CardBody>
                     <div className="song-track">
-                      <CardTitle>Track 3: </CardTitle>{songTracks.map((track, i) => {
+                      <CardTitle>3: </CardTitle>{songTracks.map((track, i) => {
                         if (track.trackId == song.track3) {
                           return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
                         }
@@ -497,7 +497,7 @@ function SongDashboard(props) {
                     </div></CardBody>
                   <CardBody>
                     <div className="song-track">
-                      <CardTitle>Track 4: </CardTitle>{songTracks.map((track, i) => {
+                      <CardTitle>4: </CardTitle>{songTracks.map((track, i) => {
                         if (track.trackId == song.track4) {
                           return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
                         }
@@ -506,7 +506,7 @@ function SongDashboard(props) {
                     </div></CardBody>
                   <CardBody>
                     <div className="song-track">
-                      <CardTitle>Track 5: </CardTitle>{songTracks.map((track, i) => {
+                      <CardTitle>5: </CardTitle>{songTracks.map((track, i) => {
                         if (track.trackId == song.track5) {
                           return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
                         }
@@ -515,7 +515,7 @@ function SongDashboard(props) {
                     </div></CardBody>
                   <CardBody>
                     <div className="song-track">
-                      <CardTitle>Track 6: </CardTitle>{songTracks.map((track, i) => {
+                      <CardTitle>6: </CardTitle>{songTracks.map((track, i) => {
                         if (track.trackId == song.track6) {
                           return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
                         }
@@ -524,7 +524,7 @@ function SongDashboard(props) {
                     </div></CardBody>
                   <CardBody>
                     <div className="song-track">
-                      <CardTitle>Track 7: </CardTitle>{songTracks.map((track, i) => {
+                      <CardTitle>7: </CardTitle>{songTracks.map((track, i) => {
                         if (track.trackId == song.track7) {
                           return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
                         }
@@ -533,7 +533,7 @@ function SongDashboard(props) {
                     </div></CardBody>
                   <CardBody>
                     <div className="song-track">
-                      <CardTitle>Track 8: </CardTitle>{songTracks.map((track, i) => {
+                      <CardTitle>8: </CardTitle>{songTracks.map((track, i) => {
                         if (track.trackId == song.track8) {
                           return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
                         }

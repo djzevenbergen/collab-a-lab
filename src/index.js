@@ -31,17 +31,17 @@ const rrfProps = {
 }
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <MyProvider>
-        <ReactReduxFirebaseProvider {...rrfProps}>
 
-          <App />
+  <Provider store={store}>
+    <MyProvider>
+      <ReactReduxFirebaseProvider {...rrfProps}>
 
-        </ReactReduxFirebaseProvider>
-      </MyProvider>
-    </Provider>
-  </React.StrictMode >
+        <App />
+
+      </ReactReduxFirebaseProvider>
+    </MyProvider>
+  </Provider>
+
   ,
   document.getElementById('root')
 );
