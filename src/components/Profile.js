@@ -98,7 +98,7 @@ const Profile = () => {
     if (auth.currentUser) {
       changeList();
     }
-    //
+
   }, [context.state.user, deleteBool])
 
   return (

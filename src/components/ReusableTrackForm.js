@@ -126,7 +126,7 @@ function ReusableTrackForm(props) {
   return (
     <React.Fragment>
       {hidden ?
-        <IntroContainer>
+        <div>
 
           <form onSubmit={addStuffToFirestore}>
             <ul>
@@ -159,7 +159,7 @@ function ReusableTrackForm(props) {
             </ul>
             <button type="submit">Update</button>
           </form>
-        </IntroContainer>
+        </div>
         : <Redirect to="/signin" />}
 
 

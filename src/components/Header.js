@@ -27,6 +27,12 @@ const Header = (props) => {
     setUser(auth.currentUser)
   }, [auth.currentUser])
 
+  function gitHubRepo() {
+    window.location.reload();
+    console.log("reload");
+    return false;
+  }
+
   return (
     <React.Fragment>
       <Navbar bg='dark' variant='dark' expand='lg'>
@@ -39,7 +45,8 @@ const Header = (props) => {
             <Nav.Link> <Link className='navLink' to="/profile">Profile</Link></Nav.Link>
             <Nav.Link> <Link className='navLink' to="/addtrack">{auth.currentUser ? "Add track" : ""}</Link></Nav.Link>
             <Nav.Link> <Link className='navLink' to="/addsong">{auth.currentUser ? "New Song" : ""}</Link></Nav.Link>
-            <Nav.Link> <Link className='navLink' to="/">Home</Link></Nav.Link>
+            <Nav.Link> <Link id="home" onClick={gitHubRepo}>Home</Link></Nav.Link>
+            {/* <Nav.Link> <Link id="home" className='navLink' to="/">Home</Link></Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

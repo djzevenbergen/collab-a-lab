@@ -80,6 +80,22 @@ const Profile = () => {
   return (
     <React.Fragment>
 
+
+      {user ? "" :
+        <div>
+          <h1>Welcome!</h1>
+          <p>This is a work in progress.</p>
+          <p>Make an account and start uploading tracks (one at a time for now)</p>
+          <p>You can then create a song with any tracks that you have</p>
+          <p>You can then go to the home page and look at other people's songs and listen to them</p>
+          <p>Right now the stop function doesn't work for songs, so you need to refresh to stop the song</p>
+          <p>If you want to mix a song, you can change the volume of individual tracks in the mixer but only before playing, you can then save.</p>
+          <p>When you save and come back, you can then hear the changed levels</p>
+          <p>If you want to add a track to another person's song, you just to need click propose track</p>
+          <p>The owner can listen to the track and either accept or reject it</p>
+        </div>}
+
+
       <SongList changeList={() => changeList} songs={songList} fromHome={true} setDelete={setDelete} />
 
       {console.log("screech")}

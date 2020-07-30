@@ -20,6 +20,11 @@ code {
   color: rgb(184, 184, 184)
 }
 
+.navBar {
+  background-color: aquamarine;
+  
+}
+
 .navLink:hover {
   color: rgb(236, 235, 235)
 }

@@ -57,7 +57,9 @@ export default function SongList(props) {
   return (
     <React.Fragment>
 
-      {songDetail ? <SongDashboard changeTempSong={changeTempSong} deleteSong={() => deleteSong()} selectSong={() => songSelect} song={tempSong} songSelect={songSelect} fromHome={fromHome} /> :
+      {songDetail ?
+        <SongDashboard changeTempSong={changeTempSong} deleteSong={() => deleteSong()} selectSong={() => songSelect} song={tempSong} songSelect={songSelect} fromHome={fromHome} />
+        :
 
         <div className="main-container">
           <div className="song-container">
