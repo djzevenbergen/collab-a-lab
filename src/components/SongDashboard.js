@@ -353,12 +353,12 @@ function SongDashboard(props) {
     }).catch(function (error) {
       console.log('error downloading');
     });
-
   }
 
   let player2;
   async function onPlaySongWithRequest(wholeTrack) {
     let tempTrackList = [...trackList, wholeTrack];
+    let tempUrls = [];
     var storage = firebase.storage();
     var pathReference = storage.ref('tracks/')
     await tempTrackList.forEach((track) => {
@@ -381,6 +381,7 @@ function SongDashboard(props) {
         console.log("5");
         xhr.send();
         console.log("6");
+        tempUrls.push(url);
         player2 = new t.Player(url).toDestination();
         //play as soon as the buffer is loaded
         player2.autostart = true;
@@ -392,6 +393,38 @@ function SongDashboard(props) {
     })
 
   }
+
+  // const playSong = (urlListHook) => {
+
+  //   // const theBuffer = new t.Buffer.fromUrl();
+
+  //   let volume1;
+
+  //   var pianoSamples = new t.Buffers(urlListHook, function () {
+
+
+  //     //play one of the samples when they all load
+  //     const playersFromBuffs = {};
+  //     let i = 0;
+  //     urlListHook.forEach((url) => {
+  //       let tempBuff = pianoSamples.get(i);
+  //       playersFromBuffs['buffplay' + i] = new t.Player(tempBuff).toDestination();
+
+  //       i++
+  //     });
+
+  //     Object.keys(playersFromBuffs).map((key) => {
+  //       console.log(key);
+  //       // players.add(playersFromBuffs[key]);
+  //       playersFromBuffs[key].start();
+  //       // players.add(playersFromBuffs[key]);
+  //     })
+
+  //   });
+
+  //   console.log("what is happening")
+
+  // }
 
   const openMixer = () => {
     toggleMixer(!mixerVisible);

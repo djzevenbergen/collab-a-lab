@@ -274,11 +274,8 @@ const MixerEditor = (props) => {
     console.log(trackNumber);
   }
   let players = new t.Players();
-  const playSong = () => {
-    console.log(trackList);
-    console.log(playerListHook)
-    console.log(playerListHook["player1"])
-    console.log(playerListHook.player1)
+  const playSong = (urlListHook) => {
+
     // const theBuffer = new t.Buffer.fromUrl();
 
     let volume1;
@@ -338,7 +335,7 @@ const MixerEditor = (props) => {
               <Card>
                 <CardBody>
                   <Col>
-                    <Button className="mixer-play-button" onClick={playSong}>Play Song</Button>
+                    <Button className="mixer-play-button" onClick={() => playSong(urlListHook)}>Play Song</Button>
                     <Button className="mixer-play-button" onClick={stopSong}>Stop Song</Button>
                   </Col>
                 </CardBody>
