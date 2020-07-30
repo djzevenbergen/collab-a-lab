@@ -7,6 +7,7 @@ import { UserContext } from '../userContext';
 
 
 
+
 function SignUp() {
 
   const [hidden, setHidden] = useState(true);
@@ -84,16 +85,16 @@ function SignUp() {
         <input
           type='text'
           name='userName'
-          placeholder='userName' />
+          placeholder='userName' /><br />
         <input
           type='text'
           name='email'
-          placeholder='email' />
+          placeholder='email' /><br />
         <input
           type='password'
           name='password'
-          placeholder='Password' />
-        <button type='submit'>Sign up</button>
+          placeholder='Password' /><br /><br />
+        <button className="card-button" type="submit">Sign Up</button>
       </form>
     </>
 

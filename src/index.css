@@ -1,7 +1,8 @@
 body {
   background-image: url("http://static.simpledesktops.com/uploads/desktops/2010/11/13/retro_november.png");
   background-repeat: no-repeat;
-  background-size: auto;
+  background-size: stretch;
+  text-align: center;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -17,6 +18,10 @@ code {
 .header {
   font-size: large;
   margin: 0 auto;
+}
+.main-container {
+  text-align: center;
+  margin-top: 2%;
 }
 
 .navLink1 {
@@ -53,6 +58,7 @@ code {
 }
 .navLink4:hover {
   color: rgb(255, 165, 46)
+  
 }
 .navLink5:hover {
   color: rgb(238, 79, 92)
@@ -60,12 +66,36 @@ code {
 .navLink6:hover {
   color: rgb(255, 242, 243)
 }
+.tinyButton{
+color: rgb(1, 86, 88);
+}
+.tinyButton:hover{
+cursor: pointer;
+color: rgb(187, 112, 51);
+}
+.card-button{
+  height: auto;
+  font-size: 25px;
+  display: inline-block;
+  width: auto;
+  padding: 5px;
+  text-shadow: 0px 0px 10px rgb(255, 94, 0), 0px 0px 12px rgb(240, 109, 2);
+  float: none;
+  font-weight: bold;
+  color: lightgoldenrodyellow;
+  background-color:maroon;
+  border-radius: 8%; 
+}
 
 .navBar {
   background-color: aquamarine;
   
 }
-
+.registerLink {
+  display: flex;
+  justify-content: center;
+  wrap: nowrap;
+}
 
 .mixer-play-button {
   float: right;
@@ -76,6 +106,22 @@ code {
 
 .your-tracks div.card {
   background-color: rgb(170, 106, 9);
+  
+}
+
+.your-tracks div.card-title{
+  font-size: large;
+
+}
+
+.your-tracks div.card-subtitle {
+  font-size: medium;
+
+}
+
+.your-tracks p.card-text {
+  font-size: small;
+
 }
 
 .your-tracks div.card-body{
@@ -121,18 +167,65 @@ code {
   background-color:maroon;
 }
 
+.song-tracks div.card {
+  background-color: #654321;
+}
+
+.song-track div.card-body{
+  padding: 3px;
+  margin: 3px; 
+  font-size: 1.5em;
+  float: none;
+  font-weight: bolder;
+  color: lightgoldenrodyellow;
+  background-color: rgb(170, 106, 9);
+}
+
+.song-track div.card-title{
+  font-size: large;
+}
+
+.song-track div.card-subtitle{
+  font-size: medium;
+}
+
+.song-track .card-button{
+  padding: 3px;
+  margin: 3px;
+  float: none;
+  font-weight: bold;
+  color: lightgoldenrodyellow;
+  background-color:maroon;
+}
+
+.song-box div.card-title{
+  font-size:x-large;
+
+}
+
+.song-box div.card-subtitle {
+  font-size: medium;
+
+}
+/*
+.song-tracks p.card-text {
+  font-size: small;
+
+} */
+
 
 .whole-mixer {
   --gutter: 14px;
   --modal-color: #800000;
-  --soft-color: #fafafa;
+  --soft-color: #800000;
+  background-color: rgb(255, 165, 46);
   top: 0;
   left: 0;
   right:0;
   bottom:0;
   margin: auto;
   max-width: 90%;
-
+ 
   z-index: 2000;
   position: fixed;
 
@@ -143,6 +236,7 @@ code {
   text-align: left;
   width: 140vh;
   overflow: auto;
+  background-color: maroon;
   padding: var(--gutter);
 }
 

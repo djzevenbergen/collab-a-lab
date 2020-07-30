@@ -9,6 +9,9 @@ import { Jumbotron, Navbar, Nav } from 'react-bootstrap';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const navImg = {
+  width: "110px",
+};
 
 const Header = (props) => {
   const { value, setValue } = useContext(UserContext);
@@ -40,13 +43,13 @@ const Header = (props) => {
   }
 
   function gitHubRepo() {
-    window.location = 'https://github.com/tytyhibye/Shrug';
+    window.location = 'https://github.com/djzevenbergen/collab-a-lab';
   }
 
   return (
     <React.Fragment>
       <Navbar variant='dark' bg="dark" expand='lg'>
-        <Navbar.Brand>Collabulous</Navbar.Brand>
+        <Navbar.Brand><a href="http://localhost:3000/"><img href="" style={navImg} src="https://i.ibb.co/FJ4Lw2R/b519fcb3-7a98-4b34-be27-6237d07c2966-200x200.png" /></a></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
 

@@ -4,7 +4,6 @@ import { Redirect } from 'react-router-dom';
 import { message } from 'antd'
 import SignUp from "./SignUp";
 import { UserContext } from '../userContext'
-
 import { MyContext } from "../../context.js"
 
 
@@ -34,6 +33,10 @@ function SignIn() {
     setSignup(!hidden);
   }
 
+  function signToggle() {
+    setSignup(!signup);
+  }
+
   function doSignOut() {
     firebase.auth().signOut().then(function () {
       console.log("Successfully signed out!");
@@ -59,25 +62,36 @@ function SignIn() {
       <div className="main-container">
 
         {hidden ? <Redirect to="/profile" /> : ''}
-        {auth.currentUser ? <div><h1>Sign Out</h1><button onClick={doSignOut}>Sign Out</button></div> : <div>
-          <h1>Sign In</h1>
-          <form onSubmit={doSignIn}>
-            <input
-              type='text'
-              name='signInEmail'
-              placeholder='Email' />
-            <input
-              type='password'
-              name='signInPassword'
-              placeholder='Password' />
-            <button type='submit'>Sign In</button>
-          </form>
-          <button onClick={onClick}>Sign Up</button>
+        {auth.currentUser ? <div><h6>You sure you wanna go?</h6><button className="card-button" variant="danger" onClick={doSignOut}>Yuhh</button></div> : <div>
+          <div className="registerLink">
+            <h6>{signup ? "" : <span>Not </span>} Registered?  </h6>
+            <h6 className="tinyButton" onClick={signToggle}>{signup ? <span>..Sign In</span> : <span>..Sign Up</span>} </h6>
+          </div>
         </div>}
-        {signup ? <SignUp /> : ''}
+        {signup ? <SignUp onClick={onClick} /> :
+          <div >
+            <h1>Sign In</h1>
+            <form onSubmit={doSignIn}>
+              <input
+                type='text'
+                name='signInEmail'
+                placeholder='Email' />
+              <br />
+              <input
+                type='password'
+                name='signInPassword'
+                placeholder='Password' />
+              <br /><br />
+              <button
+                className="card-button"
+                type='submit'
+                variant="danger"
+              >Sign In</button>
+            </form>
+          </div>}
 
-      </div>
-    </React.Fragment>
+      </div >
+    </React.Fragment >
   );
 
 }

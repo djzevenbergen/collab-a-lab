@@ -18,6 +18,10 @@ import TrackList from "./TrackList";
 import { Redirect } from 'react-router-dom';
 import Request from "./Request";
 import MixerEditor from './MixerEditor';
+import {
+  Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button
+} from 'reactstrap';
 
 
 function SongDashboard(props) {
@@ -432,14 +436,17 @@ function SongDashboard(props) {
               </div>
             }
             {song ? <div>
-              < h2 >Name : {song.name}</h2 >
-              <h3>Author: {song.username}</h3>
-              <button onClick={songSelect}>Go Back</button>
+              <div className="your-songs">
+                <Card>
+                  < CardTitle>Name : {song.name}</CardTitle>
+                  <CardSubtitle>Author: {song.username}</CardSubtitle>
+                  <Button onClick={songSelect}>Go Back</Button>
 
-              <button onClick={onPlaySong}>Play Song</button>
-              <button onClick={stopPlayers}>Stop Song</button>
+                  <Button onClick={onPlaySong}>Play Song</Button>
+                  <Button onClick={stopPlayers}>Stop Song</Button>
 
-
+                </Card>
+              </div>
               {/* {console.log(song)} */}
               <div>{(user.uid == song.owner) ? <div><MixerEditor effects={effects} rerenderCounter={rerenderCounter} rerenderCount={rerenderCount} trackList={songTracks} song={song} /><button onClick={() => deleteThisSong(song.id)}>Delete Song</button></div> : <div></div>}</div>
               {/* {(fromHome && !ownerBool) ? <button onClick={openTrackDropDown}>Propose New Track</button> : <button onClick={openTrackDropDown}>Add New Track</button>} */}
@@ -460,73 +467,81 @@ function SongDashboard(props) {
                 : ''}
 
               <div id="song-tracks">
+                <Card>
+                  <CardBody>
+                    <div className="song-track">
+                      <CardTitle>Track 1: </CardTitle>{songTracks.map((track, i) => {
+                        if (track.trackId == song.track1) {
+                          return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
+                        }
 
-                <div className="song-track">
-                  <h2>Track 1: </h2>{songTracks.map((track, i) => {
-                    if (track.trackId == song.track1) {
-                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                    }
+                      })}
+                    </div></CardBody>
+                  <CardBody>
+                    <div className="song-track">
+                      <CardTitle>Track 2: </CardTitle>{songTracks.map((track, i) => {
+                        if (track.trackId == song.track2) {
+                          return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
+                        }
 
-                  })}
-                </div>
-                <div className="song-track">
-                  <h2>Track 2: </h2>{songTracks.map((track, i) => {
-                    if (track.trackId == song.track2) {
-                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                    }
+                      })}
+                    </div></CardBody>
+                  <CardBody>
+                    <div className="song-track">
+                      <CardTitle>Track 3: </CardTitle>{songTracks.map((track, i) => {
+                        if (track.trackId == song.track3) {
+                          return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
+                        }
 
-                  })}
-                </div>
-                <div className="song-track">
-                  <h2>Track 3: </h2>{songTracks.map((track, i) => {
-                    if (track.trackId == song.track3) {
-                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                    }
+                      })}
+                    </div></CardBody>
+                  <CardBody>
+                    <div className="song-track">
+                      <CardTitle>Track 4: </CardTitle>{songTracks.map((track, i) => {
+                        if (track.trackId == song.track4) {
+                          return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
+                        }
 
-                  })}
-                </div>
-                <div className="song-track">
-                  <h2>Track 4: </h2>{songTracks.map((track, i) => {
-                    if (track.trackId == song.track4) {
-                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                    }
+                      })}
+                    </div></CardBody>
+                  <CardBody>
+                    <div className="song-track">
+                      <CardTitle>Track 5: </CardTitle>{songTracks.map((track, i) => {
+                        if (track.trackId == song.track5) {
+                          return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
+                        }
 
-                  })}
-                </div>
-                <div className="song-track">
-                  <h2>Track 5: </h2>{songTracks.map((track, i) => {
-                    if (track.trackId == song.track5) {
-                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                    }
+                      })}
+                    </div></CardBody>
+                  <CardBody>
+                    <div className="song-track">
+                      <CardTitle>Track 6: </CardTitle>{songTracks.map((track, i) => {
+                        if (track.trackId == song.track6) {
+                          return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
+                        }
 
-                  })}
-                </div>
-                <div className="song-track">
-                  <h2>Track 6: </h2>{songTracks.map((track, i) => {
-                    if (track.trackId == song.track6) {
-                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                    }
+                      })}
+                    </div></CardBody>
+                  <CardBody>
+                    <div className="song-track">
+                      <CardTitle>Track 7: </CardTitle>{songTracks.map((track, i) => {
+                        if (track.trackId == song.track7) {
+                          return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
+                        }
 
-                  })}
-                </div>
-                <div className="song-track">
-                  <h2>Track 7: </h2>{songTracks.map((track, i) => {
-                    if (track.trackId == song.track7) {
-                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                    }
+                      })}
+                    </div></CardBody>
+                  <CardBody>
+                    <div className="song-track">
+                      <CardTitle>Track 8: </CardTitle>{songTracks.map((track, i) => {
+                        if (track.trackId == song.track8) {
+                          return <><CardSubtitle key={i}>Track: {track.name}</CardSubtitle><br></br><CardSubtitle>By: {track.username}</CardSubtitle></>
+                        }
 
-                  })}
-                </div>
-                <div className="song-track">
-                  <h2>Track 8: </h2>{songTracks.map((track, i) => {
-                    if (track.trackId == song.track8) {
-                      return <><p key={i}>Track: {track.name}</p><br></br><p>By: {track.username}</p></>
-                    }
-
-                  })}
-                </div>
-
-
+                      })}
+                    </div>
+                  </CardBody>
+                </Card>
               </div>
 
             </div>
