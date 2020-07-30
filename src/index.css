@@ -1,4 +1,7 @@
 body {
+  background-image: url("http://static.simpledesktops.com/uploads/desktops/2010/11/13/retro_november.png");
+  background-repeat: no-repeat;
+  background-size: auto;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -16,8 +19,46 @@ code {
   margin: 0 auto;
 }
 
-.navLink {
-  color: rgb(184, 184, 184)
+.navLink1 {
+  color: rgb(122, 122, 122)
+}
+.navLink2 {
+  color: rgb(122, 122, 122)
+}
+.navLink3 {
+  color: rgb(122, 122, 122)
+}
+.navLink4 {
+  color: rgb(122, 122, 122)
+}
+.navLink5 {
+  color: rgb(122, 122, 122)
+}
+.navLink6 {
+  color: rgb(122, 122, 122)
+}
+.ghIcon {
+  height: 15px;
+  margin: 0 auto;
+}
+
+.navLink1:hover {
+  color: rgb(238, 79, 92)
+}
+.navLink2:hover {
+  color: rgb(255, 165, 46)
+}
+.navLink3:hover {
+  color: rgb(32, 205, 211)
+}
+.navLink4:hover {
+  color: rgb(255, 165, 46)
+}
+.navLink5:hover {
+  color: rgb(238, 79, 92)
+}
+.navLink6:hover {
+  color: rgb(255, 242, 243)
 }
 
 .navBar {
@@ -25,9 +66,6 @@ code {
   
 }
 
-.navLink:hover {
-  color: rgb(236, 235, 235)
-}
 
 .mixer-play-button {
   float: right;
@@ -37,25 +75,50 @@ code {
 }
 
 .your-tracks div.card {
-  background-color: lightslategray;
+  background-color: rgb(170, 106, 9);
 }
 
 .your-tracks div.card-body{
   padding: 3px;
-  margin: 3px;
+  margin: 3px; 
+  font-size: 1.5em;
   float: none;
-  background-color: lightgray;
+  font-weight: bolder;
+  color: lightgoldenrodyellow;
+  text-shadow: 1px yellow ;
+  background-color: #654321;
 }
 
+.your-tracks .track-button{
+  padding: 3px;
+  margin: 3px;
+  float: none;
+  font-weight: bold;
+  color: lightgoldenrodyellow;
+  background-color:maroon;
+}
+
+
 .your-songs div.card {
-  background-color: lightslategray;
+  background-color: #654321;
 }
 
 .your-songs div.card-body{
   padding: 3px;
+  margin: 3px; 
+  font-size: 1.5em;
+  float: none;
+  font-weight: bolder;
+  color: lightgoldenrodyellow;
+  background-color: rgb(170, 106, 9);
+}
+.your-songs .card-button{
+  padding: 3px;
   margin: 3px;
   float: none;
-  background-color: lightgray;
+  font-weight: bold;
+  color: lightgoldenrodyellow;
+  background-color:maroon;
 }
 
 
@@ -65,8 +128,11 @@ code {
   --soft-color: #fafafa;
   top: 0;
   left: 0;
-  width: 100vh;
-  height: 100vh;
+  right:0;
+  bottom:0;
+  margin: auto;
+  max-width: 90%;
+
   z-index: 2000;
   position: fixed;
 

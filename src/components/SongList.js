@@ -11,6 +11,7 @@ import * as t from "tone";
 import SongDashboard from "./SongDashboard";
 import { Redirect } from 'react-router-dom';
 import { UserContext } from './userContext';
+import { Card } from "reactstrap";
 
 export default function SongList(props) {
   const { songs, fromHome, changeList, setDelete } = props;
@@ -65,7 +66,9 @@ export default function SongList(props) {
           <div className="song-container">
             <div className="song-box">
             </div>
-            {songs ? songs.map((song, i) => <Song key={i} song={song} dragProp="list" canDelete={false} event={onClickSong} selectSong={songSelect} fromHome={fromHome} />) : ''}
+            <Card>
+              {songs ? songs.map((song, i) => <Song key={i} song={song} dragProp="list" canDelete={false} event={onClickSong} selectSong={songSelect} fromHome={fromHome} />) : ''}
+            </Card>
           </div>
         </div >}
     </React.Fragment>

@@ -95,9 +95,9 @@ const Profile = () => {
           <p>The owner can listen to the track and either accept or reject it</p>
         </div>}
 
-
-      <SongList changeList={() => changeList} songs={songList} fromHome={true} setDelete={setDelete} />
-
+      <div className="your-songs">
+        <SongList changeList={() => changeList} songs={songList} fromHome={true} setDelete={setDelete} />
+      </div>
       {console.log("screech")}
     </React.Fragment>
   );

@@ -1,72 +1,147 @@
-### time log
-- 8-9 attempted to do things, but ended up scrapping everything and starting over
+![]()
+<br />
+
+#### By DJ Zevenbergen
+
+<hr/>
+
+## Decription
+
+A React Web application for music collaboration. <br>
+A user can log in, upload mp3 files, and then make a song using those mp3s.
+Other users can then listen to that song and upload their own track to that song. 
+The owner of the song can then listen to that uploaded track and determine whether or not to keep it as a part of their song.
+<br>
+This application also has the beginnings of an 8-track mixer that allow the owner to adjust levels of individual tracks and save them. 
+<hr />
+
+## Component Diagrams
+
+### App Design
+
+<img src='src\Assets\component-diagram.drawio.png'>
+
+### Card Design
+
+<img src='src\Assets\card-diagram.drawio.png'>
+
+<hr/>
+
+## Live Site
+You can view the live site here. [Collabulous](https://code.visualstudio.com/Download)
+
+## Logistics
+
+|                    | Minimum Product Features                                            |
+| ------------------ | ------------------------------------------------------------------- |
+| :heavy_check_mark: | User can sign up/login/sign out                                               |
+| :heavy_check_mark: | User can access the projects github repository from navigation menu |
+| :heavy_check_mark: | User can upload an mp3 file                   |
+| :heavy_check_mark: | User can create song with any mp3s that they've uploaded        |
+| :heavy_check_mark: | User can view other user's songs and propose a new track from a list of their own uploaded mp3s            |
+| :heavy_check_mark: | User can view any proposals on their own songs and reject/accept them           |
+| :heavy_check_mark: | Accepted tracks get added to the song in the database and then become apart of the song (only on reload as of now)            |
+| :heavy_check_mark: | Rejected tracks get removed from the requests collection and list (only on reload as of now)            |
+| :heavy_check_mark: | User can view other user's songs and propose a new track from a list of their own uploaded mp3s            |
+| :heavy_check_mark: | User can view other user's songs and propose a new track from a list of their own uploaded mp3s            |
+|                    | ---------------------------   |
+
+<br/>
+<br/>
+
+|                    | Stretch Goals                                           |
+| ------------------ | ------------------------------------------------------- |
+| :heavy_check_mark: | Hosting                                                 |
+| :heavy_check_mark: | Songs can be open in the mixer and listended to                                    |
+| :heavy_check_mark: | Individual tracks can be listened to  |
+| :heavy_check_mark: | Individual tracks can be stopped  |
+| :heavy_check_mark: | Songs can be played         |
+|                    | Songs can be stopped         |
+| :heavy_check_mark: | Song (when played in mixer) uses stored volumes         |
+| :heavy_check_mark: | Changing and saving individual track sliders saves volumes        |
+|                    | Changing volume sliders changes volume live    |
+|                    | Changing volume sliders changes volume live    |
+|                    | Mute/Pan/Solo individual tracks and save those settings as well   |
+|                    | Changing volume sliders changes volume live    |
+|                    | Download tracks    |
+|                    | Download an mp3 of a whole song    |
 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+<hr />
 
-In the project directory, you can run:
+## Setup/Installation Requirements
 
-### `npm start`
+1. Clone this projects repository into your local directory following [these](https://www.linode.com/docs/development/version-control/how-to-install-git-and-clone-a-github-repository/) instructions.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2. Open the now local project folder with [VSC](https://code.visualstudio.com/Download) or an equivalent
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+3. Navigate to the project directory from your terminal by entering the following:
 
-### `npm test`
+```
+$ cd ~/collab-a-lab
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. Within the projects directory install all required dependencies with
 
-### `npm run build`
+```
+$ npm install
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+5. Run the application to view in your browser with
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```
+$ npm run start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+> If the browser does not automatically launch, view the project [here](https://localhost:3000)
 
-### `npm run eject`
+<hr/>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Known Bugs
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Songs won't stop when played
+- Tracks will start and stop just fine unless you play another track. Only the most recently played track will stop
+- Deleting a track doesn't delete it from a song
+- Deleting a song doesn't delete its settings
+- Volume sliders don't affect players when playing
+- Accepting/Rejecting a request doesn't remove the request from the DOM
+- Volume sliders affect the wrong tracks in the mixer
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+If you have a bug or an idea, browse the open issues before opening a new one. You can also take a look at the [Open Source Guide](https://opensource.guide/).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<hr/>
 
-## Learn More
+## Technologies Used
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- JavaScript
+- Tone.j
+- React
+- Firebase
+- Firestore
+- Reactstrap
+- Bootstrap
+- HTML
+- CSS
+- Git
 
-### Code Splitting
+<hr/>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Legal
 
-### Analyzing the Bundle Size
+#### Apache License V2.0
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Copyright 2020 DJ Zevenbergen @ Epicodus
 
-### Making a Progressive Web App
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+http://www.apache.org/licenses/LICENSE-2.0
 
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

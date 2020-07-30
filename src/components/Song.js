@@ -39,7 +39,7 @@ export default function Song(props) {
             <CardBody>
               <CardTitle>{song.name}</CardTitle>
               <CardSubtitle>by: {song.username}</CardSubtitle>
-              <button onClick={() => selectSong(song)}>Details</button>
+              <Button className="card-button" onClick={() => selectSong(song)}>Details</Button>
             </CardBody>
 
           </div >
