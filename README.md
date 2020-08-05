@@ -16,7 +16,7 @@ This application also has the beginnings of an 8-track mixer that allow the owne
 <hr />
 
 ## Live Site
-You can view the live site here. [Collabulous](https://code.visualstudio.com/Download)
+You can view the live site here. [Collabulous](collab-a-lab.web.app)
 
 ## Logistics
 
