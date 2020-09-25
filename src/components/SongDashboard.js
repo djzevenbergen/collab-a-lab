@@ -329,48 +329,50 @@ function SongDashboard(props) {
     );
   }
 
-  trackList.forEach((track, i) => {
-    // console.log(track.name + " " + i);
-  });
-
-  let player3;
+  let trackPlayers = {}
   const playRequestTrack = (track) => {
-    var storage = firebase.storage();
-    var pathReference = storage.ref('tracks/')
+    if (!trackPlayers[track.trackId]) {
+      var storage = firebase.storage();
+      var pathReference = storage.ref('tracks/')
 
-    pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
-      // `url` is the download URL for 'images/stars.jpg'
-      console.log("1");
-      // This can be downloaded directly:
-      var xhr = new XMLHttpRequest();
-      console.log("2");
-      xhr.responseType = 'blob';
-      console.log("3");
-      xhr.onload = function (event) {
-        event.preventDefault();
+      pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
+        // `url` is the download URL for 'images/stars.jpg'
+        console.log("1");
+        // This can be downloaded directly:
+        var xhr = new XMLHttpRequest();
+        console.log("2");
+        xhr.responseType = 'blob';
+        console.log("3");
+        xhr.onload = function (event) {
+          event.preventDefault();
 
-        var blob = xhr.response;
-        console.log(blob);
-      };
-      console.log("4");
-      xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + url);
-      console.log("5");
-      xhr.send();
-      console.log("6");
-      player3 = new t.Player(url).toDestination();
-      //play as soon as the buffer is loaded
-      player3.autostart = true;
+          var blob = xhr.response;
+          console.log(blob);
+        };
+        console.log("4");
+        xhr.open('GET', url);
+        console.log("5");
+        xhr.send();
+        console.log("6");
+        trackPlayers[track.trackId] = new t.Player(url).toDestination();
+        trackPlayers[track.trackId].autostart = true;
 
-    }).catch(function (error) {
-      console.log('error downloading');
-    });
+      }).catch(function (error) {
+        console.log('error downloading');
+      });
+    } else {
+
+      trackPlayers[track.trackId].start()
+
+    }
+
   }
 
   let player2;
   let tempPlayObj = {}
   async function onPlaySongWithRequest(wholeTrack) {
-    if (Object.keys(playObj).length === 0 && playObj.constructor === Object) {
-      let tempTrackList = [...trackList, wholeTrack];
+    if (Object.keys(tempPlayObj).length === 0 && tempPlayObj.constructor === Object) {
+      let tempTrackList = [...songTracks, wholeTrack];
       let tempUrls = [];
       var storage = firebase.storage();
       var pathReference = storage.ref('tracks/')
@@ -410,7 +412,7 @@ function SongDashboard(props) {
 
       })
     } else {
-      Object.values(playObj).forEach((ind) => {
+      Object.values(tempPlayObj).forEach((ind) => {
         ind.start()
       })
     }
@@ -467,23 +469,10 @@ function SongDashboard(props) {
       console.log(ind)
       ind.stop()
     })
-    // console.log(players.get())
-    // players.stopAll();
-
     Object.values(tempPlayObj).forEach((ind) => {
       console.log(ind)
       ind.stop()
     })
-
-    // if (player) {
-    //   player.stop();
-    // }
-    // if (player2) {
-    //   player2.stop();
-    // }
-    // if (player3) {
-    //   player3.stop();
-    // }
   }
 
   return (
@@ -496,7 +485,7 @@ function SongDashboard(props) {
             {requestList[0] ?
               <div>
                 <p>Pending Request</p>
-                <Request request={requestList[0]} rejectRequest={rejectRequest} acceptRequest={acceptRequest} onPlaySong={onPlaySong} setRequest={setRequest} onPlaySongWithRequest={onPlaySongWithRequest} playRequestTrack={playRequestTrack} stopPlayers={stopPlayers} />
+                {ownerBool ? <div><Request request={requestList[0]} rejectRequest={rejectRequest} acceptRequest={acceptRequest} onPlaySong={onPlaySong} setRequest={setRequest} onPlaySongWithRequest={onPlaySongWithRequest} playRequestTrack={playRequestTrack} stopPlayers={stopPlayers} /> </div> : ""}
               </div>
               :
               <div>
