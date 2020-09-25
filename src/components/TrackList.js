@@ -21,9 +21,6 @@ export default function TrackList(props) {
   const firestore = useFirestore();
   let player;
 
-  const likesPage = () => {
-    goToFaves(!favePage);
-  }
 
   useEffect(() => {
     console.log(auth.currentUser)
@@ -32,41 +29,48 @@ export default function TrackList(props) {
 
   console.log(tracks);
 
-  const onClickTrack = (name) => {
-    var storage = firebase.storage();
-    var pathReference = storage.ref('tracks/')
 
-    pathReference.child(`${name}`).getDownloadURL().then(function (url) {
-      // `url` is the download URL for 'images/stars.jpg'
-      console.log("1");
-      // This can be downloaded directly:
-      var xhr = new XMLHttpRequest();
-      console.log("2");
-      xhr.responseType = 'blob';
-      console.log("3");
-      xhr.onload = function (event) {
-        event.preventDefault();
+  let trackPlayers = {}
+  const onClickTrack = (trackId, name) => {
+    if (!trackPlayers[trackId]) {
+      var storage = firebase.storage();
+      var pathReference = storage.ref('tracks/')
 
-        var blob = xhr.response;
-        console.log(blob);
-      };
-      console.log("4");
-      xhr.open('GET', url);
-      console.log("5");
-      xhr.send();
-      console.log("6");
-      player = new t.Player(url).toDestination();
-      //play as soon as the buffer is loaded
-      player.autostart = true;
+      pathReference.child(`${name}`).getDownloadURL().then(function (url) {
+        // `url` is the download URL for 'images/stars.jpg'
+        console.log("1");
+        // This can be downloaded directly:
+        var xhr = new XMLHttpRequest();
+        console.log("2");
+        xhr.responseType = 'blob';
+        console.log("3");
+        xhr.onload = function (event) {
+          event.preventDefault();
 
-    }).catch(function (error) {
-      console.log('error downloading');
-    });
+          var blob = xhr.response;
+          console.log(blob);
+        };
+        console.log("4");
+        xhr.open('GET', url);
+        console.log("5");
+        xhr.send();
+        console.log("6");
+        trackPlayers[trackId] = new t.Player(url).toDestination();
+        trackPlayers[trackId].autostart = true;
+
+      }).catch(function (error) {
+        console.log('error downloading');
+      });
+    } else {
+
+      trackPlayers[trackId].start()
+
+    }
 
   }
 
-  function onClickStop() {
-    player.stop();
+  function onClickStop(trackId) {
+    trackPlayers[trackId].stop();
   }
 
   const deleteTrack = (thisId) => {

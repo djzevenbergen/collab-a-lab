@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import firebase from 'firebase/app';
 import { UserContext } from './userContext';
 import MyContext from '../context.js';
-import { Jumbotron, Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -58,7 +58,7 @@ const Header = (props) => {
   return (
     <React.Fragment>
       <Navbar style={navColor} variant='dark' expand='lg'>
-        <Navbar.Brand><a href="http://localhost:3000/"><img href="" style={navImg} src="https://i.ibb.co/FJ4Lw2R/b519fcb3-7a98-4b34-be27-6237d07c2966-200x200.png" /></a></Navbar.Brand>
+        <Navbar.Brand><a href="http://localhost:3000/"><img href="" style={navImg} src="https://i.ibb.co/FJ4Lw2R/b519fcb3-7a98-4b34-be27-6237d07c2966-200x200.png" alt="logo" /></a></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
 
