@@ -119,13 +119,13 @@ const Profile = () => {
       {console.log("sheebs")}
       <Row>
         <Col>
-          <ColoredLine color1="white" color="gray" text="Your Tracks"></ColoredLine>
+          <ColoredLine color1="lightgoldenrodyellow" color="maroon" text="Your Tracks"></ColoredLine>
           <div className="your-tracks">
             <TrackList changeList={() => changeList} getTrackList={getTrackList} setDelete={setDelete} tracks={trackList} />
           </div>
         </Col>
         <Col>
-          <ColoredLine color1="white" color="gray" text="Your Songs"></ColoredLine>
+          <ColoredLine color1="lightgoldenrodyellow" color="maroon" text="Your Songs"></ColoredLine>
           <div className="your-songs">
 
 

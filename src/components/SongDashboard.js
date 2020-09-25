@@ -161,38 +161,51 @@ function SongDashboard(props) {
   }
 
   let player;
+  let players = new t.Players().toDestination();
+  let playObj = {}
   async function onPlaySong() {
-    var storage = firebase.storage();
-    var pathReference = storage.ref('tracks/')
-    // console.log(trackList);
-    await songTracks.forEach((track) => {
-      pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
-        // `url` is the download URL for 'images/stars.jpg'
-        console.log("1");
-        // This can be downloaded directly:
-        var xhr = new XMLHttpRequest();
-        console.log("2");
-        xhr.responseType = 'blob';
-        console.log("3");
-        xhr.onload = function (event) {
-          event.preventDefault();
+    if (Object.keys(playObj).length === 0 && playObj.constructor === Object) {
 
-          var blob = xhr.response;
-          console.log(blob);
-        };
-        console.log("4");
-        xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + url);
-        console.log("5");
-        xhr.send();
-        console.log("6");
-        player = new t.Player(url).toDestination();
-        //play as soon as the buffer is loaded
-        player.autostart = true;
+      var storage = firebase.storage();
+      var pathReference = storage.ref('tracks/')
+      // console.log(trackList);
 
-      }).catch(function (error) {
-        console.log('error downloading');
-      });
-    })
+      let i = 0
+      await songTracks.forEach((track) => {
+        pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
+          // `url` is the download URL for 'images/stars.jpg'
+          console.log("1");
+          // This can be downloaded directly:
+          var xhr = new XMLHttpRequest();
+          console.log("2");
+          xhr.responseType = 'blob';
+          console.log("3");
+          xhr.onload = function (event) {
+            event.preventDefault();
+
+            var blob = xhr.response;
+            console.log(blob);
+          };
+          console.log("4");
+          xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + url);
+          console.log("5");
+          xhr.send();
+          console.log("6");
+          playObj["player" + i] = new t.Player(url).toDestination();
+          //play as soon as the buffer is loaded
+          players.add("player" + i, url)
+          playObj["player" + i].autostart = true;
+          i++;
+
+        }).catch(function (error) {
+          console.log('error downloading');
+        });
+      })
+    } else {
+      Object.values(playObj).forEach((ind) => {
+        ind.start()
+      })
+    }
   }
 
   const submitRequest = (event) => {
@@ -439,15 +452,22 @@ function SongDashboard(props) {
 
 
   const stopPlayers = () => {
-    if (player) {
-      player.stop();
-    }
-    if (player2) {
-      player2.stop();
-    }
-    if (player3) {
-      player3.stop();
-    }
+    console.log(playObj)
+    Object.values(playObj).forEach((ind) => {
+      console.log(ind)
+      ind.stop()
+    })
+    console.log(players.get())
+    players.stopAll();
+    // if (player) {
+    //   player.stop();
+    // }
+    // if (player2) {
+    //   player2.stop();
+    // }
+    // if (player3) {
+    //   player3.stop();
+    // }
   }
 
   return (
