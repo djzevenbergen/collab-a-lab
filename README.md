@@ -44,7 +44,7 @@ You can view the live site here. [Collabulous](https://collab-a-lab.web.app)
 | :heavy_check_mark: | Individual tracks can be listened to  |
 | :heavy_check_mark: | Individual tracks can be stopped  |
 | :heavy_check_mark: | Songs can be played         |
-|                    | Songs can be stopped         |
+| :heavy_check_mark: | Songs can be stopped         |
 | :heavy_check_mark: | Song (when played in mixer) uses stored volumes         |
 | :heavy_check_mark: | Changing and saving individual track sliders saves volumes        |
 |                    | Changing volume sliders changes volume live    |
