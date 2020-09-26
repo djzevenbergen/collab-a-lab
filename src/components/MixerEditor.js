@@ -180,45 +180,48 @@ const MixerEditor = (props) => {
   let urlList;
 
   async function setUpPlayers(setPlayers) {
-    let thisUrlList = [];
-    var storage = firebase.storage();
-    var pathReference = storage.ref('tracks/')
-    let count = 1;
-    await orderedTrackList.forEach((track) => {
-      pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
-        //`url` is the download URL for 'images/stars.jpg'
-        console.log("1");
-        // This can be downloaded directly:
-        var xhr = new XMLHttpRequest();
-        console.log(track.name);
-        console.log("2");
-        xhr.responseType = 'blob';
-        console.log("3");
-        xhr.onload = function (event) {
-          event.preventDefault();
+    if (Object.keys(playerList).length === 0 && playerList.constructor === Object) {
+      let thisUrlList = [];
+      var storage = firebase.storage();
+      var pathReference = storage.ref('tracks/')
+      let count = 1;
+      await orderedTrackList.forEach((track) => {
+        pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
+          //`url` is the download URL for 'images/stars.jpg'
+          console.log("1");
+          // This can be downloaded directly:
+          var xhr = new XMLHttpRequest();
+          console.log(track.name);
+          console.log("2");
+          xhr.responseType = 'blob';
+          console.log("3");
+          xhr.onload = function (event) {
+            event.preventDefault();
 
-          var blob = xhr.response;
-          console.log(blob);
-        };
-        console.log("4");
-        xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + url);
-        console.log("5");
-        xhr.send();
-        console.log("6");
-        thisUrlList.push("https://cors-anywhere.herokuapp.com/" + url);
-        playerList["player" + count] = new t.Player(url).toDestination();
-        // thisUrlList.push(url);
-        count++;
+            var blob = xhr.response;
+            console.log(blob);
+          };
+          console.log("4");
+          xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + url);
+          console.log("5");
+          xhr.send();
+          console.log("6");
+          thisUrlList.push("https://cors-anywhere.herokuapp.com/" + url);
+          playerList[track.trackId] = new t.Player(url).toDestination();
+          playerList[track.trackId]["trackNumber"] = count;
+          // thisUrlList.push(url);
+          count++;
 
 
-      }).catch(function (error) {
-        console.log('error downloading');
-      });
+        }).catch(function (error) {
+          console.log('error downloading');
+        });
 
-    })
+      })
 
-    makePlayerList(playerList);
-    setUrlList(thisUrlList);
+      makePlayerList(playerList);
+      setUrlList(thisUrlList);
+    }
 
   }
 
@@ -227,10 +230,11 @@ const MixerEditor = (props) => {
   }
 
 
-  async function playTrack(trackNumber) {
-    console.log(playerListHook["player" + trackNumber]);
+  async function playTrack(trackId, trackNumber) {
+    console.log(playerListHook[trackId]);
+    console.log(trackId)
+    console.log(playerListHook)
 
-    await playerListHook["player" + trackNumber].start();
     let vol;
     // { track3Vol ? vol = track3Vol : vol = vol3 }
 
@@ -263,63 +267,71 @@ const MixerEditor = (props) => {
       default:
         break;
     }
-    playerListHook["player" + trackNumber].volume.value = vol;
 
+    playerListHook[trackId].volume.value = vol;
+    await playerListHook[trackId].start();
     console.log(trackNumber);
   }
 
   const stopTrack = (trackNumber) => {
-    console.log(playerListHook["player" + trackNumber]);
-    playerListHook["player" + trackNumber].stop();
+    console.log(playerListHook[trackNumber]);
+    playerListHook[trackNumber].stop();
     console.log(trackNumber);
   }
   let players = new t.Players();
+  const playersFromBuffs = {};
   const playSong = (urlListHook) => {
 
     // const theBuffer = new t.Buffer.fromUrl();
 
     let volume1;
 
-    var pianoSamples = new t.Buffers(urlListHook, function () {
-      let volumesForThis = {};
+    // var pianoSamples = new t.Buffers(urlListHook, function () {
+    let volumesForThis = {};
 
-      { track1Vol ? volumesForThis.volumpt1 = track1Vol : volumesForThis.volumpt1 = vol1 }
-      { track2Vol ? volumesForThis.volumpt2 = track2Vol : volumesForThis.volumpt2 = vol2 }
-      { track3Vol ? volumesForThis.volumpt3 = track3Vol : volumesForThis.volumpt3 = vol3 }
-      { track4Vol ? volumesForThis.volumpt3 = track4Vol : volumesForThis.volumpt3 = vol4 }
-      { track5Vol ? volumesForThis.volumpt3 = track5Vol : volumesForThis.volumpt3 = vol5 }
-      { track6Vol ? volumesForThis.volumpt3 = track6Vol : volumesForThis.volumpt3 = vol6 }
-      { track7Vol ? volumesForThis.volumpt3 = track7Vol : volumesForThis.volumpt3 = vol7 }
-      { track8Vol ? volumesForThis.volumpt3 = track8Vol : volumesForThis.volumpt3 = vol8 }
+    { track1Vol ? volumesForThis[1] = track1Vol : volumesForThis[1] = vol1 }
+    { track2Vol ? volumesForThis[2] = track2Vol : volumesForThis[2] = vol2 }
+    { track3Vol ? volumesForThis[3] = track3Vol : volumesForThis[3] = vol3 }
+    { track4Vol ? volumesForThis.volumpt3 = track4Vol : volumesForThis.volumpt3 = vol4 }
+    { track5Vol ? volumesForThis.volumpt3 = track5Vol : volumesForThis.volumpt3 = vol5 }
+    { track6Vol ? volumesForThis.volumpt3 = track6Vol : volumesForThis.volumpt3 = vol6 }
+    { track7Vol ? volumesForThis.volumpt3 = track7Vol : volumesForThis.volumpt3 = vol7 }
+    { track8Vol ? volumesForThis.volumpt3 = track8Vol : volumesForThis.volumpt3 = vol8 }
 
-      //play one of the samples when they all load
-      const playersFromBuffs = {};
-      let i = 0;
-      urlListHook.forEach((url) => {
-        let tempBuff = pianoSamples.get(i);
-        playersFromBuffs['buffplay' + i] = new t.Player(tempBuff).toDestination();
+    // //play one of the samples when they all load
 
-        playersFromBuffs['buffplay' + i].volume.value = volumesForThis["volumpt" + (i + 1)];
+    // let i = 0;
+    // urlListHook.forEach((url) => {
+    //   let tempBuff = pianoSamples.get(i);
+    //   playersFromBuffs['buffplay' + i] = new t.Player(tempBuff).toDestination();
 
-        i++
-      });
+    //   playersFromBuffs['buffplay' + i].volume.value = volumesForThis["volumpt" + (i + 1)];
 
-      Object.keys(playersFromBuffs).map((key) => {
-        console.log(key);
-        // players.add(playersFromBuffs[key]);
-        playersFromBuffs[key].start();
-        // players.add(playersFromBuffs[key]);
-      })
+    //   i++
+    // });
 
-    });
+    Object.keys(playerListHook).map((key) => {
+      console.log(key);
+      // players.add(playersFromBuffs[key]);
+      playerListHook[key].volume.value = volumesForThis[playerListHook[key]['trackNumber']]
+      playerListHook[key].start();
+      // players.add(playersFromBuffs[key]);
+    })
+
+
 
     console.log("what is happening")
 
   }
 
   const stopSong = () => {
-    console.log(players);
-    players.stopAll();
+    Object.keys(playerListHook).map((key) => {
+      console.log(key);
+      // players.add(playersFromBuffs[key]);
+      playerListHook[key].stop();
+      // players.add(playersFromBuffs[key]);
+    })
+
   }
 
 
@@ -346,8 +358,8 @@ const MixerEditor = (props) => {
 
                   {/* <p>{trackList[0] ? trackList[0] : "empty"}</p> */}
                   <Col>
-                    <Button className="mixer-play-button" onClick={() => playTrack(1)}>Play</Button>
-                    <Button className="mixer-play-button" onClick={() => stopTrack(1)}>Stop</Button>
+                    <Button className="mixer-play-button" onClick={() => playTrack(orderedTrackList[0].trackId, 1)}>Play</Button>
+                    <Button className="mixer-play-button" onClick={() => stopTrack(orderedTrackList[0].trackId)}>Stop</Button>
                     <h3 className="mixer-track-name">{orderedTrackList[0] ? <span>{orderedTrackList[0].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track1Slide" id="track1Slide" min={-50} max={50} defaultValue={vol1} onChange={update1} />
 
@@ -359,8 +371,8 @@ const MixerEditor = (props) => {
                 <CardBody>
                   {/* <p>{trackList[1] ? trackList[1] : "empty"}</p> */}
                   <Col>
-                    <Button className="mixer-play-button" onClick={() => playTrack(2)}>Play</Button>
-                    <Button className="mixer-play-button" onClick={() => stopTrack(2)}>Stop</Button>
+                    <Button className="mixer-play-button" onClick={() => playTrack(orderedTrackList[1].trackId, 2)}>Play</Button>
+                    <Button className="mixer-play-button" onClick={() => stopTrack(orderedTrackList[1].trackId)}>Stop</Button>
                     <h3 className="mixer-track-name">{orderedTrackList[1] ? <span>{orderedTrackList[1].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track2Slide" id="track2Slide" min={-50} max={50} defaultValue={vol2} onChange={update2} />
                     <p>New Volume: {track2Vol}</p>
@@ -371,7 +383,7 @@ const MixerEditor = (props) => {
                 <CardBody>
                   {/* <p>{trackList[2] ? trackList[2] : "empty"}</p> */}
                   <Col>
-                    <Button className="mixer-play-button" onClick={() => playTrack(3)}>Play</Button>
+                    <Button className="mixer-play-button" onClick={() => playTrack(orderedTrackList[1].trackId)}>Play</Button>
                     <Button className="mixer-play-button" onClick={() => stopTrack(3)}>Stop</Button>
                     <h3 className="mixer-track-name">{orderedTrackList[2] ? <span>{orderedTrackList[2].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track3Slide" id="track3Slide" min={-50} max={50} defaultValue={vol3} onChange={update3} />
