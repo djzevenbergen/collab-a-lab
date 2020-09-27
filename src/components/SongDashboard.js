@@ -54,6 +54,7 @@ function SongDashboard(props) {
 
         });
 
+
         setTrackList(data);
       })
       .catch(function (error) {
@@ -512,14 +513,14 @@ function SongDashboard(props) {
                 <div>
                   <form id="trackUpdate" name="trackUpdate" onSubmit={submitRequest}>
 
-                    <select defaultValue={null} name="track1" id="track1">
+                    <select class="choose-track" defaultValue={null} name="track1" id="track1">
                       {console.table(trackList)}
                       <option value={null}>Choose a track</option>
 
-                      {trackList ? trackList.map((track) => { return <option value={track.trackId}>{track.name}</option> }) : ""}
+                      {trackList ? trackList.map((track) => { return <option class="choose-track" value={track.trackId}>{track.name}</option> }) : ""}
 
                     </select>
-                    <button>Submit Track</button>
+                    <button class="choose-track" >Submit Track</button>
                   </form>
                 </div>
                 : ''}

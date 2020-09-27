@@ -28,10 +28,7 @@ const MixerEditor = (props) => {
   })
 
 
-  console.log(trackList)
-  console.log(orderedTrackList);
 
-  console.log(vol1);
 
   const [mixerOpen, openMixer] = useState(false);
 
@@ -45,11 +42,18 @@ const MixerEditor = (props) => {
   const [track8Vol, changeTrack8Vol] = useState(vol8);
   const [playerListHook, setPlayerList] = useState(null);
   const [urlListHook, setUrlList] = useState(null);
-  const toggleModal = () => { openMixer(!mixerOpen); }
 
-  function update1(e) {
+  const toggleModal = () => {
+    if (mixerOpen) {
+      stopSong()
+    }
+    openMixer(!mixerOpen);
+  }
+
+  function update1(e, trackId) {
     console.log(e);
     changeTrack1Vol(e);
+    playerListHook[trackId].volume.value = e;
 
     console.log(track1Vol);
   }
@@ -85,7 +89,7 @@ const MixerEditor = (props) => {
     changeTrack8Vol(e);
   }
 
-  console.log(track1Vol, track2Vol, track3Vol, track4Vol, track5Vol, track6Vol, track7Vol, track8Vol);
+
 
   const initializeVals = () => {
 
@@ -101,7 +105,7 @@ const MixerEditor = (props) => {
     rerenderCounter(1);
 
   }
-  console.log(rerenderCount);
+
   useEffect(() => {
     setUpPlayers();
   }, [mixerOpen])
@@ -160,7 +164,7 @@ const MixerEditor = (props) => {
   const saveChanges = (event) => {
     event.preventDefault();
     rerenderCounter(0);
-    console.log(track1Vol, track2Vol)
+
     updateSong(song.songId, track1Vol, track2Vol, track3Vol, track4Vol, track5Vol, track6Vol, track7Vol, track8Vol);
     toggleModal();
   }
@@ -188,24 +192,24 @@ const MixerEditor = (props) => {
       await orderedTrackList.forEach((track) => {
         pathReference.child(`${track.url}`).getDownloadURL().then(function (url) {
           //`url` is the download URL for 'images/stars.jpg'
-          console.log("1");
+
           // This can be downloaded directly:
           var xhr = new XMLHttpRequest();
-          console.log(track.name);
-          console.log("2");
+
+
           xhr.responseType = 'blob';
-          console.log("3");
+
           xhr.onload = function (event) {
             event.preventDefault();
 
             var blob = xhr.response;
             console.log(blob);
           };
-          console.log("4");
+
           xhr.open('GET', "https://cors-anywhere.herokuapp.com/" + url);
-          console.log("5");
+
           xhr.send();
-          console.log("6");
+
           thisUrlList.push("https://cors-anywhere.herokuapp.com/" + url);
           playerList[track.trackId] = new t.Player(url).toDestination();
           playerList[track.trackId]["trackNumber"] = count;
@@ -214,7 +218,7 @@ const MixerEditor = (props) => {
 
 
         }).catch(function (error) {
-          console.log('error downloading');
+
         });
 
       })
@@ -231,9 +235,7 @@ const MixerEditor = (props) => {
 
 
   async function playTrack(trackId, trackNumber) {
-    console.log(playerListHook[trackId]);
-    console.log(trackId)
-    console.log(playerListHook)
+
 
     let vol;
     // { track3Vol ? vol = track3Vol : vol = vol3 }
@@ -270,14 +272,15 @@ const MixerEditor = (props) => {
 
     playerListHook[trackId].volume.value = vol;
     await playerListHook[trackId].start();
-    console.log(trackNumber);
+
   }
 
   const stopTrack = (trackNumber) => {
-    console.log(playerListHook[trackNumber]);
+
     playerListHook[trackNumber].stop();
-    console.log(trackNumber);
+
   }
+
   let players = new t.Players();
   const playersFromBuffs = {};
   const playSong = (urlListHook) => {
@@ -311,8 +314,8 @@ const MixerEditor = (props) => {
     // });
 
     Object.keys(playerListHook).map((key) => {
-      console.log(key);
-      // players.add(playersFromBuffs[key]);
+
+      console.log(playerListHook)
       playerListHook[key].volume.value = volumesForThis[playerListHook[key]['trackNumber']]
       playerListHook[key].start();
       // players.add(playersFromBuffs[key]);
@@ -320,18 +323,19 @@ const MixerEditor = (props) => {
 
 
 
-    console.log("what is happening")
+
 
   }
 
   const stopSong = () => {
-    Object.keys(playerListHook).map((key) => {
-      console.log(key);
-      // players.add(playersFromBuffs[key]);
-      playerListHook[key].stop();
-      // players.add(playersFromBuffs[key]);
-    })
+    if (Object.keys(playerListHook).length != 0) {
+      Object.keys(playerListHook).map((key) => {
 
+        // players.add(playersFromBuffs[key]);
+        playerListHook[key].stop();
+        // players.add(playersFromBuffs[key]);
+      })
+    }
   }
 
 
@@ -383,8 +387,8 @@ const MixerEditor = (props) => {
                 <CardBody>
                   {/* <p>{trackList[2] ? trackList[2] : "empty"}</p> */}
                   <Col>
-                    <Button className="mixer-play-button" onClick={() => playTrack(orderedTrackList[1].trackId)}>Play</Button>
-                    <Button className="mixer-play-button" onClick={() => stopTrack(3)}>Stop</Button>
+                    <Button className="mixer-play-button" onClick={() => playTrack(orderedTrackList[2].trackId, 3)}>Play</Button>
+                    <Button className="mixer-play-button" onClick={() => stopTrack(orderedTrackList[2].trackId)}>Stop</Button>
                     <h3 className="mixer-track-name">{orderedTrackList[2] ? <span>{orderedTrackList[2].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track3Slide" id="track3Slide" min={-50} max={50} defaultValue={vol3} onChange={update3} />
                     <p>New Volume: {track3Vol}</p>
@@ -395,8 +399,8 @@ const MixerEditor = (props) => {
                 <CardBody>
                   {/* <p>{trackList[3] ? trackList[3] : "empty"}</p> */}
                   <Col>
-                    <Button className="mixer-play-button" onClick={() => playTrack(4)}>Play</Button>
-                    <Button className="mixer-play-button" onClick={() => stopTrack(4)}>Stop</Button>
+                    <Button className="mixer-play-button" onClick={() => playTrack(orderedTrackList[3].trackId, 4)}>Play</Button>
+                    <Button className="mixer-play-button" onClick={() => stopTrack(orderedTrackList[3].trackId)}>Stop</Button>
                     <h3 className="mixer-track-name">{orderedTrackList[3] ? <span>{orderedTrackList[3].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track4Slide" id="track4Slide" min={-50} max={50} defaultValue={vol4} onChange={update4} />
                     <p>New Volume: {track4Vol}</p>
@@ -407,8 +411,8 @@ const MixerEditor = (props) => {
                 <CardBody>
                   {/* <p>{trackList[4] ? trackList[4] : "empty"}</p> */}
                   <Col>
-                    <Button className="mixer-play-button" onClick={() => playTrack(5)}>Play</Button>
-                    <Button className="mixer-play-button" onClick={() => stopTrack(5)}>Stop</Button>
+                    <Button className="mixer-play-button" onClick={() => playTrack(orderedTrackList[4].trackId, 5)}>Play</Button>
+                    <Button className="mixer-play-button" onClick={() => stopTrack(orderedTrackList[4].trackId)}>Stop</Button>
                     <h3 className="mixer-track-name">{orderedTrackList[4] ? <span>{orderedTrackList[4].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track5Slide" id="track5Slide" min={-50} max={50} defaultValue={vol5} onChange={update5} />
                     <p>{track5Vol}</p>
@@ -419,8 +423,8 @@ const MixerEditor = (props) => {
                 <CardBody>
                   {/* <p>{trackList[5] ? trackList[5] : "empty"}</p> */}
                   <Col>
-                    <Button className="mixer-play-button" onClick={() => playTrack(6)}>Play</Button>
-                    <Button className="mixer-play-button" onClick={() => stopTrack(6)}>Stop</Button>
+                    <Button className="mixer-play-button" onClick={() => playTrack(orderedTrackList[5].trackId, 6)}>Play</Button>
+                    <Button className="mixer-play-button" onClick={() => stopTrack(orderedTrackList[5].trackId)}>Stop</Button>
                     <h3 className="mixer-track-name">{orderedTrackList[5] ? <span>{orderedTrackList[5].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track6Slide" id="track6Slide" min={-50} max={50} defaultValue={vol6} onChange={update6} />
                     <p>New Volume: {track6Vol}</p>
@@ -431,8 +435,8 @@ const MixerEditor = (props) => {
                 <CardBody>
                   {/* <p>{trackList[6] ? trackList[6] : "empty"}</p> */}
                   <Col>
-                    <Button className="mixer-play-button" onClick={() => playTrack(7)}>Play</Button>
-                    <Button className="mixer-play-button" onClick={() => stopTrack(7)}>Stop</Button>
+                    <Button className="mixer-play-button" onClick={() => playTrack(orderedTrackList[6].trackId, 7)}>Play</Button>
+                    <Button className="mixer-play-button" onClick={() => stopTrack(orderedTrackList[6].trackId)}>Stop</Button>
                     <h3 className="mixer-track-name">{orderedTrackList[6] ? <span>{orderedTrackList[6].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track7Slide" id="track7Slide" min={-50} max={50} defaultValue={vol7} onChange={update7} />
                     <p>New Volume: {track7Vol}</p>
@@ -443,8 +447,8 @@ const MixerEditor = (props) => {
                 <CardBody>
                   {/* <p>{trackList[7] ? trackList[7] : "empty"}</p> */}
                   <Col>
-                    <Button className="mixer-play-button" onClick={() => playTrack(8)}>Play</Button>
-                    <Button className="mixer-play-button" onClick={() => stopTrack(8)}>Stop</Button>
+                    <Button className="mixer-play-button" onClick={() => playTrack(orderedTrackList[7].trackId, 8)}>Play</Button>
+                    <Button className="mixer-play-button" onClick={() => stopTrack(orderedTrackList[7].trackId)}>Stop</Button>
                     <h3 className="mixer-track-name">{orderedTrackList[7] ? <span>{orderedTrackList[7].name}</span> : <span>empty</span>}</h3>
                     <Slider className="mix-slider" name="track8Slide" id="track8Slide" min={-50} max={50} defaultValue={vol8} onChange={update8} />
                     <p>New Volume: {track8Vol}</p>

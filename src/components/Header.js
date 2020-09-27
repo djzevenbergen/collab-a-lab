@@ -32,11 +32,9 @@ const Header = (props) => {
   if (auth.currentUser) {
     setValue(auth.currentUser);
   }
-  console.log("hi");
+
   //dnd end
   useEffect(() => {
-    console.log(auth.currentUser)
-    // console.log(context.state)
     setUser(auth.currentUser)
   }, [auth.currentUser])
 
@@ -47,7 +45,6 @@ const Header = (props) => {
       window.location = 'https://collab-a-lab.web.app/';
     }
 
-    console.log("reload");
     return false;
   }
 

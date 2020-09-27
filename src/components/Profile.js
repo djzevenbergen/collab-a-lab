@@ -55,8 +55,7 @@ const Profile = () => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           data.push(doc.data());
-          console.log(doc.id);
-          console.log(data);
+
           count++;
 
         });
@@ -64,7 +63,7 @@ const Profile = () => {
         setTrackList(data);
       })
       .catch(function (error) {
-        console.log("Error getting documents: ", error);
+
       });
   }
 
@@ -75,8 +74,6 @@ const Profile = () => {
       .then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
           data.push(doc.data());
-          console.log(doc.id);
-          console.log(data);
           count++;
 
         });
@@ -84,11 +81,9 @@ const Profile = () => {
         setSongList(data);
       })
       .catch(function (error) {
-        console.log("Error getting documents: ", error);
+
       });
   }
-
-  console.table(trackList);
 
   const changeList = () => {
     getTrackList();
@@ -96,7 +91,7 @@ const Profile = () => {
   }
 
   const setDelete = () => {
-    console.log("setting delete bool");
+
     setDeleteBool(!deleteBool);
     getTrackList();
     getSongList();
@@ -104,7 +99,6 @@ const Profile = () => {
   }
 
   useEffect(() => {
-    console.log(context.state)
     setUser(auth.currentUser)
     if (auth.currentUser) {
       changeList();
@@ -115,8 +109,6 @@ const Profile = () => {
   return (
     <React.Fragment>
       {auth.currentUser ? "" : <Redirect to="/signin" />}
-      {/* column */}
-      {console.log("sheebs")}
       <Row>
         <Col>
           <ColoredLine color1="lightgoldenrodyellow" color="maroon" text="Your Tracks"></ColoredLine>
@@ -133,8 +125,6 @@ const Profile = () => {
           </div>
         </Col>
       </Row>
-
-      {console.log("screech")}
     </React.Fragment >
   );
 }

@@ -16,7 +16,6 @@ export default function Track(props) {
   const auth = firebase.auth();
 
   const deleteThisTrack = (id) => {
-    console.log(id);
     deleteTrack(id);
     changeList();
   }
