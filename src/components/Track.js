@@ -15,8 +15,8 @@ export default function Track(props) {
 
   const auth = firebase.auth();
 
-  const deleteThisTrack = (id) => {
-    deleteTrack(id);
+  const deleteThisTrack = (id, url) => {
+    deleteTrack(id, url);
     changeList();
   }
 
@@ -40,7 +40,7 @@ export default function Track(props) {
               <CardText>BPM: {track.bpm} Description: {track.description}</CardText>
               <Button className="track-button" onClick={() => playTrack(track.trackId, track.url)}>Play</Button>
               <Button className="track-button" onClick={() => stopTrack(track.trackId)}>Stop</Button>
-              <Button className="track-button" onClick={() => deleteThisTrack(track.trackId)}>Delete</Button>
+              <Button className="track-button" onClick={() => deleteThisTrack(track.trackId, track.url)}>Delete</Button>
             </CardBody>
 
 

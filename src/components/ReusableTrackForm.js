@@ -77,12 +77,12 @@ function ReusableTrackForm(props) {
       contentType: fileType
     }
     var blob = new Blob([file], { type: fileType });
-    storageRef = firebase.storage().ref('tracks/' + file.name);
+    storageRef = firebase.storage().ref('tracks/' + username + file.name);
     const uploadTask = storageRef.put(blob, metadata);
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
       function (snapshot) {
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload Progress: ' + progress);
+        message.info('Upload Progress: ' + progress);
         switch (progress) {
           case 100:
             message.success("file uploaded");
@@ -112,7 +112,7 @@ function ReusableTrackForm(props) {
         name: event.target.name.value,
         bpm: event.target.bpm.value,
         description: event.target.description.value,
-        url: file.name,
+        url: username + file.name,
         owner: auth.currentUser.uid,
         username: username,
         trackId: v4(),

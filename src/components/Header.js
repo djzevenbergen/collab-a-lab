@@ -39,7 +39,7 @@ const Header = (props) => {
   }, [auth.currentUser])
 
   function reloadToHome() {
-    if ((window.location.href).includes("3000") || (window.location.href).endsWith("app/")) {
+    if ((window.location.href).includes("3000") || (window.location.href).includes("app")) {
       window.location = "http://localhost:3000/"
     } else {
       window.location = 'https://collab-a-lab.web.app/';
@@ -55,7 +55,7 @@ const Header = (props) => {
   return (
     <React.Fragment>
       <Navbar style={navColor} variant='dark' expand='lg'>
-        <Navbar.Brand><a href="http://localhost:3000/"><img href="" style={navImg} src="https://i.ibb.co/FJ4Lw2R/b519fcb3-7a98-4b34-be27-6237d07c2966-200x200.png" alt="logo" /></a></Navbar.Brand>
+        <Navbar.Brand><a href="https://collab-a-lab.web.app/"><img href="" style={navImg} src="https://i.ibb.co/FJ4Lw2R/b519fcb3-7a98-4b34-be27-6237d07c2966-200x200.png" alt="logo" /></a></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
 

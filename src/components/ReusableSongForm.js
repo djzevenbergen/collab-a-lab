@@ -13,6 +13,7 @@ import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { v4 } from 'uuid';
+import { message } from "antd";
 // import history from '../history';
 
 
@@ -116,7 +117,12 @@ function ReusableTrackForm(props) {
         track7: event.target.track7.value,
         track8: event.target.track8.value,
         timeCreated: firestore.FieldValue.serverTimestamp()
-      });
+      }).then(
+        message.success("Song Created!")
+
+      ).catch(function (error) {
+        message.error(error)
+      });;
   }
 
   function createDefaultMixSettings(songId) {
@@ -135,6 +141,7 @@ function ReusableTrackForm(props) {
 
       }
     );
+
   }
 
   return (

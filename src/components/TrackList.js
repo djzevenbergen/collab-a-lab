@@ -73,20 +73,27 @@ export default function TrackList(props) {
     trackPlayers[trackId].stop();
   }
 
-  const deleteTrack = (thisId) => {
+  const deleteTrack = (thisId, url) => {
     let empId;
+
     async function getTrackId(thisId) {
       let tempId;
+      let tempUrl;
       await firestore.collection("tracks").where("trackId", "==", thisId).get()
         .then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {
 
             tempId = doc.id;
+
+
+            console.log(doc.id)
+
           })
         })
       console.log(tempId);
       empId = tempId;
-      deleteThisTrack(empId);
+
+      deleteThisTrack(empId, url);
       setDelete();
     }
     getTrackId(thisId);
@@ -95,7 +102,21 @@ export default function TrackList(props) {
 
   }
 
-  const deleteThisTrack = (empId) => {
+  const deleteThisTrack = (empId, empUrl) => {
+
+    var storage = firebase.storage();
+
+    // Create a storage reference from our storage service
+    var storageRef = storage.ref();
+    console.log(empUrl)
+    var desertRef = storageRef.child('tracks/' + empUrl);
+
+    // Delete the file
+    desertRef.delete().then(function () {
+      // File deleted successfully
+    }).catch(function (error) {
+      // Uh-oh, an error occurred!
+    });
     return firestore.delete({ collection: 'tracks', doc: empId })
   }
 
