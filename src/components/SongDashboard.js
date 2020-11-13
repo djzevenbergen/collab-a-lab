@@ -476,6 +476,12 @@ function SongDashboard(props) {
     })
   }
 
+  const goBack = () => {
+    stopPlayers();
+    songSelect();
+
+  }
+
   return (
     <>
       {
@@ -499,7 +505,7 @@ function SongDashboard(props) {
                 <Card>
                   < CardTitle>Name : {song.name}</CardTitle>
                   <CardSubtitle>Author: {song.username}</CardSubtitle>
-                  <Button className="control-buttons" onClick={songSelect}>Go Back</Button>
+                  <Button className="control-buttons" onClick={goBack}>Go Back</Button>
 
                   <Button className="control-buttons" onClick={onPlaySong}>Play Song</Button>
                   <Button className="control-buttons" onClick={stopPlayers}>Stop Song</Button>

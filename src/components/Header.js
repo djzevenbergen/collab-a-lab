@@ -39,7 +39,7 @@ const Header = (props) => {
   }, [auth.currentUser])
 
   function reloadToHome() {
-    if ((window.location.href).includes("3000") || (window.location.href).includes("app")) {
+    if ((window.location.href).includes("3000")) {
       window.location = "http://localhost:3000/"
     } else {
       window.location = 'https://collab-a-lab.web.app/';
